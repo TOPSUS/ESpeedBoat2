@@ -1,0 +1,171 @@
+package id.alin.espeedboat;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import id.alin.espeedboat.Fragment.HomeFragment;
+import id.alin.espeedboat.Fragment.NotificationFragment;
+import id.alin.espeedboat.Fragment.PemesananFragment;
+
+public class MainActivity extends AppCompatActivity {
+    /*SEARCHVIEW*/
+    private SearchView searchview;
+
+    /*BOTTOM NAVIGATION NAV*/
+    private BottomNavigationView bottomNavigationView;
+
+    /*THE FOUR FRAGMENT*/
+    private HomeFragment homeFragment;
+    private PemesananFragment pemesananFragment;
+    private NotificationFragment notificationFragment;
+
+    private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
+    private static final String PEMESASNAN_FRAGMENT_TAG = "PEMESASNAN_FRAGMENT_TAG";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initWidget();
+        Home();
+    }
+
+    private void initWidget(){
+
+        /*SEARCH VIEW*/
+        searchview = findViewById(R.id.svMainActivity);
+        searchview.setQueryHint("Pencarian");
+        searchview.setIconified(false);
+        searchview.clearFocus();
+
+        searchview.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                searchview.setQueryHint("Pilih Speedboat");
+                searchview.setIconified(false);
+                searchview.clearFocus();
+                return true;
+            }
+        });
+
+        /*FRAGMENT FILLER KE FRAMELAYOUT*/
+        fragmentFiller();
+        Home();
+        /*INIT BOTTOM NAV*/
+        bottomNavigationView = findViewById(R.id.botnavbarMainActivity);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId() == R.id.itemmenuHome){
+                    /*HOME FRAGMENT TEST APAKAH AKTIF ATAU TIDAK KALAU AKTIF TIDAK DIGANTI*/
+                    item.setChecked(true);
+                    Home();
+                }
+                else if(item.getItemId() == R.id.itemmenuPemesanan){
+                    item.setChecked(true);
+                    Pemesanan();
+                }
+                else if(item.getItemId() == R.id.itemmenuNotifikas){
+                    item.setChecked(true);
+                    Notification();
+                }
+
+                return false;
+            }
+        });
+    }
+
+    /*MEMASUKKAN SEMUA FRAGMENT KE DALAM FRAMELAYOUT*/
+    private void fragmentFiller() {
+        /*FRAGMENT NOTIFICATION*/
+        notificationFragment = new NotificationFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,notificationFragment,PEMESASNAN_FRAGMENT_TAG).commit();
+
+        /*FRAGMENT PEMESANAN*/
+        pemesananFragment = new PemesananFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,pemesananFragment,HOME_FRAGMENT_TAG).commit();
+
+        /*FRAGMENT HOME*/
+        homeFragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,homeFragment,HOME_FRAGMENT_TAG).commit();
+
+    }
+
+    /*
+    * METHOD UNTUK MEMANGGIL FRAGMENT HOME
+    * */
+    private void Home(){
+        if(homeFragment != null){
+            Log.d("TEST","TEST 1");
+            getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
+        }
+        else if(!homeFragment.isVisible()){
+            Log.d("TEST","TEST 2");
+            homeFragment = new HomeFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,homeFragment,HOME_FRAGMENT_TAG).commit();
+            getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
+        }
+
+
+        getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
+
+    }
+
+    private void Pemesanan(){
+        Log.d("TEST","TEST PEMESANAN");
+
+        if(pemesananFragment != null){
+            Log.d("TEST","TEST 3");
+            getSupportFragmentManager().beginTransaction().show(pemesananFragment).commit();
+        }
+        else if(!pemesananFragment.isVisible()){
+            Log.d("TEST","TEST 4");
+            pemesananFragment = new PemesananFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,pemesananFragment,PEMESASNAN_FRAGMENT_TAG).commit();
+            getSupportFragmentManager().beginTransaction().show(pemesananFragment).commit();
+        }
+
+
+        getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
+    }
+
+    private void Notification(){
+        Log.d("TEST","TEST NOTIFICATION");
+
+        if(notificationFragment != null){
+            Log.d("TEST","TEST 5");
+            getSupportFragmentManager().beginTransaction().show(notificationFragment).commit();
+        }
+        else if(!notificationFragment.isVisible()){
+            Log.d("TEST","TEST 6");
+            notificationFragment = new NotificationFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,notificationFragment,PEMESASNAN_FRAGMENT_TAG).commit();
+            getSupportFragmentManager().beginTransaction().show(pemesananFragment).commit();
+        }
+
+        getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+    }
+}

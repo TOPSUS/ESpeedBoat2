@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+    <!--HEADER-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/BarLayoutMainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:theme="@style/Theme.ESpeedBoat">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.ESpeedBoat">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="RtlSymmetry">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvSpeedboatActivity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    app:cardCornerRadius="10dp"
+                    >
+
+                <SearchView
+                    android:id="@+id/svMainActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:elevation="20dp"
+                    />
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:layout_gravity="end"
+                    android:src="@drawable/threedot"
+                    />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!--FRAME LAYOUT UNTUK FRAGMENT-->
+    <FrameLayout
+        android:id="@+id/HomeFrameLayout"
+        android:layout_below="@id/BarLayoutMainActivity"
+        android:layout_above="@id/botnavbarMainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </FrameLayout>
+
+    <!--BOTTOM NAVIGATION-->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/botnavbarMainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:foregroundGravity="bottom"
+        app:menu="@menu/bottomnavmainactivity"/>
+
+</RelativeLayout>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/srFragmentHomeRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFragmentHomeProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:shimmer_auto_start="false">
+                <!--PROFILE BANNER-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/home_profile_bg"
+                    android:padding="10dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleImageView"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@color/shimmer_bg"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvFragmentHomeNama"
+                        style="@style/ProfileTextDark"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/shimmer_bg"
+                        android:layout_marginStart="10dp"
+                        android:maxLines="1"
+                        android:text="I Putu Alin WInata Gotama"
+                        app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tvFragmentHomeEmail"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@color/shimmer_bg"
+                        android:maxLines="1"
+                        android:text="alingotama14@gmail.com"
+                        app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/tvFragmentHomeNama"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/appCompatButton"
+                        style="@style/homeprofilebutton"
+                        android:layout_width="120dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/homeprofilebutton"
+                        android:drawableStart="@drawable/wallet"
+                        android:drawableEnd="@drawable/arrowright"
+                        android:foregroundGravity="fill_horizontal"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="Points"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+                        tools:ignore="HardcodedText,RtlSymmetry" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnFragmentHome"
+                        style="@style/homeprofilebutton"
+                        android:layout_width="140dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/homeprofilebutton"
+                        android:drawableStart="@drawable/wallet"
+                        android:drawableEnd="@drawable/arrowright"
+                        android:foregroundGravity="fill_horizontal"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="Payments"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/appCompatButton"
+                        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+                        tools:ignore="HardcodedText,RtlSymmetry" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <include layout="@layout/shadowdown" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/tampilan_layanan">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="28dp"
+                    android:background="@drawable/homelayananbutton"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Pelajari Lebih Lanjut"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="HardcodedText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/shadowdown" />
+
+            <!--BERITA PELABUHAN-->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFragmentHomeBeritaPelabuhan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:shimmer_auto_start="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/tvFragmentHomeBeritaPelabuhanHeaderTitle"
+                        style="@style/HeadingHome"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:text="Berita Pelabuhan"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tvFragmentHomeBeritaPelabuhanHeaderDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Informasi akurat mengenai pelabuhan yang telah bekerja sama dengan ESpeedboat"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvHomeFragmentDaftarpelabuhan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="-10dp"
+                        android:layout_marginEnd="-10dp"
+                        android:overScrollMode="never" />
+
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <include layout="@layout/shadowdown" />
+
+            <!--ESPEED NEWS-->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFragmentHomeEspeednews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:shimmer_auto_start="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/tvFragmentHomeEspeedNewsTitle"
+                        style="@style/HeadingHome"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:text="ESpeed News"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tvFragmentHomeEspeedNewsDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Berita aktual mengenai transportasi laut, ticket, dan berita terkini mengenai teknologi epseed"
+                        tools:ignore="HardcodedText" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvHomeFragmentEspeednews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="-10dp"
+                        android:layout_marginEnd="-10dp"
+                        android:overScrollMode="never" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
