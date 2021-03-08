@@ -17,8 +17,8 @@
         />
 
     <item
-        android:id="@+id/itemmenuNotifikas"
-        android:title="Inbox"
+        android:id="@+id/itemmenuNotifikasi"
+        android:title="Notifikasi"
         tools:ignore="HardcodedText"
         android:icon="@drawable/menu_notification"
         />

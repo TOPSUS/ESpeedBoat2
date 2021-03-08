@@ -25,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import id.alin.espeedboat.Fragment.HomeFragment;
 import id.alin.espeedboat.Fragment.NotificationFragment;
 import id.alin.espeedboat.Fragment.PemesananFragment;
+import id.alin.espeedboat.Fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
     /*SEARCHVIEW*/
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     private PemesananFragment pemesananFragment;
     private NotificationFragment notificationFragment;
+    private ProfileFragment profileFragment;
 
     private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
     private static final String PEMESASNAN_FRAGMENT_TAG = "PEMESASNAN_FRAGMENT_TAG";
@@ -85,9 +87,12 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(true);
                     Pemesanan();
                 }
-                else if(item.getItemId() == R.id.itemmenuNotifikas){
+                else if(item.getItemId() == R.id.itemmenuNotifikasi){
                     item.setChecked(true);
                     Notification();
+                }else if(item.getItemId() == R.id.itemmenuProfile){
+                    item.setChecked(true);
+                    Profile();
                 }
 
                 return false;
@@ -109,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,homeFragment,HOME_FRAGMENT_TAG).commit();
 
+        /*FRAGMENT PROFILE*/
+        profileFragment = new ProfileFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,profileFragment,HOME_FRAGMENT_TAG).commit();
+
     }
 
     /*
@@ -129,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(profileFragment).commit();
 
     }
 
@@ -149,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(profileFragment).commit();
     }
 
     private void Notification(){
@@ -167,5 +178,25 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(profileFragment).commit();
+    }
+
+    private void Profile(){
+        Log.d("TEST","TEST NOTIFICATION");
+
+        if(profileFragment != null){
+            Log.d("TEST","TEST 5");
+            getSupportFragmentManager().beginTransaction().show(profileFragment).commit();
+        }
+        else if(!profileFragment.isVisible()){
+            Log.d("TEST","TEST 6");
+            profileFragment = new ProfileFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,profileFragment,PEMESASNAN_FRAGMENT_TAG).commit();
+            getSupportFragmentManager().beginTransaction().show(pemesananFragment).commit();
+        }
+
+        getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
     }
 }
