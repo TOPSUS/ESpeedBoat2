@@ -185,10 +185,7 @@ public class MainActivity extends AppCompatActivity {
     * METHOD MEMANGGIL FRAGMENT NOTIFICATION
     * */
     private void Notification(){
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
+        
         if(notificationFragment != null){
             Log.d("TEST","TEST 5");
             getSupportFragmentManager().beginTransaction().show(notificationFragment).commit();
