@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
     private static final String PEMESASNAN_FRAGMENT_TAG = "PEMESASNAN_FRAGMENT_TAG";
+    private static final String NOTIFIKASI_FRAGMENT_TAG = "NOTIFIKASI_FRAGMENT_TAG";
+    private static final String PROFILE_FRAGMENT_TAG = "PROFILE_FRAGMENT_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,12 @@ public class MainActivity extends AppCompatActivity {
 
         /*FRAGMENT FILLER KE FRAMELAYOUT*/
         fragmentFiller();
+
+        /*
+        * FRAGMENT HOME MERUPAKAN FRAGMENT YANG PERTAMA KALI DIPANGGIL
+        * */
         Home();
+
         /*INIT BOTTOM NAV*/
         bottomNavigationView = findViewById(R.id.botnavbarMainActivity);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -142,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    * METHOD MEMANGGIL FRAGMENT PEMESANAN
+    * */
     private void Pemesanan(){
         Log.d("TEST","TEST PEMESANAN");
 
@@ -162,8 +172,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(profileFragment).commit();
     }
 
+    /*
+    * METHOD MEMANGGIL FRAGMENT NOTIFICATION
+    * */
     private void Notification(){
-        Log.d("TEST","TEST NOTIFICATION");
 
         if(notificationFragment != null){
             Log.d("TEST","TEST 5");
@@ -172,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         else if(!notificationFragment.isVisible()){
             Log.d("TEST","TEST 6");
             notificationFragment = new NotificationFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,notificationFragment,PEMESASNAN_FRAGMENT_TAG).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,notificationFragment,NOTIFIKASI_FRAGMENT_TAG).commit();
             getSupportFragmentManager().beginTransaction().show(pemesananFragment).commit();
         }
 
@@ -181,17 +193,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(profileFragment).commit();
     }
 
+    /*
+    * METHOD MEMANGGIL FRAGMENT PROFILE
+    * */
     private void Profile(){
-        Log.d("TEST","TEST NOTIFICATION");
 
         if(profileFragment != null){
-            Log.d("TEST","TEST 5");
             getSupportFragmentManager().beginTransaction().show(profileFragment).commit();
         }
         else if(!profileFragment.isVisible()){
-            Log.d("TEST","TEST 6");
             profileFragment = new ProfileFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,profileFragment,PEMESASNAN_FRAGMENT_TAG).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,profileFragment,PROFILE_FRAGMENT_TAG).commit();
             getSupportFragmentManager().beginTransaction().show(pemesananFragment).commit();
         }
 
