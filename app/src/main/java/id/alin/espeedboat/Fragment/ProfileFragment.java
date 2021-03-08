@@ -1,5 +1,6 @@
 package id.alin.espeedboat.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,9 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import id.alin.espeedboat.LoginActivity;
+import id.alin.espeedboat.MainActivity;
+import id.alin.espeedboat.MyProfileActivity;
 import id.alin.espeedboat.R;
 
 import android.view.LayoutInflater;
@@ -54,7 +58,8 @@ public class ProfileFragment extends Fragment {
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Ini Detail Profile", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MyProfileActivity.class);
+                startActivity(intent);
             }
         });
 

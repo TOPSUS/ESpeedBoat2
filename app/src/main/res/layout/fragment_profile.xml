@@ -103,7 +103,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="My Reward"
+                    android:text="Point Saya"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText"/>
             </LinearLayout>
@@ -207,7 +207,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="My Transaction"
+                    android:text="Daftar Transaksi"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText"/>
             </LinearLayout>
@@ -556,7 +556,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Account Setting"
+                    android:text="Pengaturan Akun"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText"/>
             </LinearLayout>
