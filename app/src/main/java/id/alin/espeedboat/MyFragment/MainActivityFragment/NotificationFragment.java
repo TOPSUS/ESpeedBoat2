@@ -1,4 +1,4 @@
-package id.alin.espeedboat.Fragment;
+package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
 import android.os.Bundle;
 
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import id.alin.espeedboat.MyAdapter.NotificationAdapter;

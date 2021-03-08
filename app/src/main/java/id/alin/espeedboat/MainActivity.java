@@ -2,33 +2,20 @@ package id.alin.espeedboat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import id.alin.espeedboat.Fragment.HomeFragment;
-import id.alin.espeedboat.Fragment.NotificationFragment;
-import id.alin.espeedboat.Fragment.PemesananFragment;
-import id.alin.espeedboat.Fragment.ProfileFragment;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.HomeFragment;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananFragment;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
     /*SEARCHVIEW*/
@@ -185,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
     * METHOD MEMANGGIL FRAGMENT NOTIFICATION
     * */
     private void Notification(){
-        
         if(notificationFragment != null){
             Log.d("TEST","TEST 5");
             getSupportFragmentManager().beginTransaction().show(notificationFragment).commit();

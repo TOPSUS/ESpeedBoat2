@@ -99,6 +99,14 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.prepareLoginData();
             }
         });
+
+        /*TEXT VIEW REGISTER ADD EVENT*/
+        this.tvregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
     }
 
     /*METHOD YANG DIMASUKKAN KE DALAM ONCLICK MASUK BUTTON*/

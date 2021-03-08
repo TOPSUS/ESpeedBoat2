@@ -1,7 +1,6 @@
 package id.alin.espeedboat;
 
 import androidx.appcompat.app.AppCompatActivity;
-import id.alin.espeedboat.Fragment.ProfileFragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

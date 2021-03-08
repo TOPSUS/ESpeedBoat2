@@ -1,37 +1,25 @@
-package id.alin.espeedboat.Fragment;
+package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.os.Looper;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-import id.alin.espeedboat.MyAdapter.DaftarPelabuhanAdapter;
 import id.alin.espeedboat.R;
 
 

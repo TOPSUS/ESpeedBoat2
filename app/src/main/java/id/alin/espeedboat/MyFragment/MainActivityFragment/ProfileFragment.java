@@ -1,4 +1,4 @@
-package id.alin.espeedboat.Fragment;
+package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
