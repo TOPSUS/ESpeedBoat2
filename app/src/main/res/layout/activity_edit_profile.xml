@@ -12,8 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#F1F1F1">
+        android:orientation="vertical">
 
         <!--HEADER-->
         <com.google.android.material.appbar.AppBarLayout
@@ -57,7 +56,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Akun Saya"
+                            android:text="Kelola Profile"
                             android:textSize="18dp"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/white"
@@ -73,18 +72,17 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -112,79 +110,47 @@
                                             android:layout_gravity="center_horizontal"
                                             android:orientation="horizontal">
                                             <de.hdodenhof.circleimageview.CircleImageView
-                                                android:layout_width="100dp"
-                                                android:layout_height="100dp"
+                                                android:id="@+id/editPhotoProfile"
+                                                android:layout_width="120dp"
+                                                android:layout_height="120dp"
                                                 android:src="@drawable/ic_abdi" />
                                         </LinearLayout>
                                         <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:paddingTop="20dp"
+                                            android:paddingBottom="15dp"
                                             android:layout_gravity="center_horizontal">
                                             <TextView
+                                                android:id="@+id/addPhoto"
+                                                android:textColor="@color/Blue_primary"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="Abdi Purnawan"
+                                                android:text="Perbaharui Foto Profil"
                                                 android:textStyle="bold"
-                                                android:textSize="20dp"/>
+                                                android:textSize="15dp"/>
                                         </LinearLayout>
-                                        <LinearLayout
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:paddingTop="1dp"
-                                            android:paddingBottom="15dp">
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="abdipurnawan@gmail.com"
-                                                android:textSize="12dp"/>
-                                        </LinearLayout>
+
                                     </LinearLayout>
                                 </androidx.cardview.widget.CardView>
                             </LinearLayout>
+
+
+
                         </LinearLayout>
+
                     </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <include layout="@layout/shadowdown" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="5dp"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="vertical"
-                    >
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Informasi Akun"
-                        android:textStyle="bold"
-                        android:textSize="15dp"
-                        tools:ignore="HardcodedText"/>
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="3dp">
+                        android:layout_height="match_parent">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -203,10 +169,10 @@
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
+                                        android:paddingTop="25dp"
+                                        android:paddingLeft="20dp"
                                         android:paddingRight="4dp"
-                                        android:paddingBottom="10dp">
+                                        android:paddingBottom="20dp">
 
                                         <ImageView
                                             android:layout_width="30dp"
@@ -224,7 +190,7 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
+                                            android:layout_marginStart="12dp"
                                             android:layout_marginEnd="10dp"
                                             android:layout_marginTop="10dp"
                                             android:orientation="vertical">
@@ -246,9 +212,13 @@
                                             android:layout_marginEnd="10dp"
                                             android:orientation="vertical">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                            <EditText
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:maxLines="1"
+                                                android:inputType="text"
+                                                android:textSize="15dp"
+                                                android:backgroundTint="@color/white"
                                                 android:text="Abdi Purnawan" />
 
 
@@ -281,13 +251,13 @@
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
+                                        android:paddingTop="25dp"
+                                        android:paddingLeft="20dp"
                                         android:paddingRight="4dp"
-                                        android:paddingBottom="5dp">
+                                        android:paddingBottom="20dp">
 
                                         <ImageView
-                                            android:layout_width="31dp"
+                                            android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:src="@drawable/ic_email" />
                                     </LinearLayout>
@@ -302,7 +272,7 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
+                                            android:layout_marginStart="12dp"
                                             android:layout_marginEnd="10dp"
                                             android:layout_marginTop="10dp"
                                             android:orientation="vertical">
@@ -324,10 +294,14 @@
                                             android:layout_marginEnd="10dp"
                                             android:orientation="vertical">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                            <EditText
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:text="abdipurnawan@student.unud.ac.id" />
+                                                android:maxLines="1"
+                                                android:inputType="text"
+                                                android:textSize="15dp"
+                                                android:backgroundTint="@color/white"
+                                                android:text="abdipurnawan@gmail.com" />
 
 
                                         </LinearLayout>
@@ -359,10 +333,10 @@
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
+                                        android:paddingTop="25dp"
+                                        android:paddingLeft="20dp"
                                         android:paddingRight="4dp"
-                                        android:paddingBottom="5dp">
+                                        android:paddingBottom="20dp">
 
                                         <ImageView
                                             android:layout_width="30dp"
@@ -380,7 +354,7 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
+                                            android:layout_marginStart="12dp"
                                             android:layout_marginEnd="10dp"
                                             android:layout_marginTop="10dp"
                                             android:orientation="vertical">
@@ -402,9 +376,13 @@
                                             android:layout_marginEnd="10dp"
                                             android:orientation="vertical">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                            <EditText
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:maxLines="1"
+                                                android:inputType="text"
+                                                android:textSize="15dp"
+                                                android:backgroundTint="@color/white"
                                                 android:text="08123456789" />
 
 
@@ -437,10 +415,10 @@
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
+                                        android:paddingTop="25dp"
+                                        android:paddingLeft="20dp"
                                         android:paddingRight="4dp"
-                                        android:paddingBottom="5dp">
+                                        android:paddingBottom="20dp">
 
                                         <ImageView
                                             android:layout_width="30dp"
@@ -458,7 +436,7 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
+                                            android:layout_marginStart="12dp"
                                             android:layout_marginEnd="10dp"
                                             android:layout_marginTop="10dp"
                                             android:orientation="vertical">
@@ -480,9 +458,13 @@
                                             android:layout_marginEnd="10dp"
                                             android:orientation="vertical">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                            <EditText
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:maxLines="1"
+                                                android:inputType="text"
+                                                android:textSize="15dp"
+                                                android:backgroundTint="@color/white"
                                                 android:text="08123456789" />
 
 
@@ -515,10 +497,10 @@
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
+                                        android:paddingTop="25dp"
+                                        android:paddingLeft="20dp"
                                         android:paddingRight="4dp"
-                                        android:paddingBottom="5dp">
+                                        android:paddingBottom="20dp">
 
                                         <ImageView
                                             android:layout_width="30dp"
@@ -558,9 +540,13 @@
                                             android:layout_marginEnd="10dp"
                                             android:orientation="vertical">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                            <EditText
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:maxLines="1"
+                                                android:inputType="text"
+                                                android:textSize="15dp"
+                                                android:backgroundTint="@color/white"
                                                 android:text="Br. Penida Kaja, Tembuku, Bangli" />
 
 
@@ -568,368 +554,54 @@
 
                                     </LinearLayout>
                                 </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_marginRight="15dp">
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1dp"
+                                        android:background="@color/lightgrey"  />
+                                </LinearLayout>
                             </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingTop="25dp">
 
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_weight="1">
+                                    <Button
+                                        android:id="@+id/btnEditProfile"
+                                        android:layout_width="150dp"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/homelayananbutton"
+                                        android:text="Perbaharui"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginEnd="25dp">
+                                    <Button
+                                        android:id="@+id/btnCancelEditProfile"
+                                        android:layout_width="150dp"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/homelayananbutton"
+                                        android:text="Batal"/>
+                                </LinearLayout>
+
+                            </LinearLayout>
                         </LinearLayout>
+
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="5dp"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="vertical"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Pengaturan Akun"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        tools:ignore="HardcodedText"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="3dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingBottom="15dp">
-
-                            //KELOLA AKUN
-                            <LinearLayout
-                                android:id="@+id/kelolaAkun"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
-                                        android:paddingRight="4dp"
-                                        android:paddingBottom="10dp">
-
-                                        <ImageView
-                                            android:layout_width="30dp"
-                                            android:layout_height="30dp"
-                                            android:src="@drawable/ic_settings"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:layout_marginEnd="10dp"
-                                        android:orientation="vertical">
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:layout_marginTop="10dp"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="Kelola Informasi Akun"
-                                                android:textColor="@color/black"
-                                                android:textStyle="bold"/>
-
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_marginRight="15dp">
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="1dp"
-                                        android:background="@color/lightgrey" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            //KELOLA PASSWORD
-                            <LinearLayout
-                                android:id="@+id/kelolaPassword"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
-                                        android:paddingRight="4dp"
-                                        android:paddingBottom="5dp">
-
-                                        <ImageView
-                                            android:layout_width="31dp"
-                                            android:layout_height="30dp"
-                                            android:src="@drawable/ic_password" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:layout_marginEnd="10dp"
-                                        android:orientation="vertical">
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:layout_marginTop="10dp"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="Kelola Password"
-                                                android:textColor="@color/black"
-                                                android:textStyle="bold"/>
-
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_marginRight="15dp">
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="1dp"
-                                        android:background="@color/lightgrey"  />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            //KELOLA PIN
-                            <LinearLayout
-                                android:id="@+id/kelolaPin"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
-                                        android:paddingRight="4dp"
-                                        android:paddingBottom="5dp">
-
-                                        <ImageView
-                                            android:layout_width="30dp"
-                                            android:layout_height="30dp"
-                                            android:src="@drawable/ic_pin"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:layout_marginEnd="10dp"
-                                        android:orientation="vertical">
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:layout_marginTop="10dp"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="Kelola PIN"
-                                                android:textColor="@color/black"
-                                                android:textStyle="bold"/>
-
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_marginRight="15dp">
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="1dp"
-                                        android:background="@color/lightgrey"  />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            //TELEGRAM
-                            <LinearLayout
-                                android:id="@+id/kelolaTelegram"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
-                                        android:paddingRight="4dp"
-                                        android:paddingBottom="5dp">
-
-                                        <ImageView
-                                            android:layout_width="30dp"
-                                            android:layout_height="30dp"
-                                            android:src="@drawable/ic_telegram"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:layout_marginEnd="10dp"
-                                        android:orientation="vertical">
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:layout_marginTop="10dp"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="Sambungkan dengan Bot Telegram"
-                                                android:textColor="@color/black"
-                                                android:textStyle="bold"/>
-
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_marginRight="15dp">
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="1dp"
-                                        android:background="@color/lightgrey"  />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            //LOGOUT
-                            <LinearLayout
-                                android:id="@+id/logoutt"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="20dp"
-                                        android:paddingLeft="15dp"
-                                        android:paddingRight="4dp"
-                                        android:paddingBottom="5dp">
-
-                                        <ImageView
-                                            android:layout_width="30dp"
-                                            android:layout_height="30dp"
-                                            android:src="@drawable/ic_logout"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:layout_marginEnd="10dp"
-                                        android:orientation="vertical">
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:layout_marginTop="10dp"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="Logout"
-                                                android:textColor="@color/black"
-                                                android:textStyle="bold"/>
-
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-                                </LinearLayout>
-                            </LinearLayout>
-
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-
-
 
 
 

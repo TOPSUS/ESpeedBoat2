@@ -74,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="VIEW MY ACCOUNT"
+                            android:text="LIHAT PROFILE SAYA"
                             android:textColor="#2B9FDC"
                             android:textStyle="bold"
                             android:textSize="12sp"

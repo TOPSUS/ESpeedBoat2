@@ -1,5 +1,7 @@
 package id.alin.espeedboat.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -101,14 +103,33 @@ public class ProfileFragment extends Fragment {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Ini Pengaturan Akun User", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MyProfileActivity.class);
+                startActivity(intent);
             }
         });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Ini Tombol Logout", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Konfirmasi");
+                    builder.setMessage("Apakah Anda Yakin akan Logout?");
+                    builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getActivity(), "Logout Berhasil", Toast.LENGTH_SHORT).show();
+                            Intent intent1 = new Intent(getActivity(), LoginActivity.class);
+                            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent1);
+                        }
+                    });
+                    builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.show();
             }
         });
     }
