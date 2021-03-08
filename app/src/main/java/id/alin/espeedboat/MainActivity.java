@@ -7,9 +7,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import id.alin.espeedboat.Fragment.HomeFragment;
 import id.alin.espeedboat.Fragment.NotificationFragment;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String NOTIFIKASI_FRAGMENT_TAG = "NOTIFIKASI_FRAGMENT_TAG";
     private static final String PROFILE_FRAGMENT_TAG = "PROFILE_FRAGMENT_TAG";
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
 
         initWidget();
         Home();
+
+        Snackbar.make(findViewById(R.id.parentlayoutMainActivity), "Contoh sebuah Snackbar", Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.botnavbarMainActivity)
+                .setBackgroundTint(R.color.Blue_primary)
+                .show();
     }
 
     private void initWidget(){
@@ -176,7 +185,10 @@ public class MainActivity extends AppCompatActivity {
     * METHOD MEMANGGIL FRAGMENT NOTIFICATION
     * */
     private void Notification(){
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         if(notificationFragment != null){
             Log.d("TEST","TEST 5");
             getSupportFragmentManager().beginTransaction().show(notificationFragment).commit();

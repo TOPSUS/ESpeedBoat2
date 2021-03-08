@@ -1,14 +1,13 @@
-package id.alin.espeedboat.MyRetrofit.ServiceResponseModels;
+package id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import java.util.List;
 
 public class ProfileData implements Parcelable {
     private String response_code;
     private String status;
     private String message;
-    private Object error;
+    private ErrorProfileData error;
     private String token;
     private String user_id;
     private String name;
@@ -91,11 +90,11 @@ public class ProfileData implements Parcelable {
         this.message = message;
     }
 
-    public Object getError() {
+    public ErrorProfileData getError() {
         return error;
     }
 
-    public void setError(Object error) {
+    public void setError(ErrorProfileData error) {
         this.error = error;
     }
 

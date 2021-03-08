@@ -1,6 +1,6 @@
 package id.alin.espeedboat.MyRetrofit.Services;
 
-import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ProfileData;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
