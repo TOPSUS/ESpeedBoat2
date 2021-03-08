@@ -49,6 +49,9 @@ dependencies {
     /*MATERIAL FILE PICKER*/
     implementation 'com.nbsp:materialfilepicker:1.9.1'
 
+    /*HTTP LOGGING*/
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+
     /*RETROFIT*/
     implementation "com.squareup.retrofit2:retrofit:2.4.0"
     implementation "com.squareup.retrofit2:converter-gson:2.4.0"

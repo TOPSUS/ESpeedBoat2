@@ -92,6 +92,17 @@ public class LoginActivity extends AppCompatActivity {
             this.tvregister = findViewById(R.id.tvLoginActivityRegister);
         }
 
+        /*TEXT VIEW REGISTER ADD EVENT*/
+        this.tvregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "TEST", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         /*BUTTON METHOD UNTUK MASUK KE DALAM APLIKASI*/
         this.btnmasuk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,13 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /*TEXT VIEW REGISTER ADD EVENT*/
-        this.tvregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-            }
-        });
+
     }
 
     /*METHOD YANG DIMASUKKAN KE DALAM ONCLICK MASUK BUTTON*/

@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
         });
 
         /*INIT HALAMAN*/
-        initViewProfile("I Putu Alin Winata Gotama","alingotama14@gmail.com");
+        initViewProfile("I Putu User","user@gmail.com");
         initBeritaPelabuhan();
         initEspeedNews();
     }
@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                initViewProfile("Hacker Sejati ni bos maju sini","hacker@gmail.com");
+                initViewProfile("I Putu User","user@gmail.com");
             }
         },3000);
     }
