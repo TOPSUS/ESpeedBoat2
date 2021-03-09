@@ -113,7 +113,7 @@
                                                 android:id="@+id/editPhotoProfile"
                                                 android:layout_width="120dp"
                                                 android:layout_height="120dp"
-                                                android:src="@drawable/ic_abdi" />
+                                                android:src="@drawable/profile_scoobydo" />
                                         </LinearLayout>
                                         <LinearLayout
                                             android:layout_width="wrap_content"
@@ -219,7 +219,7 @@
                                                 android:inputType="text"
                                                 android:textSize="15dp"
                                                 android:backgroundTint="@color/white"
-                                                android:text="Abdi Purnawan" />
+                                                android:text="I Putu User" />
 
 
                                         </LinearLayout>
@@ -301,7 +301,7 @@
                                                 android:inputType="text"
                                                 android:textSize="15dp"
                                                 android:backgroundTint="@color/white"
-                                                android:text="abdipurnawan@gmail.com" />
+                                                android:text="user@gmail.com" />
 
 
                                         </LinearLayout>
@@ -465,7 +465,7 @@
                                                 android:inputType="text"
                                                 android:textSize="15dp"
                                                 android:backgroundTint="@color/white"
-                                                android:text="08123456789" />
+                                                android:text="Laki-laki" />
 
 
                                         </LinearLayout>

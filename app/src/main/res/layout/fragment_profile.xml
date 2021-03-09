@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+<LinearLayout
     android:id="@+id/srFragmentHome"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -39,7 +39,7 @@
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:src="@drawable/ic_abdi"
+                            android:src="@drawable/profile_scoobydo"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginTop="16dp"
@@ -53,7 +53,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
-                            android:text="Abdi Purnawan"
+                            android:text="I Putu User"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -65,7 +65,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="abdipurnawan@gmail.com"
+                            android:text="user@gmail.com"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="@+id/namaAccount"
                             app:layout_constraintTop_toBottomOf="@+id/namaAccount" />
@@ -724,4 +724,4 @@
 
         </LinearLayout>
     </ScrollView>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

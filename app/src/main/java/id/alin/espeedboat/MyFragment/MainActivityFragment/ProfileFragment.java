@@ -27,7 +27,6 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
-    private SwipeRefreshLayout refreshLayout;
     CardView point, riwayat, active_trans, unpaid_trans, review, setting, logout;
     TextView viewUser;
 
@@ -145,14 +144,5 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         init(view);
         eventListener();
-        refreshLayout = view.findViewById(R.id.srFragmentHome);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                init(view);
-                eventListener();
-                Toast.makeText(getContext(), "Refresh", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

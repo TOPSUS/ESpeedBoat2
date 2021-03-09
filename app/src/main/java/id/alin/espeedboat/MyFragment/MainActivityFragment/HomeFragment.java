@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.alin.espeedboat.R;
 
@@ -40,6 +43,9 @@ public class HomeFragment extends Fragment {
     private ShimmerFrameLayout shimmerberitapelabuhan;
     private TextView tvberitapelabuhantitla,tvberitapelabuhandetail;
     private RecyclerView rvberitapelabuhan;
+
+    /*BERITA PELABUHAN*/
+    List<String> beritaPelabuhan;
 
     /*BGAIAN ESPEED NEWS*/
     private ShimmerFrameLayout shimmerespeednews;
@@ -280,4 +286,5 @@ public class HomeFragment extends Fragment {
             shimmerespeednews.hideShimmer();
         }
     }
+
 }

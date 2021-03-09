@@ -114,7 +114,7 @@
                                             <de.hdodenhof.circleimageview.CircleImageView
                                                 android:layout_width="100dp"
                                                 android:layout_height="100dp"
-                                                android:src="@drawable/ic_abdi" />
+                                                android:src="@drawable/profile_scoobydo" />
                                         </LinearLayout>
                                         <LinearLayout
                                             android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="Abdi Purnawan"
+                                                android:text="I Putu User"
                                                 android:textStyle="bold"
                                                 android:textSize="20dp"/>
                                         </LinearLayout>
@@ -136,7 +136,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="abdipurnawan@gmail.com"
+                                                android:text="user@gmail.com"
                                                 android:textSize="12dp"/>
                                         </LinearLayout>
                                     </LinearLayout>
@@ -249,7 +249,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="Abdi Purnawan" />
+                                                android:text="I Putu User" />
 
 
                                         </LinearLayout>
@@ -327,7 +327,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="abdipurnawan@student.unud.ac.id" />
+                                                android:text="user@gmail.com" />
 
 
                                         </LinearLayout>
@@ -483,7 +483,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="08123456789" />
+                                                android:text="Laki-laki" />
 
 
                                         </LinearLayout>
