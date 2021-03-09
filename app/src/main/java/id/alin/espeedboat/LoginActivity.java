@@ -1,6 +1,7 @@
 package id.alin.espeedboat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         /*INIT WIDGET HALAMAN LOGIN*/
         initWidget();
@@ -163,6 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.btnmasuk.revertAnimation();
                 if (response.body().getResponse_code().matches("200")){
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    setSharedPreferenceData(response.body());
                     startActivity(intent);
                 }
                 else if(response.body().getResponse_code().matches("401") && response.body().getStatus().matches("error_input")){
@@ -191,6 +194,7 @@ public class LoginActivity extends AppCompatActivity {
                 .setTitle("ERROR")
                 .setMessage(error)
                 .setCancelable(true)
+                .setAnimation(R.raw.animation_boat_2)
                 .setPositiveButton("OKE", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
@@ -209,5 +213,19 @@ public class LoginActivity extends AppCompatActivity {
 
         // Show Dialog
         mDialog.show();
+    }
+
+    /*MENYIMPAN KE DALAM SHARED PREFERENCES*/
+    private void setSharedPreferenceData(ProfileData data){
+        editor = sharedPreferences.edit();
+        editor.putString(Config.USER_ID,data.getUser_id());
+        editor.putString(Config.USER_NAMA,data.getName());
+        editor.putString(Config.USER_ALAMAT,data.getAlamat());
+        editor.putString(Config.USER_CHAT_ID,data.getChat_id());
+        editor.putString(Config.USER_PIN,data.getPin());
+        editor.putString(Config.USER_EMAIL,data.getEmail());
+        editor.putString(Config.USER_NOHP,data.getNohp());
+        editor.putString(Config.USER_JENIS_KELAMIN,data.getJeniskelamin());
+        editor.apply();
     }
 }

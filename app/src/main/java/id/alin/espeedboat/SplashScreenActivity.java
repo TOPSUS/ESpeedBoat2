@@ -1,12 +1,14 @@
 package id.alin.espeedboat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
@@ -21,6 +23,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        /*DISABLE DARK MODE*/
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         /*INIT SHARED PREFERENCES*/
         sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
 
@@ -33,7 +38,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void checkAuth(String status){
         if(status == ""){
-            new Handler().postDelayed(new Runnable() {
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
@@ -43,7 +48,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             },1000);
         }
         else{
-            new Handler().postDelayed(new Runnable() {
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);

@@ -2,6 +2,7 @@ package id.alin.espeedboat;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
@@ -12,6 +13,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import de.hdodenhof.circleimageview.CircleImageView;
+import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
@@ -43,12 +46,11 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Part;
-
-import com.nbsp.materialfilepicker.MaterialFilePicker;
 
 import java.io.File;
-import java.util.regex.Pattern;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -73,7 +75,6 @@ public class RegisterActivity extends AppCompatActivity {
      * BOTTOM SHEET FRAGMENT KAN PUNYA WIDGET JUGA NAH ITU
      * DISINI DIA PROPERTIES NYA
      * */
-
     /*BOTTOM SHEET GAMBAR*/
     private CircleImageView bottomsheetcircleimage;
 
@@ -84,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
     private CircularProgressButton bottomsheetkirim;
 
     /*OBJECT IMAGE*/
-    private File imageFile;
+    private Bitmap bitmap;
 
     /*PRIVATE STATIC FIELD*/
     private static final int MIN_INPUT_GENERAL = 4;
@@ -93,12 +94,15 @@ public class RegisterActivity extends AppCompatActivity {
     private static final int MAX_INPUT_NOHP = 20;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private static final int MY_IMAGE_REQUEST = 1;
-
+    private static final int GALLERY_ADD_PROFILE = 1;
+    private static final String USER_IMAGE = "user_image";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         /*
          * INIT SEMUA WIDGET DI LAMAN REGISTER
@@ -226,7 +230,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 /*CHECK DULU YAKAN APAKAH DATANYA SUDAH VALIDA ATAU BELUM*/
                 if(RegisterActivity.this.prepareData()){
-                    Toast.makeText(RegisterActivity.this, "HAI", Toast.LENGTH_SHORT).show();
                     bottomsheetkirim.startAnimation();
                     circularProgressButton.startAnimation();
                     postRegisterAPI();
@@ -253,10 +256,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     /*METHOD INI DIGUNAKAN UNTUK MEMANGGIL INTENT GALLERY / PENYIMPANAN*/
     private void pickFile() {
-        Intent fileintent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent fileintent = new Intent(Intent.ACTION_PICK);
         fileintent.setType("image/*");
         try {
-            startActivityForResult(fileintent, 1);
+            startActivityForResult(fileintent,GALLERY_ADD_PROFILE);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "NO STORAGE DETECTED", Toast.LENGTH_SHORT).show();
         }
@@ -272,80 +275,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (requestCode == MY_IMAGE_REQUEST && resultCode == -1) {
 
-            Log.d("result", String.valueOf(resultCode));
-            Uri selectedImage = data.getData();
+            Uri imgUri = data.getData();
+            bottomsheetcircleimage.setImageURI(imgUri);
 
-            String result = getPathFromURI(selectedImage);
-            imageFile = new File(result);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            if (imageFile.exists()) {
-                this.bottomsheetcircleimage.setImageURI(selectedImage);
-                bottomsheetkirim.setText("KIRIM");
-            }
-            else {
-                result = selectedImage.getPath();
-                imageFile = new File(result);
-                if(imageFile.exists()){
-                    this.bottomsheetcircleimage.setImageURI(selectedImage);
-                    bottomsheetkirim.setText("KIRIM");
-                }else{
-                    Toast.makeText(this, "TIDAK DAPAT MENGGUNAKAN GAMBAR TERSEBUT !", Toast.LENGTH_LONG).show();
-                }
-            }
         }
-    }
-
-    /*
-     * INI UNTUK MENDAPATKAN PATH ASLI DARI URI YANG DIBERIKAN OLEH INTENT DATA
-     * */
-    @SuppressLint("ObsoleteSdkInt")
-    private String getPathFromURI(Uri uri) {
-        String realPath = "";
-        // SDK < API11
-        if (Build.VERSION.SDK_INT < 11) {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            @SuppressLint("Recycle") Cursor cursor = this.getContentResolver().query(uri, proj, null, null, null);
-            int column_index = 0;
-            String result = "";
-            if (cursor != null) {
-                column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                realPath = cursor.getString(column_index);
-            }
-        }
-        // SDK >= 11 && SDK < 19
-        else if (Build.VERSION.SDK_INT < 19) {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            CursorLoader cursorLoader = new CursorLoader(this.getApplicationContext(), uri, proj, null, null, null);
-            Cursor cursor = cursorLoader.loadInBackground();
-            if (cursor != null) {
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                realPath = cursor.getString(column_index);
-            }
-        }
-        // SDK > 19 (Android 4.4)
-        else {
-            String wholeID = DocumentsContract.getDocumentId(uri);
-            // Split at colon, use second item in the array
-            Log.d("colon", wholeID);
-            String id = wholeID;
-            if (wholeID.contains(":")) {
-                id = wholeID.split(":")[1];
-            }
-            String[] column = {MediaStore.Images.Media.DATA};
-            // where id is equal to
-            String sel = MediaStore.Images.Media._ID + "=?";
-            Cursor cursor = this.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, sel, new String[]{id}, null);
-            int columnIndex = 0;
-            if (cursor != null) {
-                columnIndex = cursor.getColumnIndex(column[0]);
-                if (cursor.moveToFirst()) {
-                    realPath = cursor.getString(columnIndex);
-                }
-                cursor.close();
-            }
-        }
-        return realPath;
     }
 
     /*
@@ -401,60 +340,94 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
-
-
+    /*
+    * METHOD YANG DIGUNAKAN UNTUK MELAKUKAN REGISTER
+    * */
     private void postRegisterAPI(){
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
 
-        MultipartBody.Part body = MultipartBody.Part.createFormData("imageprofile", imageFile.getName(), requestFile);
+        /*MENGIRIM DENGAN GAMBAR*/
+        if(this.bitmap != null){
+            /*MENGUBAH IMAGE BITMAP KE BENTUK FILE*/
+            File imagefile =  persistImage(this.bitmap,USER_IMAGE);
 
-        RequestBody nama = RequestBody.create(MediaType.parse("multipart/form-data"), this.metnama.getText().toString().trim());
+            /*MEMBUAT REQUEST UNTUK MULTIPART FORM DATA*/
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imagefile);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("imageprofile", USER_IMAGE, requestFile);
+            RequestBody nama = RequestBody.create(MediaType.parse("multipart/form-data"), this.metnama.getText().toString().trim());
+            RequestBody alamat = RequestBody.create(MediaType.parse("multipart/form-data"), this.metalamat.getText().toString().trim());
+            RequestBody jeniskelamin = RequestBody.create(MediaType.parse("multipart/form-data"), this.jenis_kelamin.trim());
+            RequestBody nohp = RequestBody.create(MediaType.parse("multipart/form-data"), this.metnohp.getText().toString().trim());
+            RequestBody email = RequestBody.create(MediaType.parse("multipart/form-data"), this.metemail.getText().toString().trim());
+            RequestBody password = RequestBody.create(MediaType.parse("multipart/form-data"), this.metpassowrd.getText().toString().trim());
+            RequestBody c_password = RequestBody.create(MediaType.parse("multipart/form-data"), this.metconfirmpassord.getText().toString().trim());
 
-        RequestBody alamat = RequestBody.create(MediaType.parse("multipart/form-data"), this.metalamat.getText().toString().trim());
+            AuthServices services = ApiClient.getRetrofit().create(AuthServices.class);
+            Call<ProfileData> call = services.registerImage(
+                    nama,
+                    alamat,
+                    jeniskelamin,
+                    nohp,
+                    email,
+                    password,
+                    c_password,
+                    body
+            );
 
-        RequestBody jeniskelamin = RequestBody.create(MediaType.parse("multipart/form-data"), this.jenis_kelamin.trim());
+            call.enqueue(new Callback<ProfileData>() {
+                @Override
+                public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+                    bottomsheetkirim.revertAnimation();
+                    circularProgressButton.revertAnimation();
 
-        RequestBody nohp = RequestBody.create(MediaType.parse("multipart/form-data"), this.metnohp.getText().toString().trim());
-
-        RequestBody email = RequestBody.create(MediaType.parse("multipart/form-data"), this.metemail.getText().toString().trim());
-
-        RequestBody password = RequestBody.create(MediaType.parse("multipart/form-data"), this.metpassowrd.getText().toString().trim());
-
-        RequestBody c_password = RequestBody.create(MediaType.parse("multipart/form-data"), this.metconfirmpassord.getText().toString().trim());
-
-        AuthServices services = ApiClient.getRetrofit().create(AuthServices.class);
-
-        Call<ProfileData> call = services.register(
-                nama,
-                alamat,
-                jeniskelamin,
-                nohp,
-                email,
-                password,
-                c_password,
-                body
-        );
-
-        call.enqueue(new Callback<ProfileData>() {
-            @Override
-            public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
-                bottomsheetkirim.revertAnimation();
-                circularProgressButton.revertAnimation();
-
-                if(response.body().getStatus().matches("success")){
-                    modalShowRegistrasiBerhasil();
-                }else{
-                    modalShowError(response.body().getError().parseErrorAll());
+                    if(response.body().getStatus().matches("success")){
+                        modalShowRegistrasiBerhasil();
+                    }else{
+                        modalShowError(response.body().getError().parseErrorAll());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ProfileData> call, Throwable t) {
-                bottomsheetkirim.revertAnimation();
-                circularProgressButton.revertAnimation();
-                modalShowError(t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<ProfileData> call, Throwable t) {
+                    bottomsheetkirim.revertAnimation();
+                    circularProgressButton.revertAnimation();
+                    modalShowError(t.getMessage());
+                }
+            });
+
+            /*TANPA GAMBAR*/
+        }else{
+            AuthServices services = ApiClient.getRetrofit().create(AuthServices.class);
+            Call<ProfileData> call = services.registerNoImage(
+                    this.metnama.getText().toString().trim(),
+                    this.metalamat.getText().toString().trim(),
+                    this.jenis_kelamin.trim(),
+                    this.metnohp.getText().toString().trim(),
+                    this.metemail.getText().toString().trim(),
+                    this.metpassowrd.getText().toString().trim(),
+                    this.metconfirmpassord.getText().toString().trim()
+            );
+
+            call.enqueue(new Callback<ProfileData>() {
+                @Override
+                public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+                    bottomsheetkirim.revertAnimation();
+                    circularProgressButton.revertAnimation();
+
+                    if(response.body().getStatus().matches("success")){
+                        modalShowRegistrasiBerhasil();
+                    }else{
+                        modalShowError(response.body().getError().parseErrorAll());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProfileData> call, Throwable t) {
+                    bottomsheetkirim.revertAnimation();
+                    circularProgressButton.revertAnimation();
+                    modalShowError(t.getMessage());
+                }
+            });
+        }
 
     }
 
@@ -467,13 +440,18 @@ public class RegisterActivity extends AppCompatActivity {
                 .setTitle("REGISTRASI BERHASIL")
                 .setMessage("Silahkan melakukan verifikasi email, dan login kembali")
                 .setCancelable(false)
+                .setAnimation(R.raw.animation_boat_2)
                 .setPositiveButton("OKE", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         dialogInterface.dismiss();
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        RegisterActivity.this.startActivity(intent);
                         RegisterActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("BACK", new AbstractDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
                     }
                 })
                 .build();
@@ -501,5 +479,23 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Show Dialog
         mDialog.show();
+    }
+
+    /*BITMAP TO FILE*/
+    private File persistImage(Bitmap bitmap, String name) {
+        File filesDir = this.getFilesDir();
+        File imageFile = new File(filesDir, name + ".jpg");
+
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            Log.e(this.getClass().getSimpleName(), "Error writing bitmap", e);
+        }
+
+        return imageFile;
     }
 }

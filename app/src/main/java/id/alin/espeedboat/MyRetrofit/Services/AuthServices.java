@@ -21,7 +21,7 @@ public interface AuthServices {
 
     @Multipart
     @POST("/api/register")
-    Call<ProfileData> register(
+    Call<ProfileData> registerImage(
             @Part("nama") RequestBody nama,
             @Part("alamat") RequestBody alamat,
             @Part("jeniskelamin") RequestBody jeniskelamin,
@@ -30,5 +30,17 @@ public interface AuthServices {
             @Part("password") RequestBody password,
             @Part("c_password") RequestBody c_password,
             @Part MultipartBody.Part profileimage
+    );
+
+    @FormUrlEncoded
+    @POST("/api/register")
+    Call<ProfileData> registerNoImage(
+            @Field("nama") String nama,
+            @Field("alamat") String alamat,
+            @Field("jeniskelamin") String jeniskelamin,
+            @Field("nohp") String nohp,
+            @Field("email") String email,
+            @Field("password") String password,
+            @Field("c_password") String c_password
     );
 }
