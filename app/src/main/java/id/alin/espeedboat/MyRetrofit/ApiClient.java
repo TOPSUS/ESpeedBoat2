@@ -14,6 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     private static Retrofit retrofit = null;
     public static String BASE_URL = "https://www.espeedboat.xyz/";
+    public static String BASE_IMAGE_USER = "https://www.espeedboat.xyz/storage/image_users/";
+    public static String BASE_IMAGE_BERITA_PELABUHAN = "https://www.espeedboat.xyz/storage/image_berita_pelabuhan/";
 
     public static Retrofit getRetrofit(){
 

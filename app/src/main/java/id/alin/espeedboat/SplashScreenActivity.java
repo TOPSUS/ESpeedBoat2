@@ -37,7 +37,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void checkAuth(String status){
-        if(status == ""){
+        if(status.equals("")){
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {

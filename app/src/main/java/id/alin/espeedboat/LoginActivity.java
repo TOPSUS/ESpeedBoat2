@@ -2,19 +2,19 @@ package id.alin.espeedboat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.service.dreams.DreamService;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Objects;
@@ -23,15 +23,16 @@ import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
-import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ErrorProfileData;
-import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ProfileData;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
 import id.alin.espeedboat.MyRetrofit.Services.AuthServices;
 import id.alin.espeedboat.MySharedPref.Config;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityViewModel;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
     /*SHARED PREFERENCE APLIKASI*/
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -41,11 +42,17 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvlupapassword, tvregister;
     private CircularProgressButton btnmasuk;
 
+    /*VIEW MODEL MAIN ACTIVITY*/
+    private MainActivityViewModel mainActivityViewModel;
+
     /*PRIVATE VARIABEL*/
     private static final int MIN_EDIT_EMAIL = 3;
     private static final int MAX_EDIT_EMAIL = 50;
     private static final int MIN_EDIT_PASSWORD = 3;
     private static final int MAX_EDIT_PASSWORD = 50;
+
+    /*PUBLIC STATIC VARIABLE*/
+    public static final String PROFILE_DATA_PARCELABE = "PROFILE_DATA_PARCELABE";
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -150,41 +157,51 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /*POST API LOGIN KE SERVER*/
-    private void postLoginAPI(String email, String password){
+    private void postLoginAPI(String email, String password) {
 
         /*RETROFIT INIIIATION*/
         AuthServices services = ApiClient.getRetrofit().create(AuthServices.class);
-        Call<ProfileData> call = services.login(
-            email,
-            password
+        Call<ServerResponseProfileData> call = services.login(
+                email,
+                password
         );
 
-        call.enqueue(new Callback<ProfileData>() {
+        call.enqueue(new Callback<ServerResponseProfileData>() {
             @Override
-            public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+            public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
                 LoginActivity.this.btnmasuk.revertAnimation();
-                if (response.body().getResponse_code().matches("200")){
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+
+                /*APABILA SUKSES*/
+                if (response.body().getResponse_code().matches("200")) {
+
+                    /*MEMBERIKAN DATA KE DALAM SHARED PREF*/
                     setSharedPreferenceData(response.body());
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
                     startActivity(intent);
+                    finish();
                 }
-                else if(response.body().getResponse_code().matches("401") && response.body().getStatus().matches("error_input")){
+
+                /*APABILA GAGAL*/
+                else if (response.body().getResponse_code().matches("401") && response.body().getStatus().matches("error_input")) {
                     modalShowError(response.body().getError().parseErrorAll());
                 }
-                else{
+
+                /*ELSE*/
+                else {
                     modalShowError(response.body().getMessage());
                 }
             }
 
             @Override
-            public void onFailure(Call<ProfileData> call, Throwable t) {
+            public void onFailure(Call<ServerResponseProfileData> call, Throwable t) {
                 LoginActivity.this.btnmasuk.revertAnimation();
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d("TEST",t.getMessage());
+                Log.d("TEST", t.getMessage());
             }
         });
     }
-
     /*METHOD UNTUK MODAL*/
     private void modalShowError(String error){
         /*PEMBUATAN KALIMAT SAMBUTAN*/
@@ -216,16 +233,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /*MENYIMPAN KE DALAM SHARED PREFERENCES*/
-    private void setSharedPreferenceData(ProfileData data){
+    private void setSharedPreferenceData(ServerResponseProfileData data){
         editor = sharedPreferences.edit();
         editor.putString(Config.USER_ID,data.getUser_id());
+
+        /*
+        * MEMBERIKAN PREFIX HEADER KEPADA TOKEN
+        * */
+        StringBuilder token = new StringBuilder();
+        token.append("Bearer ");
+        token.append(data.getToken());
+
+        editor.putString(Config.USER_TOKEN,token.toString());
         editor.putString(Config.USER_NAMA,data.getName());
         editor.putString(Config.USER_ALAMAT,data.getAlamat());
         editor.putString(Config.USER_CHAT_ID,data.getChat_id());
         editor.putString(Config.USER_PIN,data.getPin());
         editor.putString(Config.USER_EMAIL,data.getEmail());
+        editor.putString(Config.USER_FOTO,data.getFoto());
         editor.putString(Config.USER_NOHP,data.getNohp());
         editor.putString(Config.USER_JENIS_KELAMIN,data.getJeniskelamin());
+
         editor.apply();
     }
 }

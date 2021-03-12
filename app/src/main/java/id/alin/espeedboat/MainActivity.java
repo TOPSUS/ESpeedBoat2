@@ -3,8 +3,12 @@ package id.alin.espeedboat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,6 +21,10 @@ import id.alin.espeedboat.MyFragment.MainActivityFragment.HomeFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
+import id.alin.espeedboat.MySharedPref.Config;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityInstanceFactory;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityViewModel;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
 
 public class MainActivity extends AppCompatActivity {
     /*SEARCHVIEW*/
@@ -31,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
     private NotificationFragment notificationFragment;
     private ProfileFragment profileFragment;
 
+    /*SHARED PREF*/
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    /*VIEW MODEL VARIABLE*/
+    public static  MainActivityViewModel mainActivityViewModel;
+
+    /*STATIC VARIABLE*/
     private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
     private static final String PEMESASNAN_FRAGMENT_TAG = "PEMESASNAN_FRAGMENT_TAG";
     private static final String NOTIFIKASI_FRAGMENT_TAG = "NOTIFIKASI_FRAGMENT_TAG";
@@ -45,15 +61,36 @@ public class MainActivity extends AppCompatActivity {
         /*NON AKTIFKAN MODE MALAM*/
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+        /*INIT VIEW MODEL MAIN ACTIVITY*/
+        sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
+
+        initViewModel();
         initWidget();
         Home();
-
-        Snackbar.make(findViewById(R.id.parentlayoutMainActivity), "Contoh sebuah Snackbar", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.botnavbarMainActivity)
-                .setBackgroundTint(R.color.Blue_primary)
-                .show();
     }
 
+    /*INIT VIEW MODEL YANG AKAN DIGUNAKAN OLEH KE-4 FRAGMENT*/
+    private void initViewModel() {
+        mainActivityViewModel = new ViewModelProvider(this,new MainActivityInstanceFactory())
+                .get(MainActivityViewModel.class);
+
+        ProfileData profileData = new ProfileData(
+                sharedPreferences.getString(Config.USER_ID,""),
+                sharedPreferences.getString(Config.USER_TOKEN,""),
+                sharedPreferences.getString(Config.USER_NAMA,""),
+                sharedPreferences.getString(Config.USER_ALAMAT,""),
+                sharedPreferences.getString(Config.USER_CHAT_ID,""),
+                sharedPreferences.getString(Config.USER_PIN,""),
+                sharedPreferences.getString(Config.USER_EMAIL,""),
+                sharedPreferences.getString(Config.USER_FOTO,""),
+                sharedPreferences.getString(Config.USER_NOHP,""),
+                sharedPreferences.getString(Config.USER_JENIS_KELAMIN,"")
+        );
+
+        mainActivityViewModel.setProfileData(profileData);
+    }
+
+    /*INIT WIDGET HALAMAN MAIN ACTIVITY (SEARCH VIEW DAN BOTNAV)*/
     private void initWidget(){
 
         /*SEARCH VIEW*/
@@ -75,10 +112,6 @@ public class MainActivity extends AppCompatActivity {
         /*FRAGMENT FILLER KE FRAMELAYOUT*/
         fragmentFiller();
 
-        /*
-        * FRAGMENT HOME MERUPAKAN FRAGMENT YANG PERTAMA KALI DIPANGGIL
-        * */
-        Home();
 
         /*INIT BOTTOM NAV*/
         bottomNavigationView = findViewById(R.id.botnavbarMainActivity);

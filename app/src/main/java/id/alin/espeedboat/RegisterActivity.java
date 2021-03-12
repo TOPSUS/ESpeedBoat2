@@ -5,19 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.loader.content.CursorLoader;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +24,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.snackbar.Snackbar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
@@ -38,7 +32,7 @@ import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
-import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ProfileData;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
 import id.alin.espeedboat.MyRetrofit.Services.AuthServices;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -362,7 +356,7 @@ public class RegisterActivity extends AppCompatActivity {
             RequestBody c_password = RequestBody.create(MediaType.parse("multipart/form-data"), this.metconfirmpassord.getText().toString().trim());
 
             AuthServices services = ApiClient.getRetrofit().create(AuthServices.class);
-            Call<ProfileData> call = services.registerImage(
+            Call<ServerResponseProfileData> call = services.registerImage(
                     nama,
                     alamat,
                     jeniskelamin,
@@ -373,9 +367,9 @@ public class RegisterActivity extends AppCompatActivity {
                     body
             );
 
-            call.enqueue(new Callback<ProfileData>() {
+            call.enqueue(new Callback<ServerResponseProfileData>() {
                 @Override
-                public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+                public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
                     bottomsheetkirim.revertAnimation();
                     circularProgressButton.revertAnimation();
 
@@ -387,7 +381,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ProfileData> call, Throwable t) {
+                public void onFailure(Call<ServerResponseProfileData> call, Throwable t) {
                     bottomsheetkirim.revertAnimation();
                     circularProgressButton.revertAnimation();
                     modalShowError(t.getMessage());
@@ -397,7 +391,7 @@ public class RegisterActivity extends AppCompatActivity {
             /*TANPA GAMBAR*/
         }else{
             AuthServices services = ApiClient.getRetrofit().create(AuthServices.class);
-            Call<ProfileData> call = services.registerNoImage(
+            Call<ServerResponseProfileData> call = services.registerNoImage(
                     this.metnama.getText().toString().trim(),
                     this.metalamat.getText().toString().trim(),
                     this.jenis_kelamin.trim(),
@@ -407,9 +401,9 @@ public class RegisterActivity extends AppCompatActivity {
                     this.metconfirmpassord.getText().toString().trim()
             );
 
-            call.enqueue(new Callback<ProfileData>() {
+            call.enqueue(new Callback<ServerResponseProfileData>() {
                 @Override
-                public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+                public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
                     bottomsheetkirim.revertAnimation();
                     circularProgressButton.revertAnimation();
 
@@ -421,7 +415,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ProfileData> call, Throwable t) {
+                public void onFailure(Call<ServerResponseProfileData> call, Throwable t) {
                     bottomsheetkirim.revertAnimation();
                     circularProgressButton.revertAnimation();
                     modalShowError(t.getMessage());

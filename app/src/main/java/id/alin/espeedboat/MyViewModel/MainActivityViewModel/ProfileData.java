@@ -1,57 +1,31 @@
-package id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData;
+package id.alin.espeedboat.MyViewModel.MainActivityViewModel;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ProfileData implements Parcelable {
-    private String response_code;
-    private String status;
-    private String message;
-    private ErrorProfileData error;
-    private String token;
     private String user_id;
+    private String token;
     private String name;
     private String alamat;
     private String chat_id;
     private String pin;
     private String email;
+    private String foto;
     private String nohp;
     private String jeniskelamin;
 
-    protected ProfileData(Parcel in) {
-        response_code = in.readString();
-        status = in.readString();
-        message = in.readString();
-        token = in.readString();
-        user_id = in.readString();
-        name = in.readString();
-        alamat = in.readString();
-        chat_id = in.readString();
-        pin = in.readString();
-        email = in.readString();
-        nohp = in.readString();
-        jeniskelamin = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(response_code);
-        dest.writeString(status);
-        dest.writeString(message);
-        dest.writeString(token);
-        dest.writeString(user_id);
-        dest.writeString(name);
-        dest.writeString(alamat);
-        dest.writeString(chat_id);
-        dest.writeString(pin);
-        dest.writeString(email);
-        dest.writeString(nohp);
-        dest.writeString(jeniskelamin);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public ProfileData(String user_id, String token, String name, String alamat, String chat_id, String pin, String email, String foto, String nohp, String jeniskelamin) {
+        this.user_id = user_id;
+        this.token = token;
+        this.name = name;
+        this.alamat = alamat;
+        this.chat_id = chat_id;
+        this.pin = pin;
+        this.email = email;
+        this.foto = foto;
+        this.nohp = nohp;
+        this.jeniskelamin = jeniskelamin;
     }
 
     public static final Creator<ProfileData> CREATOR = new Creator<ProfileData>() {
@@ -65,38 +39,6 @@ public class ProfileData implements Parcelable {
             return new ProfileData[size];
         }
     };
-
-    public String getResponse_code() {
-        return response_code;
-    }
-
-    public void setResponse_code(String response_code) {
-        this.response_code = response_code;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public ErrorProfileData getError() {
-        return error;
-    }
-
-    public void setError(ErrorProfileData error) {
-        this.error = error;
-    }
 
     public String getToken() {
         return token;
@@ -154,6 +96,14 @@ public class ProfileData implements Parcelable {
         this.email = email;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     public String getNohp() {
         return nohp;
     }
@@ -169,5 +119,38 @@ public class ProfileData implements Parcelable {
     public void setJeniskelamin(String jeniskelamin) {
         this.jeniskelamin = jeniskelamin;
     }
-}
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(user_id);
+        dest.writeString(token);
+        dest.writeString(name);
+        dest.writeString(alamat);
+        dest.writeString(chat_id);
+        dest.writeString(pin);
+        dest.writeString(email);
+        dest.writeString(foto);
+        dest.writeString(nohp);
+        dest.writeString(jeniskelamin);
+    }
+
+    protected ProfileData(Parcel in) {
+        user_id = in.readString();
+        token = in.readString();
+        name = in.readString();
+        alamat = in.readString();
+        chat_id = in.readString();
+        pin = in.readString();
+        email = in.readString();
+        foto = in.readString();
+        nohp = in.readString();
+        jeniskelamin = in.readString();
+    }
+
+}

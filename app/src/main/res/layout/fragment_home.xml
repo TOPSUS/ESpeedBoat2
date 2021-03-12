@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/srFragmentHomeRefresh"
+    android:background="#F1F1F1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyFragment.MainActivityFragment.HomeFragment">
@@ -22,7 +23,7 @@
                 android:id="@+id/shimmerFragmentHomeProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shimmer_auto_start="false">
+                app:shimmer_auto_start="true">
                 <!--PROFILE BANNER-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -138,7 +139,7 @@
                 android:id="@+id/shimmerFragmentHomeBeritaPelabuhan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shimmer_auto_start="false">
+                app:shimmer_auto_start="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -189,7 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:shimmer_auto_start="false">
+                app:shimmer_auto_start="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"

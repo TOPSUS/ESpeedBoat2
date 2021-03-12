@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ErrorProfileData {
+public class ServerResponseErrorProfileData {
     @SerializedName("nama")
     @Expose
     private List<String> nama;
