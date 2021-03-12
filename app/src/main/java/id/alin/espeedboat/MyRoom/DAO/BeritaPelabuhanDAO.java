@@ -17,4 +17,6 @@ public interface BeritaPelabuhanDAO {
     @Query("SELECT * FROM BeritaPelabuhanEntity")
     List<BeritaPelabuhanEntity> getAllBeritaPelabuhanEntity();
 
+    @Query("DELETE FROM BeritaPelabuhanEntity")
+    void truncateBeritaPelabuhanEntity();
 }

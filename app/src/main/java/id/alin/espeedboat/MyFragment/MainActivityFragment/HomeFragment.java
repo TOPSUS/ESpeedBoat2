@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.alin.espeedboat.MainActivity;
@@ -200,21 +202,21 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         );
 
         /*
-        *
-        * MENJALANKAN BEBERAPA
-        *
-        * */
+         *
+         * MENJALANKAN BEBERAPA
+         *
+         * */
         call.enqueue(new Callback<ServerResponseBeritaPelabuhan>() {
 
             /*
-            *
-            * SAAT RESPONSENYA BERHASIL MAKA AKAN MEMPERBARUI RECYLERVIEW
-            * DAN DISIIMPAN KE DALAM SQLITE MENGGUNAKAN THREAD TERPISAH
-            *
-            * */
+             *
+             * SAAT RESPONSENYA BERHASIL MAKA AKAN MEMPERBARUI RECYLERVIEW
+             * DAN DISIIMPAN KE DALAM SQLITE MENGGUNAKAN THREAD TERPISAH
+             *
+             * */
             @Override
             public void onResponse(Call<ServerResponseBeritaPelabuhan> call, Response<ServerResponseBeritaPelabuhan> response) {
-                if(response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")){
+                if (response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")) {
                     HomeFragment.this.beritaPelabuhanEntities.clear();
                     HomeFragment.this.beritaPelabuhanEntities = response.body().getBerita_pelabuhan();
                     HomeFragment.this.beritaPelabuhanAdapter.beritaPelabuhanEntities = response.body().getBerita_pelabuhan();
@@ -222,12 +224,31 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
                     /*NONAKTIFKAN SHIMMER DAN REFRESH*/
                     showShimmerBeritaPelabuhan(false);
+
+                    /*MENYIMPAN DATA DARI SERVER BERITA PELABUHAN SECARA ASYC*/
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            /*HAPUS SEMUA DATA YANG ADA DI DALAM TABLE*/
+                            HomeFragment.this.databaeESpeedboat.beritaPelabuhanDAO().truncateBeritaPelabuhanEntity();
+
+                            /*MASUKKAN DATA SATU PERSATU KE DALAM SQLITE*/
+                            response.body().getBerita_pelabuhan().forEach(new Consumer<BeritaPelabuhanEntity>() {
+                                @Override
+                                public void accept(BeritaPelabuhanEntity entity) {
+                                    HomeFragment.this.databaeESpeedboat.beritaPelabuhanDAO().insertBeritaPelabuhan(entity);
+                                    Log.d("DONE INSERT DATA","DONE INSERT");
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
             @Override
             public void onFailure(Call<ServerResponseBeritaPelabuhan> call, Throwable t) {
-                Log.d("BERITA",t.getMessage());
+                Log.d("BERITA", t.getMessage());
 
                 /*NONAKTIFKAN SHIMMER DAN REFRESH*/
                 showShimmerBeritaPelabuhan(false);
@@ -254,8 +275,8 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         }, 10000);
     }
 
-    private void initEspeedDatabase(){
-        if(databaeESpeedboat == null){
+    private void initEspeedDatabase() {
+        if (databaeESpeedboat == null) {
             this.databaeESpeedboat = DatabaeESpeedboat.createDatabase(getContext());
         }
     }
@@ -319,7 +340,8 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         /*INIT RV BERITA PELABUHAN*/
         if (this.rvberitapelabuhan == null) {
             this.rvberitapelabuhan = view.findViewById(R.id.rvHomeFragmentDaftarpelabuhan);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);;
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            ;
             this.rvberitapelabuhan.setLayoutManager(layoutManager);
         }
 
@@ -337,7 +359,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         this.beritaPelabuhanEntities = this.databaeESpeedboat.beritaPelabuhanDAO().getAllBeritaPelabuhanEntity();
 
         /*APABILA KOSONG MAKA RECYCLERVIEW DUMMY AKAN DIBUAT KEMUDIAN MEMANGGIL API BERITA BOAT*/
-        if(this.beritaPelabuhanEntities.isEmpty()){
+        if (this.beritaPelabuhanEntities.isEmpty()) {
             BeritaPelabuhanEntity dummyBeritaPelabuhan = new BeritaPelabuhanEntity();
             dummyBeritaPelabuhan.setBerita("");
             dummyBeritaPelabuhan.setJudul("");
@@ -348,9 +370,9 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             List<BeritaPelabuhanEntity> listBeritaDummy = new LinkedList<>();
             listBeritaDummy.add(dummyBeritaPelabuhan);
 
-            this.beritaPelabuhanAdapter = new BeritaPelabuhanAdapter(listBeritaDummy,getContext());
-        }else{
-            this.beritaPelabuhanAdapter = new BeritaPelabuhanAdapter(this.beritaPelabuhanEntities,getContext());
+            this.beritaPelabuhanAdapter = new BeritaPelabuhanAdapter(listBeritaDummy, getContext());
+        } else {
+            this.beritaPelabuhanAdapter = new BeritaPelabuhanAdapter(this.beritaPelabuhanEntities, getContext());
         }
 
         /*PASANG ADAPTER KE RECYCLERVIEW*/
@@ -453,9 +475,4 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             shimmerespeednews.hideShimmer();
         }
     }
-
-    public interface updateBeritaPelabuhan{
-        void setBeritaPelabuhan(List<BeritaPelabuhanEntity> beritaPelabuhanEntities);
-    }
-
 }
