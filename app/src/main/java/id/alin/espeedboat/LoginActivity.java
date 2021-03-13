@@ -120,6 +120,15 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
+        /*BUTTON METHOD UNTUK MASUK KE DALAM LUPA PASSWORD*/
+        this.tvlupapassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

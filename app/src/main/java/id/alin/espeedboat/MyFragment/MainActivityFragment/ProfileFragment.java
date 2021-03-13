@@ -9,10 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import de.hdodenhof.circleimageview.CircleImageView;
+import dev.shreyaspatil.MaterialDialog.AbstractDialog;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import id.alin.espeedboat.LoginActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyProfileActivity;
+import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
 import id.alin.espeedboat.R;
 
 import android.view.LayoutInflater;
@@ -20,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +37,9 @@ import android.widget.Toast;
 public class ProfileFragment extends Fragment {
     CardView point, riwayat, active_trans, unpaid_trans, review, setting, logout;
     TextView viewUser;
+
+    TextView tvnama, tvemail;
+    CircleImageView civfotoProfil;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -53,6 +64,26 @@ public class ProfileFragment extends Fragment {
         review = view.findViewById(R.id.cardViewReview);
         setting = view.findViewById(R.id.cardViewSetting);
         logout = view.findViewById(R.id.cardViewLogout);
+
+        tvnama = view.findViewById(R.id.namaAccount);
+        tvemail = view.findViewById(R.id.emailAccount);
+        civfotoProfil = view.findViewById(R.id.fotoAccount);
+
+        MainActivity.mainActivityViewModel.getProfileLiveData().observe(this, new Observer<ProfileData>() {
+            @Override
+            public void onChanged(ProfileData data) {
+                ProfileFragment.this.tvnama.setText(data.getName());
+                ProfileFragment.this.tvemail.setText(data.getEmail());
+
+                StringBuilder url = new StringBuilder(ApiClient.BASE_IMAGE_USER);
+                url.append(data.getFoto());
+
+                Glide.with(getContext()).load(url.toString())
+                        .placeholder(R.drawable.user_placeholder)
+                        .into(ProfileFragment.this.civfotoProfil);
+
+            }
+        });
     }
 
     private void eventListener(){
@@ -110,25 +141,33 @@ public class ProfileFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Konfirmasi");
-                    builder.setMessage("Apakah Anda Yakin akan Logout?");
-                    builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getActivity(), "Logout Berhasil", Toast.LENGTH_SHORT).show();
-                            Intent intent1 = new Intent(getActivity(), LoginActivity.class);
-                            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent1);
-                        }
-                    });
-                    builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                MaterialDialog mDialog = new MaterialDialog.Builder(getActivity())
+                        .setTitle("Konfirmasi Logout")
+                        .setMessage("Apakah anda yakin untuk logout?")
+                        .setCancelable(false)
+                        .setAnimation(R.raw.animation_boat_2)
+                        .setPositiveButton("Ya", new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                                Intent i = new Intent(getActivity(), LoginActivity.class);
+                                startActivity(i);
+                                Toast.makeText(getActivity(), "Logout Berhasil", Toast.LENGTH_SHORT).show();
+                                getActivity().finish();
+                            }
+                        })
+                        .setNegativeButton("Batal", new AbstractDialog.OnClickListener() {
+                            @Override
+                            public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                            }
 
-                        }
-                    });
-                    builder.show();
+                        })
+                        .build();
+
+                // Show Dialog
+                mDialog.show();
+
             }
         });
     }

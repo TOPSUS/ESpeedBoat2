@@ -61,7 +61,7 @@
                             app:layout_constraintTop_toTopOf="@+id/fotoAccount" />
 
                         <TextView
-                            android:id="@+id/emailUser"
+                            android:id="@+id/emailAccount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -78,8 +78,8 @@
                             android:textColor="#2B9FDC"
                             android:textStyle="bold"
                             android:textSize="12sp"
-                            app:layout_constraintStart_toStartOf="@+id/emailUser"
-                            app:layout_constraintTop_toBottomOf="@+id/emailUser" />
+                            app:layout_constraintStart_toStartOf="@+id/emailAccount"
+                            app:layout_constraintTop_toBottomOf="@+id/emailAccount" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

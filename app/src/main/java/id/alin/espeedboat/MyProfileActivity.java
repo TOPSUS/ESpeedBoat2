@@ -2,6 +2,8 @@ package id.alin.espeedboat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import dev.shreyaspatil.MaterialDialog.AbstractDialog;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -86,25 +88,33 @@ public class MyProfileActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MyProfileActivity.this);
-                builder.setTitle("Konfirmasi");
-                builder.setMessage("Apakah Anda Yakin akan Logout?");
-                builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MyProfileActivity.this, "Logout Berhasil", Toast.LENGTH_SHORT).show();
-                        Intent intent1 = new Intent(MyProfileActivity.this, LoginActivity.class);
-                        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent1);
-                    }
-                });
-                builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                MaterialDialog mDialog = new MaterialDialog.Builder(MyProfileActivity.this)
+                        .setTitle("Konfirmasi Logout")
+                        .setMessage("Apakah anda yakin untuk logout?")
+                        .setCancelable(false)
+                        .setAnimation(R.raw.animation_boat_2)
+                        .setPositiveButton("Ya", new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                                Intent i = new Intent(MyProfileActivity.this, LoginActivity.class);
+                                startActivity(i);
+                                Toast.makeText(MyProfileActivity.this, "Logout Berhasil", Toast.LENGTH_SHORT).show();
+                                MyProfileActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton("Batal", new AbstractDialog.OnClickListener() {
+                            @Override
+                            public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                            }
 
-                    }
-                });
-                builder.show();
+                        })
+                        .build();
+
+                // Show Dialog
+                mDialog.show();
+
             }
         });
     }
