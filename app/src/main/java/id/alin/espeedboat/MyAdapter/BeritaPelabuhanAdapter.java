@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
-
-import id.alin.espeedboat.MyFragment.MainActivityFragment.HomeFragment.updateBeritaPelabuhan;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
 import id.alin.espeedboat.R;

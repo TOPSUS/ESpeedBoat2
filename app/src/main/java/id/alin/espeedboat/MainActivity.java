@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -242,5 +243,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
+    }
+
+    public void pindahHome(){
+        Toast.makeText(this, "HAI", Toast.LENGTH_SHORT).show();
     }
 }

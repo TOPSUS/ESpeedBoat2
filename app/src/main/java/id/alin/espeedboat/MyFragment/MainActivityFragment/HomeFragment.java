@@ -48,6 +48,7 @@ import id.alin.espeedboat.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 
 public class HomeFragment extends Fragment implements LifecycleOwner {
@@ -379,6 +380,9 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         this.rvberitapelabuhan.setAdapter(this.beritaPelabuhanAdapter);
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(this.rvberitapelabuhan);
+        ScrollingPagerIndicator indicator = view.findViewById(R.id.irvBeritaPelabuhan);
+        indicator.setSelectedDotColor(Color.BLUE);
+        indicator.attachToRecyclerView(this.rvberitapelabuhan);
 
         /*MENJALANKAN GET BERITA PELABUHAN KE API*/
         getBeritaPelabuhanFromApi();

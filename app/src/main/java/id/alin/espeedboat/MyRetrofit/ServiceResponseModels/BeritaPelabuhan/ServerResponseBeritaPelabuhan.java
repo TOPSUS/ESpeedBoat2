@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import java.util.List;
 
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.BeritaPelabuhanData;
 
 public class ServerResponseBeritaPelabuhan implements Parcelable {
     private String response_code;
