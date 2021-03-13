@@ -275,7 +275,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                initEspeedNews();
+                showShimmerEspeedNews(false);
             }
         }, 10000);
     }
@@ -500,6 +500,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void showShimmerEspeedNews(boolean value) {
         /*INIT WIDGET SHIMMER*/
         if (shimmerespeednews == null) {
@@ -513,6 +514,10 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             shimmerespeednews.showShimmer(false);
             shimmerespeednews.stopShimmer();
             shimmerespeednews.hideShimmer();
+            tvespeednewstitle.setText("ESpeed News");
+            tvespeednewsdetail.setText("Berita aktual mengenai transportasi laut, ticket, dan berita terkini mengenai teknologi epseed");
+            tvespeednewstitle.setBackground(null);
+            tvespeednewsdetail.setBackground(null);
         }
     }
 }
