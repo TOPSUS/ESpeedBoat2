@@ -35,6 +35,7 @@ import java.util.function.Consumer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.alin.espeedboat.MainActivity;
+import id.alin.espeedboat.MyAdapter.BeritaEspeedAdapter;
 import id.alin.espeedboat.MyAdapter.BeritaPelabuhanAdapter;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.BeritaPelabuhan.ServerResponseBeritaPelabuhan;
@@ -42,6 +43,7 @@ import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerRes
 import id.alin.espeedboat.MyRetrofit.Services.BeritaPelabuhanServices;
 import id.alin.espeedboat.MyRetrofit.Services.UserServices;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
+import id.alin.espeedboat.MyRoom.Entity.BeritaEspeedEntity;
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
 import id.alin.espeedboat.R;
@@ -75,6 +77,8 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
     private ShimmerFrameLayout shimmerespeednews;
     private TextView tvespeednewstitle, tvespeednewsdetail;
     private RecyclerView rvespeednews;
+    private List<BeritaEspeedEntity> beritaEspeedEntities;
+    private BeritaEspeedAdapter beritaEspeedAdapter;
 
     /*WARNA BACKGROUND SHIMMER*/
     private static final String SHAMMER_BACKGROUND = "#BBE6FA";
@@ -309,6 +313,8 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
         /*MEMASUKKAN DATA BARU*/
         MainActivity.mainActivityViewModel.getProfileLiveData().observe(this, new Observer<ProfileData>() {
+
+
             @Override
             public void onChanged(ProfileData data) {
                 HomeFragment.this.tvname.setText(data.getName());
@@ -393,6 +399,9 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         /*INIT RV BERITA PELABUHAN*/
         if (this.rvespeednews == null) {
             this.rvespeednews = view.findViewById(R.id.rvHomeFragmentEspeednews);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            ;
+            this.rvespeednews.setLayoutManager(layoutManager);
         }
 
         if (this.tvespeednewstitle == null) {
@@ -402,6 +411,33 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         if (this.tvespeednewsdetail == null) {
             this.tvespeednewsdetail = view.findViewById(R.id.tvFragmentHomeEspeedNewsDetail);
         }
+
+        this.beritaEspeedEntities = this.databaeESpeedboat.beritaEspeedDAO().getAllBeritaEspeed();
+
+        if(this.beritaEspeedEntities.isEmpty()){
+            BeritaEspeedEntity beritaEspeedEntity = new BeritaEspeedEntity();
+            beritaEspeedEntity.setId(-1);
+            beritaEspeedEntity.setId_speedboat(-1);
+            beritaEspeedEntity.setId_user(-1);
+            beritaEspeedEntity.setFoto("");
+            beritaEspeedEntity.setJudul("TIDAK ADA BERITA");
+            beritaEspeedEntity.setBerita("TIDAK ADA BERITA");
+            beritaEspeedEntity.setTanggal("2020-01-01");
+
+            List<BeritaEspeedEntity> dummyberitaEspeed = new LinkedList<>();
+            dummyberitaEspeed.add(beritaEspeedEntity);
+
+            this.beritaEspeedAdapter = new BeritaEspeedAdapter(dummyberitaEspeed, getContext());
+        }else{
+            this.beritaEspeedAdapter = new BeritaEspeedAdapter(this.beritaEspeedEntities, getContext());
+        }
+
+        this.rvespeednews.setAdapter(this.beritaEspeedAdapter);
+        SnapHelper helper = new LinearSnapHelper();
+        helper.attachToRecyclerView(this.rvespeednews);
+        ScrollingPagerIndicator indicator = view.findViewById(R.id.irvBeritaSpeedBoat);
+        indicator.setSelectedDotColor(Color.BLUE);
+        indicator.attachToRecyclerView(this.rvespeednews);
 
         /*NONAKTIFKAN SHIMMER DAN REFRESH*/
         showShimmerEspeedNews(false);

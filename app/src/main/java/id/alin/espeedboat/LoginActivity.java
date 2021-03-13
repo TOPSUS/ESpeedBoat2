@@ -42,9 +42,6 @@ public class LoginActivity extends AppCompatActivity{
     private TextView tvlupapassword, tvregister;
     private CircularProgressButton btnmasuk;
 
-    /*VIEW MODEL MAIN ACTIVITY*/
-    private MainActivityViewModel mainActivityViewModel;
-
     /*PRIVATE VARIABEL*/
     private static final int MIN_EDIT_EMAIL = 3;
     private static final int MAX_EDIT_EMAIL = 50;
@@ -59,13 +56,13 @@ public class LoginActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
+        Log.d("GOTAMA","LOGIN ACTIVITY");
         /*INIT WIDGET HALAMAN LOGIN*/
         initWidget();
 
         /*INIT SHARED PREf*/
         initSharedPref();
+
     }
 
     /*METHOD INIT SHARED PREF*/

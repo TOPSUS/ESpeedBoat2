@@ -2,8 +2,7 @@ package id.alin.espeedboat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -13,10 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import id.alin.espeedboat.MyFragment.MainActivityFragment.HomeFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
@@ -59,15 +56,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*NON AKTIFKAN MODE MALAM*/
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         /*INIT VIEW MODEL MAIN ACTIVITY*/
         sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
 
-        initViewModel();
-        initWidget();
-        Home();
+        /*SAAT KONFIGURASI APLIKASI BERUBAH*/
+        if(null != savedInstanceState) {
+            initWidget();
+            fragmentAfterFiller();
+
+        /*SAAT TIDAK ADA YANG BERUBAH (AWAL DIBUKA)*/
+        }else{
+            initViewModel();
+            initWidget();
+            fragmentFirstTimeFiller();
+            Home();
+        }
     }
 
     /*INIT VIEW MODEL YANG AKAN DIGUNAKAN OLEH KE-4 FRAGMENT*/
@@ -110,10 +114,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*FRAGMENT FILLER KE FRAMELAYOUT*/
-        fragmentFiller();
-
-
         /*INIT BOTTOM NAV*/
         bottomNavigationView = findViewById(R.id.botnavbarMainActivity);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -142,23 +142,79 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*MEMASUKKAN SEMUA FRAGMENT KE DALAM FRAMELAYOUT*/
-    private void fragmentFiller() {
+    private void fragmentFirstTimeFiller() {
+        /*FRAGMENT PROFILE*/
+        if(this.profileFragment == null){
+            profileFragment = new ProfileFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,profileFragment,PROFILE_FRAGMENT_TAG).commit();
+        }
+
         /*FRAGMENT NOTIFICATION*/
-        notificationFragment = new NotificationFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,notificationFragment,PEMESASNAN_FRAGMENT_TAG).commit();
+        if(this.notificationFragment == null){
+            notificationFragment = new NotificationFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,notificationFragment,NOTIFIKASI_FRAGMENT_TAG).commit();
+        }
 
         /*FRAGMENT PEMESANAN*/
-        pemesananFragment = new PemesananFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,pemesananFragment,HOME_FRAGMENT_TAG).commit();
+        if(this.pemesananFragment == null){
+            pemesananFragment = new PemesananFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,pemesananFragment,PEMESASNAN_FRAGMENT_TAG).commit();
+        }
 
         /*FRAGMENT HOME*/
-        homeFragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,homeFragment,HOME_FRAGMENT_TAG).commit();
+        if(this.homeFragment == null){
+            homeFragment = new HomeFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,homeFragment,HOME_FRAGMENT_TAG).commit();
+        }
 
-        /*FRAGMENT PROFILE*/
-        profileFragment = new ProfileFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,profileFragment,HOME_FRAGMENT_TAG).commit();
+    }
 
+    /*
+    *
+    * METHOD YANG DIGUNAKAN SAAT ACTIVITY BERUBAH CONFIGURASINYA
+    * BAIK SAAT ORIENTASI LAYAR
+    * ATAU
+    * PERUBAHAN MODE TERANG / GELAP
+    *
+    * */
+    private void fragmentAfterFiller(){
+        Fragment home = getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
+
+        if(home != null){
+            this.homeFragment = (HomeFragment) home;
+            Log.d("KOSONG","KOSONG 1");
+            if(this.homeFragment.isVisible()){
+                Home();
+            }
+        }
+
+        Fragment pemesanan = getSupportFragmentManager().findFragmentByTag(PEMESASNAN_FRAGMENT_TAG);
+
+        if(pemesanan != null){
+            this.pemesananFragment = (PemesananFragment) pemesanan;
+            Log.d("KOSONG","KOSONG 2");
+            if(this.pemesananFragment.isVisible()){
+                Pemesanan();
+            }
+        }
+
+        Fragment notifikasi = getSupportFragmentManager().findFragmentByTag(NOTIFIKASI_FRAGMENT_TAG);
+
+        if(notifikasi != null){
+            this.notificationFragment = (NotificationFragment) notifikasi;
+            if(this.notificationFragment.isVisible()){
+                Notification();
+            }
+        }
+
+        Fragment profile = getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG);
+
+        if(profile != null){
+            this.profileFragment = (ProfileFragment) profile;
+            if(this.profileFragment.isVisible()){
+                Profile();
+            }
+        }
     }
 
     /*
@@ -243,9 +299,5 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
-    }
-
-    public void pindahHome(){
-        Toast.makeText(this, "HAI", Toast.LENGTH_SHORT).show();
     }
 }
