@@ -67,7 +67,7 @@ public class BeritaEspeedAdapter extends RecyclerView.Adapter<BeritaEspeedAdapte
         return this.beritaEspeedEntities.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView tvJudul, tvBerita;
         public ImageView ivBerita;
 
@@ -79,4 +79,5 @@ public class BeritaEspeedAdapter extends RecyclerView.Adapter<BeritaEspeedAdapte
             this.ivBerita = itemView.findViewById(R.id.ivItemBeritaPelabuhan);
         }
     }
+
 }

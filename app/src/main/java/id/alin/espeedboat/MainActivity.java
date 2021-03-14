@@ -22,7 +22,7 @@ import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
 import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityInstanceFactory;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityViewModel;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 
 public class MainActivity extends AppCompatActivity {
     /*SEARCHVIEW*/

@@ -1,4 +1,4 @@
-package id.alin.espeedboat.MyViewModel.MainActivityViewModel;
+package id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -45,7 +45,7 @@ import id.alin.espeedboat.MyRetrofit.Services.UserServices;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.BeritaEspeedEntity;
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
 import retrofit2.Call;
 import retrofit2.Callback;
