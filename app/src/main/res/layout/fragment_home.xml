@@ -194,11 +194,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:orientation="vertical"
-                    android:background="@color/white"
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
                     android:paddingEnd="10dp"
@@ -229,6 +228,12 @@
                         android:layout_marginStart="-10dp"
                         android:layout_marginEnd="-10dp"
                         android:overScrollMode="never" />
+
+                    <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                        android:id="@+id/irvBeritaSpeedBoat"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>

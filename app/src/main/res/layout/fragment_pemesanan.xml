@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayoutPemesananFragmentRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyFragment.MainActivityFragment.PemesananFragment">
@@ -39,8 +40,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_marginEnd="10dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -52,8 +53,10 @@
                             android:orientation="vertical">
 
                             <com.rengwuxian.materialedittext.MaterialEditText
+                                android:id="@+id/metFragmentPemesananAsal"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:focusable="false"
                                 android:hint="Asal"
                                 app:met_baseColor="@color/black"
                                 app:met_errorColor="@color/black"
@@ -87,8 +90,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_marginEnd="10dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -100,8 +103,10 @@
                             android:orientation="vertical">
 
                             <com.rengwuxian.materialedittext.MaterialEditText
+                                android:id="@+id/metFragmentPemesananTujuan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:focusable="false"
                                 android:hint="Tujuan"
                                 app:met_baseColor="@color/black"
                                 app:met_errorColor="@color/black"
@@ -135,8 +140,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_marginEnd="10dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -148,6 +153,7 @@
                             android:orientation="vertical">
 
                             <com.rengwuxian.materialedittext.MaterialEditText
+                                android:id="@+id/metFragmentPemesananTanggal"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Tanggal"
@@ -183,8 +189,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_marginEnd="10dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -196,6 +202,7 @@
                             android:orientation="vertical">
 
                             <com.rengwuxian.materialedittext.MaterialEditText
+                                android:id="@+id/metFragmentPemesananPenumpang"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Jumlah Penumpang"
@@ -219,6 +226,7 @@
                     android:paddingBottom="10dp">
 
                     <Button
+                        android:id="@+id/btnFragmentPemesananCari"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#FF4500"

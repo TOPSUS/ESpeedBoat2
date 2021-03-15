@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
-import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 
 public class MainActivityViewModel extends ViewModel {
 
@@ -13,6 +13,11 @@ public class MainActivityViewModel extends ViewModel {
     * VARIABLE LIVE DATA PROFILE DATA
     * */
     private static MutableLiveData<ProfileData> profileDataMutableLiveData;
+
+    /*
+    * PROPERTI YANG DIGUNAKAN OLEH FRAGMENT PEMESANAN
+    * */
+    private static MutableLiveData<PemesananData> pemesananDataMutableLiveData;
 
     /*
     * METHOD YANG DIGUNAKAN UNTUK MENGAMBIL LIVE DATA BISA DIOBSERVER DARI
@@ -23,11 +28,10 @@ public class MainActivityViewModel extends ViewModel {
     *
     * */
     public LiveData<ProfileData> getProfileLiveData(){
-        if(profileDataMutableLiveData == null){
-            throw new NullPointerException();
-        }
-        else {
+        try{
             return profileDataMutableLiveData;
+        }catch(NullPointerException e){
+            return null;
         }
     }
 
@@ -43,4 +47,23 @@ public class MainActivityViewModel extends ViewModel {
 
         profileDataMutableLiveData.setValue(data);
     }
+
+    /*DIGUNAKAN UNTUK MENGIRIM DATA PEMESANAN*/
+    public LiveData<PemesananData> getPemesananLiveData(){
+        try{
+            return pemesananDataMutableLiveData;
+        }catch (NullPointerException e){
+            return null;
+        }
+    }
+
+    /*PEMESANAN DATA SET VALUENYA DISINI*/
+    public void setPemesananData(PemesananData data){
+        if(MainActivityViewModel.pemesananDataMutableLiveData == null){
+            pemesananDataMutableLiveData = new MutableLiveData<>();
+        }
+
+        pemesananDataMutableLiveData.setValue(data);
+    }
+
 }

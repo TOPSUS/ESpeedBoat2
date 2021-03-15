@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
@@ -23,22 +24,19 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        /*DISABLE DARK MODE*/
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         /*INIT SHARED PREFERENCES*/
         sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
 
         /*AMBIL STATUS DARI SHARED PREF*/
         String status = sharedPreferences.getString(Config.USER_ID,"");
-
-        /*CEK APAKAH SUDAH LOGIN ATAU BELUM*/
         checkAuth(status);
+
     }
 
     private void checkAuth(String status){
         if(status.equals("")){
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            /*CEK APAKAH SUDAH LOGIN ATAU BELUM*/
+            new Handler(getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
@@ -48,7 +46,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             },1000);
         }
         else{
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            /*CEK APAKAH SUDAH LOGIN ATAU BELUM*/
+            new Handler(getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
@@ -57,5 +56,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             },1000);
         }
+
     }
+
+
 }

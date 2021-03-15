@@ -1,7 +1,5 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
@@ -18,7 +16,7 @@ import id.alin.espeedboat.LoginActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyProfileActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
 
 import android.view.LayoutInflater;
