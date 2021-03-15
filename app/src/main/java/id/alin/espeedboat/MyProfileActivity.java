@@ -30,6 +30,8 @@ public class MyProfileActivity extends AppCompatActivity {
     CircleImageView circleImageView;
     TextView tvNameBig, tvEmailBig, tvName, tvEmail, tvTelepon, tvGender, tvAddress;
 
+    String myPin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 MyProfileActivity.this.tvTelepon.setText(data.getNohp());
                 MyProfileActivity.this.tvGender.setText(data.getJeniskelamin());
                 MyProfileActivity.this.tvAddress.setText(data.getAlamat());
-
+                MyProfileActivity.this.myPin = data.getPin();
                 StringBuilder url = new StringBuilder(ApiClient.BASE_IMAGE_USER);
                 url.append(data.getFoto());
 
@@ -109,8 +111,14 @@ public class MyProfileActivity extends AppCompatActivity {
         pin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProfileActivity.this, AddPinActivity.class);
-                startActivity(intent);
+                if(myPin.isEmpty()){
+                    Intent intent = new Intent(MyProfileActivity.this, AddPinActivity.class);
+                    startActivity(intent);
+                }else if(!(myPin.isEmpty())){
+                    Intent intent = new Intent(MyProfileActivity.this, EditPinActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 

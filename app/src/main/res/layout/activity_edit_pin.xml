@@ -55,7 +55,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tambah PIN"
+                            android:text="Kelola PIN"
                             android:textSize="18dp"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/white"
@@ -116,7 +116,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Masukkan PIN"
+                                android:text="Masukkan PIN Lama"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"/>
 
@@ -131,12 +131,12 @@
                             android:orientation="vertical">
 
                             <EditText
-                                android:id="@+id/etNewAddPin"
+                                android:id="@+id/etOldPin"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
                                 android:textSize="15dp"
-                                android:hint="Masukkan PIN Baru (6 Digit)"
+                                android:hint="Masukkan PIN Lama"
                                 android:inputType="textPassword"
                                 android:backgroundTint="@color/white" />
 
@@ -178,7 +178,7 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/ic_password" />
+                            android:src="@drawable/ic_pin" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -199,7 +199,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Ulangi PIN"
+                                android:text="Masukkan PIN Baru"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"/>
 
@@ -214,12 +214,12 @@
                             android:orientation="vertical">
 
                             <EditText
-                                android:id="@+id/etConfirmAddPin"
+                                android:id="@+id/etNewPin"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
                                 android:textSize="15dp"
-                                android:hint="Ulangi PIN Baru"
+                                android:hint="Masukkan PIN Baru"
                                 android:inputType="textPassword"
                                 android:backgroundTint="@color/white" />
 
@@ -282,7 +282,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Masukkan Password Anda"
+                                android:text="Ulangi PIN Baru"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"/>
 
@@ -297,12 +297,12 @@
                             android:orientation="vertical">
 
                             <EditText
-                                android:id="@+id/etPasswordAddPin"
+                                android:id="@+id/etConfirmPin"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
                                 android:textSize="15dp"
-                                android:hint="Masukkan Password Anda"
+                                android:hint="Ulangi PIN Baru"
                                 android:inputType="textPassword"
                                 android:backgroundTint="@color/white" />
 
@@ -335,11 +335,11 @@
                     android:layout_marginStart="25dp"
                     android:layout_weight="1">
                     <Button
-                        android:id="@+id/btnAddPin"
+                        android:id="@+id/btnEditPin"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/homelayananbutton"
-                        android:text="Tambah Pin"/>
+                        android:text="Edit Pin"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -348,7 +348,7 @@
                     android:layout_gravity="right"
                     android:layout_marginEnd="25dp">
                     <Button
-                        android:id="@+id/btnCancelAddPin"
+                        android:id="@+id/btnCancelEditPin"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/homelayananbutton"

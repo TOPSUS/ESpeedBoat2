@@ -8,33 +8,36 @@ import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
 import id.alin.espeedboat.MyRetrofit.Services.UserServices;
+import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.media.Image;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-public class EditPasswordActivity extends AppCompatActivity {
+public class EditPinActivity extends AppCompatActivity {
 
     Button btnUpdate, btnCancel;
     ImageButton backButton;
-    EditText etOldPass, etNewPass, etConfirmPass;
+    EditText etOldPin, etNewPin, etConfirmPin;
     ProgressDialog dialog;
+
+    /*SHARED PREFERENCE APLIKASI*/
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_password);
+        setContentView(R.layout.activity_edit_pin);
 
         /*DISABLE DARK MODE*/
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -44,20 +47,23 @@ public class EditPasswordActivity extends AppCompatActivity {
     }
 
     private void init(){
+        sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
+
         //PROGRES BAR INIT
-        dialog = new ProgressDialog(EditPasswordActivity.this);
+        dialog = new ProgressDialog(EditPinActivity.this);
         dialog.setCancelable(false);
 
         backButton = (ImageButton) findViewById(R.id.backButton);
-        btnUpdate = (Button) findViewById(R.id.btnEditPass);
-        btnCancel = (Button) findViewById(R.id.btnCancelEditPass);
+        btnUpdate = (Button) findViewById(R.id.btnEditPin);
+        btnCancel = (Button) findViewById(R.id.btnCancelEditPin);
 
-        etOldPass = (EditText) findViewById(R.id.etOldPass);
-        etNewPass = (EditText) findViewById(R.id.etNewPass);
-        etConfirmPass = (EditText) findViewById(R.id.etConfirmPass);
+        etOldPin = (EditText) findViewById(R.id.etOldPin);
+        etNewPin = (EditText) findViewById(R.id.etNewPin);
+        etConfirmPin = (EditText) findViewById(R.id.etConfirmPin);
+
     }
 
-    private void eventListener(){
+    private void eventListener() {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,12 +72,11 @@ public class EditPasswordActivity extends AppCompatActivity {
         });
 
 
-
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(validate()){
-                    postEditPasswordApi();
+                    postAddPinApi();
                 }
             }
         });
@@ -82,18 +87,17 @@ public class EditPasswordActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
     }
 
-    private void postEditPasswordApi(){
+    private void postAddPinApi(){
         ProfileData data = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
         dialog.setMessage("Processing");
         dialog.show();
         UserServices services = ApiClient.getRetrofit().create(UserServices.class);
-        Call<ServerResponseProfileData> call = services.editPassword(
+        Call<ServerResponseProfileData> call = services.editPin(
                 data.getToken(),
-                this.etOldPass.getText().toString().trim(),
-                this.etNewPass.getText().toString().trim()
+                this.etOldPin.getText().toString().trim(),
+                this.etNewPin.getText().toString().trim()
 
         );
 
@@ -102,11 +106,14 @@ public class EditPasswordActivity extends AppCompatActivity {
             public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
                 ServerResponseProfileData newData = response.body();
                 if(response.body().getStatus().matches("success")){
+                    data.setPin(newData.getPin());
+                    setSharedPreferenceData(response.body());
+                    MainActivity.mainActivityViewModel.setProfileData(data);
                     dialog.dismiss();
-                    modalShowEditPasswordBerhasil();
+                    modalShowEditPinBerhasil();
                 }else if(response.body().getStatus().matches("failed")){
                     dialog.dismiss();
-                    modalShowEditPasswordGagal();
+                    modalShowEditPinGagal();
                 }else{
                     modalShowError(response.body().getError().parseErrorAll());
                 }
@@ -121,41 +128,37 @@ public class EditPasswordActivity extends AppCompatActivity {
     }
 
     private boolean validate(){
-        if(etOldPass.getText().toString().isEmpty()){
-            etOldPass.setError("Masukkan Password Lama dengan Benar");
+        if(etNewPin.getText().toString().length() !=6){
+            etNewPin.setError("Masukkan PIN 6 Digit!");
             return false;
         }
-        if(etNewPass.getText().toString().isEmpty()){
-            etNewPass.setError("Masukkan Password Baru");
+        if(!(etConfirmPin.getText().toString().equals(etNewPin.getText().toString()))){
+            etConfirmPin.setError("PIN Tidak Cocok");
+            etNewPin.setError("PIN Tidak Cocok");
             return false;
         }
-        if(etNewPass.getText().toString().length() < 8){
-            etNewPass.setError("Password Baru Minimal 8 Digit");
-            return false;
-        }
-        if(!(etNewPass.getText().toString().equals(etConfirmPass.getText().toString()))){
-            etNewPass.setError("Password Tidak Cocok");
-            etConfirmPass.setError("Password Tidak Cocok");
+        if(etOldPin.getText().toString().isEmpty()){
+            etOldPin.setError("Masukkan PIN Saat Ini");
             return false;
         }
         return true;
     }
 
     /*METHOD UNTUK MODAL*/
-    private void modalShowEditPasswordBerhasil(){
+    private void modalShowEditPinBerhasil(){
         /*PEMBUATAN KALIMAT SAMBUTAN*/
 
         /*INIT MODAL*/
         MaterialDialog mDialog = new MaterialDialog.Builder(this)
-                .setTitle("EDIT PASSWORD BERHASIL")
-                .setMessage("Edit Password Telah Berhasil Dilakukan")
+                .setTitle("EDIT PIN BERHASIL")
+                .setMessage("Edit Pin Telah Berhasil Dilakukan")
                 .setCancelable(false)
                 .setAnimation(R.raw.animation_boat_2)
                 .setPositiveButton("OKE", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         dialogInterface.dismiss();
-                        EditPasswordActivity.this.finish();
+                        EditPinActivity.this.finish();
                     }
                 })
                 .setNegativeButton("BACK", new AbstractDialog.OnClickListener() {
@@ -171,13 +174,13 @@ public class EditPasswordActivity extends AppCompatActivity {
     }
 
     /*METHOD UNTUK MODAL*/
-    private void modalShowEditPasswordGagal(){
+    private void modalShowEditPinGagal(){
         /*PEMBUATAN KALIMAT SAMBUTAN*/
 
         /*INIT MODAL*/
         MaterialDialog mDialog = new MaterialDialog.Builder(this)
-                .setTitle("EDIT PASSWORD GAGAL")
-                .setMessage("Password Lama Salah")
+                .setTitle("EDIT PIN GAGAL")
+                .setMessage("PIN Lama Salah")
                 .setCancelable(false)
                 .setAnimation(R.raw.animation_boat_2)
                 .setPositiveButton("OKE", new MaterialDialog.OnClickListener() {
@@ -217,5 +220,30 @@ public class EditPasswordActivity extends AppCompatActivity {
 
         // Show Dialog
         mDialog.show();
+    }
+
+    /*MENYIMPAN KE DALAM SHARED PREFERENCES*/
+    private void setSharedPreferenceData(ServerResponseProfileData data){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Config.USER_ID,data.getUser_id());
+
+//        /*
+//         * MEMBERIKAN PREFIX HEADER KEPADA TOKEN
+//         * */
+//        StringBuilder token = new StringBuilder();
+//        token.append("Bearer ");
+//        token.append(data.getToken());
+//
+//        editor.putString(Config.USER_TOKEN,token.toString());
+        editor.putString(Config.USER_NAMA,data.getName());
+        editor.putString(Config.USER_ALAMAT,data.getAlamat());
+        editor.putString(Config.USER_CHAT_ID,data.getChat_id());
+        editor.putString(Config.USER_PIN,data.getPin());
+        editor.putString(Config.USER_EMAIL,data.getEmail());
+        editor.putString(Config.USER_FOTO,data.getFoto());
+        editor.putString(Config.USER_NOHP,data.getNohp());
+        editor.putString(Config.USER_JENIS_KELAMIN,data.getJeniskelamin());
+
+        editor.apply();
     }
 }

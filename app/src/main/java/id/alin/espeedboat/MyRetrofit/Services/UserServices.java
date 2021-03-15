@@ -67,4 +67,31 @@ public interface UserServices {
             @Field("email") String email,
             @Field("photo") String photo
     );
+
+    @FormUrlEncoded
+    @POST("/api/user/editPassword")
+    Call<ServerResponseProfileData> editPassword(
+            @Header("Authorization") String Authorization,
+            @Field("password") String password,
+            @Field("newPass") String newPass
+
+    );
+
+    @FormUrlEncoded
+    @POST("/api/user/addPin")
+    Call<ServerResponseProfileData> addPin(
+            @Header("Authorization") String Authorization,
+            @Field("pin") String pin,
+            @Field("password") String password
+
+    );
+
+    @FormUrlEncoded
+    @POST("/api/user/editPin")
+    Call<ServerResponseProfileData> editPin(
+            @Header("Authorization") String Authorization,
+            @Field("oldpin") String oldpin,
+            @Field("pin") String pin
+
+    );
 }
