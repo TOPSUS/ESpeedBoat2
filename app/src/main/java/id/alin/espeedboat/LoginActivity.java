@@ -1,6 +1,7 @@
 package id.alin.espeedboat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -91,6 +92,10 @@ public class LoginActivity extends AppCompatActivity{
         if(this.tvregister == null){
             this.tvregister = findViewById(R.id.tvLoginActivityRegister);
         }
+
+        String html =  "Belum punya akun ? <b>Daftar Sekarang</b> !";
+
+        this.tvregister.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
         /*TEXT VIEW REGISTER ADD EVENT*/
         this.tvregister.setOnClickListener(new View.OnClickListener() {
