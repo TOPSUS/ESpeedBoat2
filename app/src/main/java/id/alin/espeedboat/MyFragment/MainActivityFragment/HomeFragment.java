@@ -149,7 +149,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
                         data.setChat_id(newData.getChat_id());
                         data.setPin(newData.getPin());
                         data.setEmail(newData.getEmail());
-                        data.setNohp(newData.getEmail());
+                        data.setNohp(newData.getNohp());
                         data.setJeniskelamin(newData.getJeniskelamin());
 
                         MainActivity.mainActivityViewModel.setProfileData(data);
