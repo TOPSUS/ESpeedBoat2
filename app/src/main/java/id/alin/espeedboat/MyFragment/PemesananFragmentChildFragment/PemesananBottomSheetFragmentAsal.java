@@ -100,6 +100,7 @@ public class PemesananBottomSheetFragmentAsal extends BottomSheetDialogFragment 
                 public void getDataFomAdapter(PelabuhanEntity pelabuhanEntity) {
                     PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
                     pemesananData.setAsal(pelabuhanEntity.getNama_pelabuhan());
+                    pemesananData.setId_asal(pelabuhanEntity.getId());
                     MainActivity.mainActivityViewModel.setPemesananData(pemesananData);
                     PemesananBottomSheetFragmentAsal.this.dismiss();
                 }
