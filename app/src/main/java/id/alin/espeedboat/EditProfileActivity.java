@@ -16,7 +16,7 @@ import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerRes
 import id.alin.espeedboat.MyRetrofit.Services.AuthServices;
 import id.alin.espeedboat.MyRetrofit.Services.UserServices;
 import id.alin.espeedboat.MySharedPref.Config;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.Request;

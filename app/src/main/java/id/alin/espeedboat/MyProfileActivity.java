@@ -8,7 +8,7 @@ import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ProfileData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
