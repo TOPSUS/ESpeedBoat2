@@ -4,6 +4,7 @@ public class PemesananData {
     private String asal;
     private String tujuan;
     private String tanggal;
+    private String tanggal_variable;
     private String jumlah_penumpang;
 
     public PemesananData() {
@@ -43,5 +44,13 @@ public class PemesananData {
 
     public void setJumlah_penumpang(String jumlah_penumpang) {
         this.jumlah_penumpang = jumlah_penumpang;
+    }
+
+    public String getTanggal_variable() {
+        return tanggal_variable;
+    }
+
+    public void setTanggal_variable(String tanggal_variable) {
+        this.tanggal_variable = tanggal_variable;
     }
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/register_bottom_sheet"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/Blue_primary"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="80dp"
+                android:layout_height="10dp"
+                app:cardBackgroundColor="@color/textColorSecondary"
+                app:cardCornerRadius="30dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="JUMLAH \n PENUMPANG"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/textColorSecondary"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="30dp"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <biz.kasual.materialnumberpicker.MaterialNumberPicker
+            android:id="@+id/bottomsheetJumlahPenumpang"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            app:npMinValue="1"
+            app:npMaxValue="10"
+            app:npDefaultValue="1"
+            android:outlineAmbientShadowColor="@color/black"
+            android:outlineSpotShadowColor="@color/black"
+            android:forceHasOverlappingRendering="true"
+            app:npBackgroundColor="@color/white"
+            app:npSeparatorColor="@color/white"
+            app:npTextColor="@color/black"
+            app:npTextSize="25sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnPilihJumlahPenumpang"
+            android:layout_width="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/Blue_primary"
+            android:text="PILIh"
+            android:layout_marginHorizontal="40dp"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+        
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

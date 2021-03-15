@@ -26,11 +26,9 @@ public interface UserServices {
     * DIGUNAKAN UNTUK MENGAMBIL USER PROFILE
     * PARAMETER YANG DIPERLUKAN ADALAH ID
     * */
-    @FormUrlEncoded
     @POST("/api/userprofile")
     Call<ServerResponseProfileData> userprofile(
-            @Header("Authorization") String Authorization,
-            @Field("id") String id
+            @Header("Authorization") String Authorization
     );
 
     /*

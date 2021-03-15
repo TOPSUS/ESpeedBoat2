@@ -137,8 +137,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
 
             Call<ServerResponseProfileData> call = services.userprofile(
-                    data.getToken(),
-                    data.getUser_id()
+                    data.getToken()
             );
 
             call.enqueue(new Callback<ServerResponseProfileData>() {
@@ -419,7 +418,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             beritaEspeedEntity.setId(-1);
             beritaEspeedEntity.setId_speedboat(-1);
             beritaEspeedEntity.setId_user(-1);
-            beritaEspeedEntity.setFoto("");
+            beritaEspeedEntity.setFoto("default.jpg");
             beritaEspeedEntity.setJudul("TIDAK ADA BERITA");
             beritaEspeedEntity.setBerita("TIDAK ADA BERITA");
             beritaEspeedEntity.setTanggal("2020-01-01");

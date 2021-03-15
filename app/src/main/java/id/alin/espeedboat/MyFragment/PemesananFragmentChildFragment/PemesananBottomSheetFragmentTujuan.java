@@ -2,6 +2,7 @@ package id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -122,9 +123,12 @@ public class PemesananBottomSheetFragmentTujuan extends BottomSheetDialogFragmen
             public void onShow(DialogInterface dialog) {
                 BottomSheetDialog dialogc = (BottomSheetDialog) dialog;
                 FrameLayout bottomSheet = dialogc.findViewById(R.id.bottomsheetrootlayout);
+                ViewGroup.LayoutParams layoutParams = bottomSheet.getLayoutParams();
+
 
                 BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
                 bottomSheetBehavior.setDraggable(false);
+                bottomSheetBehavior.setPeekHeight(300,false);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });

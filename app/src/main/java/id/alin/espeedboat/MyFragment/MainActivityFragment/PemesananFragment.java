@@ -20,19 +20,16 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.util.List;
 
 import id.alin.espeedboat.MainActivity;
+import id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment.BottomSheetFragmentJumlahPenumpang;
+import id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment.DatePickerFragment;
 import id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment.PemesananBottomSheetFragmentAsal;
 import id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment.PemesananBottomSheetFragmentTujuan;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
-import id.alin.espeedboat.MyViewModel.PemesananFragmentViewModel.PemesananFragmentInstanceFactory;
-import id.alin.espeedboat.MyViewModel.PemesananFragmentViewModel.PemesananFragmentViewModel;
 import id.alin.espeedboat.R;
 
 public class PemesananFragment extends Fragment implements LifecycleOwner {
-
-    /*VIEW MODEL PEMESANAN FRAGMNT*/
-    public static PemesananFragmentViewModel pemesananFragmentViewModel;
 
     /*WIDGET DI HALAMAN FRAGMENT PEMESANAN*/
     private MaterialEditText metasal, mettujuan, mettanggal, metjumlahpenumpang;
@@ -47,6 +44,8 @@ public class PemesananFragment extends Fragment implements LifecycleOwner {
     /*CHILD FRAGMENT TAGS*/
     public static String FRAGMENT_PEMESANAN_CHILD_ASAL = "FRAGMENT_PEMESANAN_CHILD_ASAL";
     public static String FRAGMENT_PEMESANAN_CHILD_TUJUAN = "FRAGMENT_PEMESANAN_CHILD_TUJUAN";
+    public static String FRAGMENT_PEMESANAN_CHILD_TANGGAL = "FRAGMENT_PEMESANAN_CHILD_TANGGAL";
+    public static String FRAGMENT_PEMESANAN_CHILD_JUMLAH_PENUMPANG = "FRAGMENT_PEMESANAN_CHILD_JUMLAH_PENUMPANG";
 
     /*PELABUHAN ENTITIES*/
     public List<PelabuhanEntity> pelabuhanEntities;
@@ -78,14 +77,8 @@ public class PemesananFragment extends Fragment implements LifecycleOwner {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        initViewModel();
         initDatabase();
         initWidget();
-    }
-
-    private void initViewModel() {
-        PemesananFragment.pemesananFragmentViewModel = new ViewModelProvider(this, new PemesananFragmentInstanceFactory())
-                .get(PemesananFragmentViewModel.class);
     }
 
     private void initDatabase() {
@@ -125,33 +118,7 @@ public class PemesananFragment extends Fragment implements LifecycleOwner {
             MainActivity.mainActivityViewModel.getPemesananLiveData().observe(this, new Observer<PemesananData>() {
                 @Override
                 public void onChanged(PemesananData pemesananData) {
-                    if (pemesananData.getAsal().matches("") || pemesananData.getAsal() == null) {
-                        PemesananFragment.this.metasal.setText("");
-                    } else {
-                        Log.d("PEMESANAN", "AMBIL DARI VIEW MODEL");
-                        PemesananFragment.this.metasal.setText(pemesananData.getAsal());
-                    }
-
-                    if (pemesananData.getTujuan().matches("") || pemesananData.getTujuan() == null) {
-                        PemesananFragment.this.mettujuan.setText("");
-                    } else {
-                        PemesananFragment.this.mettujuan.setText(pemesananData.getTujuan());
-                    }
-
-                    if (pemesananData.getTanggal().matches("") || pemesananData.getTanggal() == null) {
-                        PemesananFragment.this.mettanggal.setText("");
-                    } else {
-                        PemesananFragment.this.mettanggal.setText(pemesananData.getTanggal());
-                    }
-
-                    if (pemesananData.getJumlah_penumpang().matches("") || pemesananData.getJumlah_penumpang() == null) {
-                        PemesananFragment.this.metjumlahpenumpang.setText("");
-                    } else {
-                        PemesananFragment.this.metjumlahpenumpang.setText(pemesananData.getJumlah_penumpang());
-                    }
-
-                    /*MENYIMPAN KE DALAM PROPERTI*/
-                    PemesananFragment.this.pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                   setObserver(pemesananData);
                 }
             });
         } else {
@@ -161,32 +128,7 @@ public class PemesananFragment extends Fragment implements LifecycleOwner {
             MainActivity.mainActivityViewModel.getPemesananLiveData().observe(this, new Observer<PemesananData>() {
                 @Override
                 public void onChanged(PemesananData pemesananData) {
-                    if (pemesananData.getAsal().matches("") || pemesananData.getAsal() == null) {
-                        PemesananFragment.this.metasal.setText("");
-                    } else {
-                        PemesananFragment.this.metasal.setText(pemesananData.getAsal());
-                    }
-
-                    if (pemesananData.getTujuan().matches("") || pemesananData.getTujuan() == null) {
-                        PemesananFragment.this.mettujuan.setText("");
-                    } else {
-                        PemesananFragment.this.mettujuan.setText(pemesananData.getTujuan());
-                    }
-
-                    if (pemesananData.getTanggal().matches("") || pemesananData.getTanggal() == null) {
-                        PemesananFragment.this.mettanggal.setText("");
-                    } else {
-                        PemesananFragment.this.mettanggal.setText(pemesananData.getTanggal());
-                    }
-
-                    if (pemesananData.getJumlah_penumpang().matches("") || pemesananData.getJumlah_penumpang() == null) {
-                        PemesananFragment.this.metjumlahpenumpang.setText("");
-                    } else {
-                        PemesananFragment.this.metjumlahpenumpang.setText(pemesananData.getJumlah_penumpang());
-                    }
-
-                    /*MENYIMPAN KE DALAM PROPERTI*/
-                    PemesananFragment.this.pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                    setObserver(pemesananData);
                 }
             });
         }
@@ -205,6 +147,53 @@ public class PemesananFragment extends Fragment implements LifecycleOwner {
                 selectTujuan();
             }
         });
+
+        this.mettanggal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTanggal();
+            }
+        });
+
+        this.metjumlahpenumpang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectJumlah();
+            }
+        });
+    }
+
+    private void setObserver(PemesananData pemesananData){
+        if (pemesananData.getAsal().matches("") || pemesananData.getAsal() == null) {
+            PemesananFragment.this.metasal.setText("");
+        } else if (pemesananData.getAsal().matches(pemesananData.getTujuan())) {
+            PemesananFragment.this.metasal.setError("Asal dan tujuan tidak boleh sama");
+        } else {
+            PemesananFragment.this.metasal.setText(pemesananData.getAsal());
+        }
+
+        if (pemesananData.getTujuan().matches("") || pemesananData.getTujuan() == null) {
+            PemesananFragment.this.mettujuan.setText("");
+        } else if (pemesananData.getTujuan().matches(pemesananData.getAsal())) {
+            PemesananFragment.this.mettujuan.setError("Asal dan tujuan tidak boleh sama");
+        } else {
+            PemesananFragment.this.mettujuan.setText(pemesananData.getTujuan());
+        }
+
+        if (pemesananData.getTanggal().matches("") || pemesananData.getTanggal() == null) {
+            PemesananFragment.this.mettanggal.setText("");
+        } else {
+            PemesananFragment.this.mettanggal.setText(pemesananData.getTanggal());
+        }
+
+        if (pemesananData.getJumlah_penumpang().matches("") || pemesananData.getJumlah_penumpang() == null) {
+            PemesananFragment.this.metjumlahpenumpang.setText("");
+        } else {
+            PemesananFragment.this.metjumlahpenumpang.setText(pemesananData.getJumlah_penumpang());
+        }
+
+        /*MENYIMPAN KE DALAM PROPERTI*/
+        PemesananFragment.this.pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
     }
 
     private void selectAsal() {
@@ -216,4 +205,15 @@ public class PemesananFragment extends Fragment implements LifecycleOwner {
         PemesananBottomSheetFragmentTujuan pemesananBottomSheetFragmentTujuan = new PemesananBottomSheetFragmentTujuan();
         pemesananBottomSheetFragmentTujuan.showNow(getChildFragmentManager(), FRAGMENT_PEMESANAN_CHILD_TUJUAN);
     }
+
+    private void selectTanggal(){
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.showNow(getChildFragmentManager(),FRAGMENT_PEMESANAN_CHILD_TANGGAL);
+    }
+
+    private void selectJumlah(){
+        BottomSheetFragmentJumlahPenumpang bottomSheetFragmentJumlahPenumpang = new BottomSheetFragmentJumlahPenumpang();
+        bottomSheetFragmentJumlahPenumpang.showNow(getChildFragmentManager(),FRAGMENT_PEMESANAN_CHILD_JUMLAH_PENUMPANG);
+    }
+
 }
