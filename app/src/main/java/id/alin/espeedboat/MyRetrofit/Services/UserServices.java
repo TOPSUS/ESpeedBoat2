@@ -94,4 +94,12 @@ public interface UserServices {
             @Field("pin") String pin
 
     );
+
+    @FormUrlEncoded
+    @POST("/api/user/logout")
+    Call<ServerResponseProfileData> logout(
+            @Header("Authorization") String Authorization,
+            @Field("id_user") String id
+
+    );
 }

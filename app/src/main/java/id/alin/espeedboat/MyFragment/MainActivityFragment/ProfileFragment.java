@@ -1,6 +1,9 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +19,14 @@ import id.alin.espeedboat.LoginActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyProfileActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
+import id.alin.espeedboat.MyRetrofit.Services.UserServices;
+import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +48,12 @@ public class ProfileFragment extends Fragment {
     TextView tvnama, tvemail;
     CircleImageView civfotoProfil;
 
+    /*SHARED PREFERENCE APLIKASI*/
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    ProgressDialog dialog;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -53,6 +68,12 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init(View view){
+        sharedPreferences = getContext().getApplicationContext().getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
+
+        //PROGRES BAR INIT
+        dialog = new ProgressDialog(getActivity());
+        dialog.setCancelable(false);
+
         viewUser = view.findViewById(R.id.txtViewAccount);
 
         point = view.findViewById(R.id.cardViewPoint);
@@ -148,10 +169,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
                                 dialogInterface.dismiss();
-                                Intent i = new Intent(getActivity(), LoginActivity.class);
-                                startActivity(i);
-                                Toast.makeText(getActivity(), "Logout Berhasil", Toast.LENGTH_SHORT).show();
-                                getActivity().finish();
+                                logoutFromApi();
                             }
                         })
                         .setNegativeButton("Batal", new AbstractDialog.OnClickListener() {
@@ -168,6 +186,47 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+    }
+
+    private void logoutFromApi(){
+        ProfileData data = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
+        dialog.setMessage("Processing");
+        dialog.show();
+        UserServices services = ApiClient.getRetrofit().create(UserServices.class);
+        Call<ServerResponseProfileData> call = services.logout(
+                data.getToken(),
+                data.getUser_id()
+
+        );
+
+        call.enqueue(new Callback<ServerResponseProfileData>() {
+            @Override
+            public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
+                ServerResponseProfileData newData = response.body();
+                if(response.body().getStatus().matches("success")){
+                    clearSharedPreference();
+                    dialog.dismiss();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseProfileData> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+    private void clearSharedPreference(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 
     @Override

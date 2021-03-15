@@ -6,13 +6,22 @@ import androidx.lifecycle.Observer;
 import de.hdodenhof.circleimageview.CircleImageView;
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
+import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
+import id.alin.espeedboat.MyRetrofit.Services.UserServices;
+import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -29,8 +38,12 @@ public class MyProfileActivity extends AppCompatActivity {
     LinearLayout akun, pass, pin, tele, logout;
     CircleImageView circleImageView;
     TextView tvNameBig, tvEmailBig, tvName, tvEmail, tvTelepon, tvGender, tvAddress;
-
+    ProgressDialog dialog;
     String myPin;
+
+    /*SHARED PREFERENCE APLIKASI*/
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +58,13 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     private void init(){
+        sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
+
+        //PROGRES BAR INIT
+        dialog = new ProgressDialog(MyProfileActivity.this);
+        dialog.setCancelable(false);
+
+
         backButton = (ImageButton)findViewById(R.id.backButton);
         akun = (LinearLayout)findViewById(R.id.kelolaAkun);
         pass = (LinearLayout)findViewById(R.id.kelolaPassword);
@@ -146,10 +166,7 @@ public class MyProfileActivity extends AppCompatActivity {
                             @Override
                             public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
                                 dialogInterface.dismiss();
-                                Intent i = new Intent(MyProfileActivity.this, LoginActivity.class);
-                                startActivity(i);
-                                Toast.makeText(MyProfileActivity.this, "Logout Berhasil", Toast.LENGTH_SHORT).show();
-                                MyProfileActivity.this.finish();
+                                logoutFromApi();
                             }
                         })
                         .setNegativeButton("Batal", new AbstractDialog.OnClickListener() {
@@ -166,5 +183,47 @@ public class MyProfileActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void logoutFromApi(){
+        ProfileData data = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
+        dialog.setMessage("Processing");
+        dialog.show();
+        UserServices services = ApiClient.getRetrofit().create(UserServices.class);
+        Call<ServerResponseProfileData> call = services.logout(
+                data.getToken(),
+                data.getUser_id()
+
+        );
+
+        call.enqueue(new Callback<ServerResponseProfileData>() {
+            @Override
+            public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
+                ServerResponseProfileData newData = response.body();
+                if(response.body().getStatus().matches("success")){
+                    clearSharedPreference();
+                    dialog.dismiss();
+                    Intent intent = new Intent(MyProfileActivity.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    MyProfileActivity.this.finish();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseProfileData> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+    private void clearSharedPreference(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 }
