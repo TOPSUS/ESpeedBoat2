@@ -3,14 +3,18 @@ package id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData;
 public class PemesananData {
     private String asal;
     private String tujuan;
+    private long id_asal;
     private String tanggal;
+    private long id_tujuan;
     private String tanggal_variable;
     private String jumlah_penumpang;
 
     public PemesananData() {
         this.asal = "";
         this.tujuan = "";
+        this.id_asal = 0;
         this.tanggal = "";
+        this.id_tujuan = 0;
         this.jumlah_penumpang = "";
     }
 
@@ -52,5 +56,21 @@ public class PemesananData {
 
     public void setTanggal_variable(String tanggal_variable) {
         this.tanggal_variable = tanggal_variable;
+    }
+
+    public long getId_asal() {
+        return id_asal;
+    }
+
+    public void setId_asal(long id_asal) {
+        this.id_asal = id_asal;
+    }
+
+    public long getId_tujuan() {
+        return id_tujuan;
+    }
+
+    public void setId_tujuan(long id_tujuan) {
+        this.id_tujuan = id_tujuan;
     }
 }
