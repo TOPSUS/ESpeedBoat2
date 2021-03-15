@@ -55,7 +55,7 @@ public class DatePickerFragment extends DialogFragment implements LifecycleOwner
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
                 try {
-                    LocalDate date = LocalDate.of(year, monthOfYear, dayOfMonth);
+                    LocalDate date = LocalDate.of(year, monthOfYear + 1, dayOfMonth);
                     DateTimeFormatter formatervariable = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     DateTimeFormatter formaterdisplay = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
                     String displaydate = date.format(formaterdisplay);

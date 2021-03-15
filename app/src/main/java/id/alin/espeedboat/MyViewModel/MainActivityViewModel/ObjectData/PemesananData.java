@@ -15,6 +15,7 @@ public class PemesananData {
         this.id_asal = 0;
         this.tanggal = "";
         this.id_tujuan = 0;
+        this.tanggal_variable = "";
         this.jumlah_penumpang = "";
     }
 

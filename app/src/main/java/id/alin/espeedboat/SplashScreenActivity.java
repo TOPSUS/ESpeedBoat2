@@ -30,7 +30,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         /*AMBIL STATUS DARI SHARED PREF*/
         String status = sharedPreferences.getString(Config.USER_ID,"");
         checkAuth(status);
-
     }
 
     private void checkAuth(String status){

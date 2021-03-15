@@ -1,5 +1,6 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +26,19 @@ import id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment.BottomSheetF
 import id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment.DatePickerFragment;
 import id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment.PemesananBottomSheetFragmentAsal;
 import id.alin.espeedboat.MyFragment.PemesananFragmentChildFragment.PemesananBottomSheetFragmentTujuan;
+import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponseJadwalData;
+import id.alin.espeedboat.MyRetrofit.Services.JadwalServices;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
+import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
 import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
+import id.alin.espeedboat.PemesananJadwalActivity;
 import id.alin.espeedboat.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PemesananFragment extends Fragment implements LifecycleOwner {
 
@@ -77,8 +88,15 @@ public class PemesananFragment extends Fragment implements LifecycleOwner {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        initPemesananData();
         initDatabase();
         initWidget();
+    }
+
+    private void initPemesananData() {
+        PemesananData pemesananData = new PemesananData();
+
+        MainActivity.mainActivityViewModel.setPemesananData(pemesananData);
     }
 
     private void initDatabase() {
@@ -161,6 +179,44 @@ public class PemesananFragment extends Fragment implements LifecycleOwner {
                 selectJumlah();
             }
         });
+
+        this.btncari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prepareData();
+            }
+        });
+    }
+
+    private void prepareData() {
+        int validation = 1;
+
+        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+
+        if(pemesananData.getAsal().matches("")){
+            this.metasal.setError("Mohon Pilih Asal");
+            validation -= 1;
+        }
+
+        if(pemesananData.getTujuan().matches("")){
+            this.mettujuan.setError("Mohon Pilih Tujuan");
+            validation -= 1;
+        }
+
+        if(pemesananData.getTanggal().matches("")){
+            this.mettanggal.setError("Mohon pilih tanggal");
+            validation -= 1;
+        }
+
+        if(pemesananData.getJumlah_penumpang().matches("")){
+            this.metjumlahpenumpang.setError("Mohon pilih jumlah penumpang");
+            validation -= 1;
+        }
+
+        if(validation == 1){
+            Intent intent = new Intent(getContext(), PemesananJadwalActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void setObserver(PemesananData pemesananData){

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -97,7 +96,6 @@ public class LoginActivity extends AppCompatActivity{
         this.tvregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "TEST", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
@@ -198,7 +196,6 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onFailure(Call<ServerResponseProfileData> call, Throwable t) {
                 LoginActivity.this.btnmasuk.revertAnimation();
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("TEST", t.getMessage());
             }
         });

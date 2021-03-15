@@ -11,13 +11,15 @@ import id.alin.espeedboat.MyRoom.DAO.BeritaPelabuhanDAO;
 import id.alin.espeedboat.MyRoom.DAO.PelabuhanDAO;
 import id.alin.espeedboat.MyRoom.Entity.BeritaEspeedEntity;
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
+import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
 import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
 
 @Database(entities = {
         BeritaPelabuhanEntity.class,
         BeritaEspeedEntity.class,
-        PelabuhanEntity.class
-},version = 5,exportSchema = false)
+        PelabuhanEntity.class,
+        JadwalEntity.class
+},version = 6,exportSchema = false)
 public abstract class DatabaeESpeedboat extends RoomDatabase {
     public abstract BeritaPelabuhanDAO beritaPelabuhanDAO();
     public abstract BeritaEspeedDAO beritaEspeedDAO();
