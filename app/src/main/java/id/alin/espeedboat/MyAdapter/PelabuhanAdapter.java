@@ -44,7 +44,6 @@ public abstract class PelabuhanAdapter extends RecyclerView.Adapter<PelabuhanAda
         holder.itemPelabuhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
                 getDataFomAdapter(pelabuhanEntities.get(position));
             }
         });

@@ -419,8 +419,8 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             beritaEspeedEntity.setId_speedboat(-1);
             beritaEspeedEntity.setId_user(-1);
             beritaEspeedEntity.setFoto("default.jpg");
-            beritaEspeedEntity.setJudul("TIDAK ADA BERITA");
-            beritaEspeedEntity.setBerita("TIDAK ADA BERITA");
+            beritaEspeedEntity.setJudul("BERITA ESPEEDBOAT");
+            beritaEspeedEntity.setBerita("BERITA ESPEEDBOAT");
             beritaEspeedEntity.setTanggal("2020-01-01");
 
             List<BeritaEspeedEntity> dummyberitaEspeed = new LinkedList<>();

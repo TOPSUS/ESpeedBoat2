@@ -133,7 +133,6 @@ public class PemesananJadwalActivity extends AppCompatActivity {
         call.enqueue(new Callback<ServerResponseJadwalData>() {
             @Override
             public void onResponse(Call<ServerResponseJadwalData> call, Response<ServerResponseJadwalData> response) {
-                Toast.makeText(PemesananJadwalActivity.this, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                 Log.d("ALINDEBUG",String.valueOf(response.body().getJadwal().size()));
                 if(response.body().getJadwal().size() == 0 || !response.body().getResponse_code().matches("200")){
                     setNoDataState();
