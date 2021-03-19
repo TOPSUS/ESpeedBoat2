@@ -1,9 +1,22 @@
 package id.alin.espeedboat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
+
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
+import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ServerResponseModels;
+import id.alin.espeedboat.MyRetrofit.Services.LupaPasswordServices;
+import id.alin.espeedboat.MyViewModel.LupaPasswordActivityViewModel.LupaPasswordActivityInstanceFactory;
+import id.alin.espeedboat.MyViewModel.LupaPasswordActivityViewModel.LupaPasswordActivityViewModel;
+import id.alin.espeedboat.MyViewModel.LupaPasswordActivityViewModel.ObjectData.LupaPasswordData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityViewModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,18 +27,33 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class ForgotPasswordActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends AppCompatActivity implements LifecycleOwner {
 
     Button btnTele, btnEmail;
     EditText email;
     ImageButton btnBack;
+
+    public static LupaPasswordActivityViewModel lupaPasswordActivityViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
+        initViewModel();
         init();
         eventListener();
+    }
+
+    /*
+    * INIT VIEW MODEL LUPA PASSWORD
+    * INPUT DILAKUKAN DALAM BEBERAPA FORM
+    * DIAKHIR SEMUA VARIABLE YANG DIINPUT PERLU DIKIRIM LAGI
+    * MAKANYA DISIMPAN DULU KE DALAM VIEW MODEL SUPAYA TIDAK HILANG
+    * */
+    private void initViewModel() {
+        ForgotPasswordActivity.lupaPasswordActivityViewModel = new ViewModelProvider(this, new LupaPasswordActivityInstanceFactory())
+                                                                        .get(LupaPasswordActivityViewModel.class);
     }
 
     private void init(){
@@ -52,7 +80,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validate()){
-                    emailVerifSuccess();
+                    sendVerifyEmailAPI(ForgotPasswordActivity.this.email.getText().toString());
                 }
             }
         });
@@ -65,7 +93,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
 
-
     //MODAL EMAIL VERIF
     private void emailVerifSuccess(){
         MaterialDialog mDialog = new MaterialDialog.Builder(this)
@@ -77,13 +104,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         dialogInterface.dismiss();
-                        ForgotPasswordActivity.this.finish();
+                        Intent intent =  new Intent(ForgotPasswordActivity.this,LupaPasswordVerifikasiEmailActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton("Close", new AbstractDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         dialogInterface.dismiss();
+                        Intent intent =  new Intent(ForgotPasswordActivity.this,LupaPasswordVerifikasiEmailActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .build();
@@ -103,5 +133,37 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    /*
+    *
+    * MELAKUKAN PEMANGGILAN API KIRIM VERIFY EMAIL
+    * */
+    private void sendVerifyEmailAPI(String email){
+        LupaPasswordServices services = ApiClient.getRetrofit().create(LupaPasswordServices.class);
+        Call<ServerResponseModels> call = services.sendEmail(email);
+
+        call.enqueue(new Callback<ServerResponseModels>() {
+            @Override
+            public void onResponse(Call<ServerResponseModels> call, Response<ServerResponseModels> response) {
+                if(response.body().getResponse_code().matches("200") && response.body().getStatus().matches("success")){
+                    LupaPasswordData data = ForgotPasswordActivity.lupaPasswordActivityViewModel.getLupaPasswordDataMutableLiveData().getValue();
+
+                    data.setEmail(ForgotPasswordActivity.this.email.getText().toString());
+                    ForgotPasswordActivity.lupaPasswordActivityViewModel.setLupaPasswordDataMutableLiveData(data);
+
+                    emailVerifSuccess();
+                }else if(response.body().getResponse_code().matches("403")){
+                    Toast.makeText(ForgotPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(ForgotPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseModels> call, Throwable t) {
+                Toast.makeText(ForgotPasswordActivity.this, "TERJADI KESALAHAN", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

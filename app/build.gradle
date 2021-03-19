@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.1.0"
     implementation 'biz.kasual:materialnumberpicker:1.2.1'
+    implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
 
     /*HTTP LOGGING*/
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'

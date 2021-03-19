@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.HomeFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananFragment;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananJadwalFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
 import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityInstanceFactory;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*THE FOUR FRAGMENT*/
     private HomeFragment homeFragment;
-    private PemesananFragment pemesananFragment;
+    private PemesananJadwalFragment pemesananFragment;
     private NotificationFragment notificationFragment;
     private ProfileFragment profileFragment;
 
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
         /*FRAGMENT PEMESANAN*/
         if(this.pemesananFragment == null){
-            pemesananFragment = new PemesananFragment();
+            pemesananFragment = new PemesananJadwalFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,pemesananFragment,PEMESASNAN_FRAGMENT_TAG).commit();
         }
 
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment pemesanan = getSupportFragmentManager().findFragmentByTag(PEMESASNAN_FRAGMENT_TAG);
 
         if(pemesanan != null){
-            this.pemesananFragment = (PemesananFragment) pemesanan;
+            this.pemesananFragment = (PemesananJadwalFragment) pemesanan;
             Log.d("KOSONG","KOSONG 2");
             if(this.pemesananFragment.isVisible()){
                 Pemesanan();
@@ -251,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(!pemesananFragment.isVisible()){
             Log.d("TEST","TEST 4");
-            pemesananFragment = new PemesananFragment();
+            pemesananFragment = new PemesananJadwalFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,pemesananFragment,PEMESASNAN_FRAGMENT_TAG).commit();
             getSupportFragmentManager().beginTransaction().show(pemesananFragment).commit();
         }
