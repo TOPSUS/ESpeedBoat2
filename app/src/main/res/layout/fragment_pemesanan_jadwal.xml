@@ -53,11 +53,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
-                    app:met_baseColor="@color/black"
+                    android:hint="Pelabuhan asal"
+                    app:met_textColorHint="@color/black"
+                    android:textColorHint="@color/black"
+                    app:met_baseColor="@color/Blue_primary"
+                    app:met_textColor="@color/espeedorange"
+                    app:met_floatingLabelTextColor="@color/black"
                     app:met_errorColor="@android:color/holo_red_dark"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_floatingLabelText="Dari :"
+                    app:met_floatingLabelText="Asal :"
+                    app:met_iconLeft="@drawable/ic_speedboat"
+                    app:met_iconPadding="3dp"
+                    app:met_primaryColor="@color/Blue_primary"
+                    app:met_underlineColor="@color/Blue_primary"
+                    tools:ignore="HardcodedText" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metPemesananJadwalFragmentTujuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pelabuhan tujuan"
+                    android:focusable="false"
+                    app:met_textColorHint="@color/black"
+                    android:textColorHint="@color/black"
+                    app:met_baseColor="@color/Blue_primary"
+                    app:met_textColor="@color/espeedorange"
+                    app:met_floatingLabelTextColor="@color/black"
+                    app:met_errorColor="@android:color/holo_red_dark"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_floatingLabelText="Tujuan :"
+                    app:met_iconLeft="@drawable/ic_speedboat"
+                    app:met_iconPadding="3dp"
                     app:met_primaryColor="@color/Blue_primary"
                     app:met_underlineColor="@color/Blue_primary"
                     tools:ignore="HardcodedText" />
@@ -65,23 +93,16 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:met_baseColor="@color/black"
+                    android:hint="Tanggal keberangkatan"
+                    app:met_textColorHint="@color/black"
+                    android:textColorHint="@color/black"
+                    app:met_baseColor="@color/Blue_primary"
                     app:met_errorColor="@android:color/holo_red_dark"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_floatingLabelText="Dari :"
-                    app:met_primaryColor="@color/Blue_primary"
-                    app:met_underlineColor="@color/Blue_primary"
-                    tools:ignore="HardcodedText" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:met_baseColor="@color/black"
-                    app:met_errorColor="@android:color/holo_red_dark"
-                    app:met_floatingLabel="highlight"
-                    app:met_floatingLabelAlwaysShown="true"
-                    app:met_floatingLabelText="Dari :"
+                    app:met_floatingLabelText="Tanggal :"
+                    app:met_iconLeft="@drawable/ic_date"
+                    app:met_iconPadding="3dp"
                     app:met_primaryColor="@color/Blue_primary"
                     app:met_underlineColor="@color/Blue_primary"
                     tools:ignore="HardcodedText" />
@@ -90,27 +111,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    app:met_baseColor="@color/black"
+                    android:hint="Jumlah penumpang"
+                    app:met_textColorHint="@color/black"
+                    android:textColorHint="@color/black"
+                    app:met_baseColor="@color/Blue_primary"
                     app:met_errorColor="@android:color/holo_red_dark"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_floatingLabelText="Dari :"
+                    app:met_floatingLabelText="Jumlah penumpang :"
                     app:met_floatingLabelTextColor="@color/black"
+                    app:met_iconLeft="@drawable/ic_penumpang"
+                    app:met_iconPadding="3dp"
                     app:met_primaryColor="@color/Blue_primary"
                     app:met_underlineColor="@color/Blue_primary"
                     tools:ignore="HardcodedText" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/Blue_primary">
-
-
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:backgroundTint="@color/espeedorange"
+                    android:text="CARI"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

@@ -17,6 +17,7 @@ public class ApiClient {
     public static String BASE_IMAGE_USER = "https://www.espeedboat.xyz/storage/image_users/";
     public static String BASE_IMAGE_BERITA_PELABUHAN = "https://www.espeedboat.xyz/storage/image_berita_pelabuhan/";
     public static String BASE_IMAGE_BERITA_ESPEED = "https://www.espeedboat.xyz/storage/image_berita_espeed/";
+    public static String BASE_IMAGE_PELABUHAN = "https://espeedboat.xyz/storage/image_pelabuhan/";
 
     public static Retrofit getRetrofit(){
 

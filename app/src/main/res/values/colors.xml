@@ -25,4 +25,7 @@
     <!--DANGER COLOR-->
     <color name="dangerColor">#db463b</color>
 
+    <!--UNIQUE COLOR-->
+    <color name="espeedorange">#FF5E1E</color>
+
 </resources>

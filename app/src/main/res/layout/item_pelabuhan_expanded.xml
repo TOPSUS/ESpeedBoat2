@@ -4,28 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="10dp"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="3dp"
     app:cardUseCompatPadding="true"
+    android:padding="0dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/itempelabuhanimage"
             android:src="@drawable/berita"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:adjustViewBounds="true"
+            android:adjustViewBounds="false"
             android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/itemPelabuhanName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:background="@color/Blue_primary"
+            android:paddingVertical="7dp"
             android:textSize="20sp"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
 
@@ -33,16 +39,69 @@
             android:id="@+id/expandable_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:el_duration="1000"
+            app:el_duration="700"
             app:el_expanded="false"
             app:el_parallax="0.5">
 
-            <TextView
-                android:id="@+id/itemPelabuhanKode"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fixed height"
-                tools:ignore="HardcodedText" />
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KODE PELABUHAN"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/itemPelabuhanKode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="HardcodedText"
+                    tools:layout_editor_absoluteY="237dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@color/Blue_primary"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ALAMAT KANTOR"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/itemPelabuhanalamat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Jln Banteng"
+                    tools:ignore="HardcodedText"
+                    tools:layout_editor_absoluteY="237dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@color/Blue_primary"/>
+
+                <Button
+                    android:id="@+id/btnpilih"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:text="PILIH"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
 
         </net.cachapa.expandablelayout.ExpandableLayout>
 

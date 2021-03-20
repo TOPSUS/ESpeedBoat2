@@ -1,12 +1,11 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -31,14 +30,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FullscreenDialog extends DialogFragment implements LifecycleOwner {
+public class FullscreenDialogAsal extends DialogFragment implements LifecycleOwner {
     private LinearLayout loading, nodata;
     private RecyclerView rvfullscreenpelabuhan;
     private PelabuhanExpandedAdapter pelabuhanExpandedAdapter;
+    private ImageButton closebutton;
 
     /*METHO STATIC UNTUK MEMBUAT INSTANCE BARU*/
-    public static FullscreenDialog createNewInstance(){
-        return new FullscreenDialog();
+    public static FullscreenDialogAsal createNewInstance(){
+        return new FullscreenDialogAsal();
     }
 
     @Override
@@ -70,6 +70,13 @@ public class FullscreenDialog extends DialogFragment implements LifecycleOwner {
         this.rvfullscreenpelabuhan = getView().findViewById(R.id.rvFullScreenPemesananChildFragment);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         this.rvfullscreenpelabuhan.setLayoutManager(layoutManager);
+        this.closebutton = getView().findViewById(R.id.closebutton);
+        this.closebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
 
     /*MENGAMBIL DATA PELABUHAN DARI API PELABUHAN*/
@@ -107,7 +114,15 @@ public class FullscreenDialog extends DialogFragment implements LifecycleOwner {
 
     /*MENYIAPKAN RECYLERVIEW*/
     private void setRecyclerView(List<PelabuhanEntity> pelabuhanEntities) {
-        this.pelabuhanExpandedAdapter = new PelabuhanExpandedAdapter(pelabuhanEntities,getContext(),this.rvfullscreenpelabuhan);
+        this.pelabuhanExpandedAdapter = new PelabuhanExpandedAdapter(pelabuhanEntities, getContext(), this.rvfullscreenpelabuhan, this) {
+            @Override
+            public void onSelectedItemPelabuhan(PelabuhanEntity pelabuhanEntity) {
+                PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                pemesananData.setAsal(pelabuhanEntity.getNama_pelabuhan());
+                pemesananData.setId_asal(pelabuhanEntity.getId());
+                MainActivity.mainActivityViewModel.setPemesananData(pemesananData);
+            }
+        };
         this.rvfullscreenpelabuhan.setAdapter(this.pelabuhanExpandedAdapter);
     }
 
