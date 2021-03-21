@@ -91,9 +91,13 @@
                     tools:ignore="HardcodedText" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metPemesananJadwalFragmentTanggal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Tanggal keberangkatan"
+                    android:focusable="false"
+                    app:met_textColor="@color/espeedorange"
+                    app:met_floatingLabelTextColor="@color/black"
                     app:met_textColorHint="@color/black"
                     android:textColorHint="@color/black"
                     app:met_baseColor="@color/Blue_primary"
@@ -108,10 +112,14 @@
                     tools:ignore="HardcodedText" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metPemesananJadwalFragmentJumlahpenumpang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:hint="Jumlah penumpang"
+                    android:focusable="false"
+                    app:met_textColor="@color/espeedorange"
+                    app:met_floatingLabelTextColor="@color/black"
                     app:met_textColorHint="@color/black"
                     android:textColorHint="@color/black"
                     app:met_baseColor="@color/Blue_primary"
@@ -119,7 +127,6 @@
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
                     app:met_floatingLabelText="Jumlah penumpang :"
-                    app:met_floatingLabelTextColor="@color/black"
                     app:met_iconLeft="@drawable/ic_penumpang"
                     app:met_iconPadding="3dp"
                     app:met_primaryColor="@color/Blue_primary"
@@ -127,6 +134,7 @@
                     tools:ignore="HardcodedText" />
 
                 <Button
+                    android:id="@+id/btncari"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"

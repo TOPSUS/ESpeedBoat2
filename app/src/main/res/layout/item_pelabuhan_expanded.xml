@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/itempelabuhanimage"
-            android:src="@drawable/berita"
+            android:src="@drawable/no_image_pelabuhan"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:adjustViewBounds="false"

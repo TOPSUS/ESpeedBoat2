@@ -100,6 +100,7 @@ public class FullscreenDialogAsal extends DialogFragment implements LifecycleOwn
                             setStateNodata();
                         }
                     }else{
+                        setStateNodata();
                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -107,7 +108,7 @@ public class FullscreenDialogAsal extends DialogFragment implements LifecycleOwn
 
             @Override
             public void onFailure(Call<ServerResponsePelabuhanData> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                setStateNodata();
             }
         });
     }

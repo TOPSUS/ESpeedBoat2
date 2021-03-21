@@ -100,14 +100,14 @@ public class FullscreenDialogTujuan extends DialogFragment implements LifecycleO
                             setStateNodata();
                         }
                     }else{
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        setStateNodata();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<ServerResponsePelabuhanData> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                setStateNodata();
             }
         });
     }

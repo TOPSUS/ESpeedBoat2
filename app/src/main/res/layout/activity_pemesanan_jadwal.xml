@@ -87,6 +87,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPemesananJadwal"
                 android:layout_width="match_parent"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:paddingBottom="70dp"
                 android:layout_height="match_parent"/>
 
         </LinearLayout>

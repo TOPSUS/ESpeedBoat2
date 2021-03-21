@@ -14,6 +14,7 @@
     <color name="Blue_primary">#1BA0DC</color>
     <color name="Blue_secondary">#BBE6FA</color>
     <color name="Blue_tertiary">#EAF8FF</color>
+    <color name="grey_bg">#F1F1F1</color>
 
     <!--SHAMMER-->
     <color name="shimmer_bg">#BBE6FA</color>

@@ -57,7 +57,7 @@ public abstract class PelabuhanExpandedAdapter extends RecyclerView.Adapter<Pela
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.tvnamapelabuhan.setText(this.pelabuhanEntities.get(position).getNama_pelabuhan());
         holder.tvkodepelabuhan.setText(this.pelabuhanEntities.get(position).getKode_pelabuhan());
-
+        holder.tvalamatkantor.setText(this.pelabuhanEntities.get(position).getAlamat_kantor());
         /*URL GAMBAR PELABUHAN*/
         StringBuilder url = new StringBuilder();
         url.append(ApiClient.BASE_IMAGE_PELABUHAN);
@@ -103,7 +103,7 @@ public abstract class PelabuhanExpandedAdapter extends RecyclerView.Adapter<Pela
     public class MyViewHolder extends RecyclerView.ViewHolder implements ExpandableLayout.OnExpansionUpdateListener {
         private CardView itemroot;
         private ExpandableLayout expandableLayout;
-        private TextView tvnamapelabuhan, tvkodepelabuhan;
+        private TextView tvnamapelabuhan, tvkodepelabuhan, tvalamatkantor;
         private ImageView ivpelabuhan;
         private Button btnpilih;
 
@@ -116,6 +116,7 @@ public abstract class PelabuhanExpandedAdapter extends RecyclerView.Adapter<Pela
             this.tvnamapelabuhan = itemView.findViewById(R.id.itemPelabuhanName);
             this.tvkodepelabuhan = itemView.findViewById(R.id.itemPelabuhanKode);
             this.ivpelabuhan = itemView.findViewById(R.id.itempelabuhanimage);
+            this.tvalamatkantor = itemView.findViewById(R.id.itemPelabuhanalamat);
             this.btnpilih = itemView.findViewById(R.id.btnpilih);
         }
 
