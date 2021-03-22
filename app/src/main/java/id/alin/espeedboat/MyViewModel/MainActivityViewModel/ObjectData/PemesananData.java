@@ -1,5 +1,8 @@
 package id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData;
 
+import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
+import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
+
 public class PemesananData {
     private String asal;
     private String tujuan;
@@ -8,6 +11,7 @@ public class PemesananData {
     private long id_tujuan;
     private String tanggal_variable;
     private String jumlah_penumpang;
+    private JadwalEntity jadwalEntity;
 
     public PemesananData() {
         this.asal = "";
@@ -17,6 +21,7 @@ public class PemesananData {
         this.id_tujuan = 0;
         this.tanggal_variable = "";
         this.jumlah_penumpang = "";
+        this.jadwalEntity = new JadwalEntity();
     }
 
     public String getAsal() {
@@ -73,5 +78,13 @@ public class PemesananData {
 
     public void setId_tujuan(long id_tujuan) {
         this.id_tujuan = id_tujuan;
+    }
+
+    public JadwalEntity getJadwalEntity() {
+        return jadwalEntity;
+    }
+
+    public void setJadwalEntity(JadwalEntity jadwalEntity) {
+        this.jadwalEntity = jadwalEntity;
     }
 }

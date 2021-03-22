@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.Locale;
 
 import id.alin.espeedboat.InputIdentitasPemesanActivity;
+import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.R;
 
 public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHolder> {
@@ -97,6 +99,11 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
         holder.btnpilih.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                pemesananData.setJadwalEntity(jadwalEntities.get(position));
+                MainActivity.mainActivityViewModel.setPemesananData(pemesananData);
+
                 Intent intent = new Intent(context, InputIdentitasPemesanActivity.class);
                 context.startActivity(intent);
             }
