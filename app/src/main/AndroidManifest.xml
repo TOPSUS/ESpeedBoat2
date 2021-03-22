@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="id.alin.espeedboat">
-<<<<<<< HEAD
-=======
 
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -12,7 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
->>>>>>> b790bf185c94cc064d789e843a3cddc6cf312242
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:allowBackup="true"
@@ -21,11 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ESpeedBoat">
-<<<<<<< HEAD
         <activity android:name=".MyPointRewardActivity"></activity>
-=======
         <activity android:name=".InputIdentitasPemesanActivity"></activity>
->>>>>>> b790bf185c94cc064d789e843a3cddc6cf312242
         <activity android:name=".GantiPasswordActivity" />
         <activity android:name=".LupaPasswordVerifikasiEmailActivity" />
         <activity android:name=".PemesananJadwalActivity" />
@@ -36,10 +31,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-<<<<<<< HEAD
         <activity android:name=".MyPointActivity" />
-=======
->>>>>>> b790bf185c94cc064d789e843a3cddc6cf312242
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,13 +44,5 @@
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing" />
     </application>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
 </manifest>
