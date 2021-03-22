@@ -195,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardViewPoint"
+                    android:id="@+id/cardViewPointHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="8dp"
@@ -210,19 +210,18 @@
                         >
 
                         <ImageView
-                            android:id="@+id/iconPoint"
+                            android:id="@+id/iconPointHistory"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="16dp"
-                            android:src="@drawable/ic_reward"
-
+                            android:src="@drawable/ic_medal"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.522" />
 
                         <TextView
-                            android:id="@+id/namaPoint"
+                            android:id="@+id/namaPointHistory"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
@@ -232,13 +231,13 @@
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/iconPoint"
+                            app:layout_constraintStart_toEndOf="@+id/iconPointHistory"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.166" />
 
 
                         <TextView
-                            android:id="@+id/deskripsiPoint"
+                            android:id="@+id/deskripsiPointHistory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="15dp"
@@ -248,14 +247,14 @@
                             android:layout_marginStart="80dp"
                             android:layout_marginEnd="50dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                            app:layout_constraintEnd_toStartOf="@+id/imageButtonHistoryy"
                             app:layout_constraintHorizontal_bias="0.092"
-                            app:layout_constraintStart_toEndOf="@+id/iconPoint"
-                            app:layout_constraintTop_toBottomOf="@+id/namaPoint"
+                            app:layout_constraintStart_toEndOf="@+id/iconPointHistory"
+                            app:layout_constraintTop_toBottomOf="@+id/namaPointHistory"
                             app:layout_constraintVertical_bias="1.0" />
 
                         <ImageButton
-                            android:id="@+id/imageButton"
+                            android:id="@+id/imageButtonHistoryy"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="8dp"

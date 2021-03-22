@@ -18,11 +18,13 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import id.alin.espeedboat.LoginActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyPointActivity;
+import id.alin.espeedboat.MyPointHistoryActivity;
 import id.alin.espeedboat.MyProfileActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
 import id.alin.espeedboat.MyRetrofit.Services.UserServices;
 import id.alin.espeedboat.MySharedPref.Config;
+import id.alin.espeedboat.MyUnpaidTransactionActivity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
 import retrofit2.Call;
@@ -43,7 +45,7 @@ import com.bumptech.glide.Glide;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
-    CardView point, riwayat, active_trans, unpaid_trans, review, setting, logout;
+    CardView point, pointHistory, riwayat, active_trans, unpaid_trans, review, setting, logout;
     TextView viewUser;
 
     TextView tvnama, tvemail;
@@ -77,6 +79,7 @@ public class ProfileFragment extends Fragment {
 
         viewUser = view.findViewById(R.id.txtViewAccount);
 
+        pointHistory = view.findViewById(R.id.cardViewPointHistory);
         point = view.findViewById(R.id.cardViewPoint);
         riwayat = view.findViewById(R.id.cardHistory);
         active_trans = view.findViewById(R.id.cardViewActiveTrans);
@@ -123,6 +126,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        pointHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyPointHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
         riwayat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +151,8 @@ public class ProfileFragment extends Fragment {
         unpaid_trans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Ini Transaksi Belum Dibayar User", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MyUnpaidTransactionActivity.class);
+                startActivity(intent);
             }
         });
 
