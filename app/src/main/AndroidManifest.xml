@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ESpeedBoat">
 
-        <activity android:name=".InputIdentitasPemesanActivity"></activity>
+        <activity android:name=".InputIdentitasPemesanActivity"/>
         <activity android:name=".GantiPasswordActivity" />
         <activity android:name=".LupaPasswordVerifikasiEmailActivity" />
         <activity android:name=".PemesananJadwalActivity" />

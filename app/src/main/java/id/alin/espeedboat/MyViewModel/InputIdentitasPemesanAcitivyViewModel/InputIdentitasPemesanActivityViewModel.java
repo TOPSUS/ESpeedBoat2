@@ -15,12 +15,13 @@ public class InputIdentitasPemesanActivityViewModel extends ViewModel {
     private MutableLiveData<List<PenumpangData>> listPenumpangLivedata;
 
     public LiveData<TransaksiData> getTransaksiLiveData(){
-        try{
-            return this.transaksiMutableLiveData;
-        }catch (NullPointerException e){
+        if(this.transaksiMutableLiveData == null){
+            this.transaksiMutableLiveData = new MutableLiveData<>();
             TransaksiData transaksiData = new TransaksiData();
             this.transaksiMutableLiveData.setValue(transaksiData);
 
+            return this.transaksiMutableLiveData;
+        }else {
             return this.transaksiMutableLiveData;
         }
     }
@@ -30,12 +31,13 @@ public class InputIdentitasPemesanActivityViewModel extends ViewModel {
     }
 
     public LiveData<List<PenumpangData>> getListPenumpangLiveData(){
-        try{
-            return listPenumpangLivedata;
-        }catch (NullPointerException e){
-            List<PenumpangData> listPenumpangData = new LinkedList<>();
-            this.listPenumpangLivedata.setValue(listPenumpangData);
+        if(this.listPenumpangLivedata == null){
+            this.listPenumpangLivedata = new MutableLiveData<>();
+            List<PenumpangData> penumpangDataList = new LinkedList<>();
+            this.listPenumpangLivedata.setValue(penumpangDataList);
 
+            return this.listPenumpangLivedata;
+        }else{
             return this.listPenumpangLivedata;
         }
     }

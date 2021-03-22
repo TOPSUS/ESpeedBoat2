@@ -72,12 +72,13 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingHorizontal="10dp"
+        android:fillViewport="true"
         android:paddingTop="10dp"
-        android:paddingBottom="30dp">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
@@ -102,22 +103,20 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="320dp"
+                        android:id="@+id/pelabuhanasaltujuan"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:minLines="1"
-                        android:text="Pelabuhan Benoa > Pelabuhan Triguna"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText" />
 
                     <TextView
+                        android:id="@+id/jadwaldetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="none"
                         android:maxLines="20"
                         android:scrollHorizontally="false"
-                        android:text="BNA >> TKB [ Sunday , 22 Maret 2021 ] 18.00 WITA"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
@@ -147,7 +146,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 app:cardBackgroundColor="@color/white"
-                app:contentPadding="10dp">
+                app:contentPadding="10dp"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -155,45 +155,34 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/namapemesan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="-10dp"
                         android:ellipsize="end"
-                        android:minLines="1"
-                        android:text="I Putu Alin Winata Gotama"
+                        android:maxLines="1"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        tools:ignore="HardcodedText" />
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/emailpemesan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:scrollHorizontally="false"
-                        android:text="alingotama14@gmail.com"
                         android:textSize="14sp"
                         tools:ignore="HardcodedText" />
 
                     <TextView
+                        android:id="@+id/nomorhppemesan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:scrollHorizontally="false"
-                        android:text="081246082357"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
-
-                    <ImageButton
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="10dp"
-                        android:background="@null"
-                        android:src="@drawable/pencil_edit_biru" />
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -220,24 +209,75 @@
                     tools:ignore="HardcodedText" />
 
                 <com.zcw.togglebutton.ToggleButton
+                    android:id="@+id/togglebuttonpemesanadalahpenumpang"
                     android:layout_width="55dp"
                     android:layout_height="25dp"
                     toggle:tbBorderWidth="2dp"
                     toggle:tbOffColor="@color/lightgrey"
                     toggle:tbOnColor="@color/Blue_secondary"
-                    toggle:tbSpotColor="@color/Blue_primary"/>
+                    toggle:tbSpotColor="@color/Blue_primary" />
 
 
             </LinearLayout>
-            
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvInputIdentitas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="20dp" />
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:contentPadding="10dp"
+                app:cardBackgroundColor="@color/white"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total"
+                            android:textColor="@color/Blue_primary"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:id="@+id/totalbiaya"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableEnd="@drawable/arrowright"
+                            android:textAlignment="textEnd"
+                            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="LANJUTKAN PEMBAYARAN"
+                        android:layout_marginVertical="20dp"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 
 </RelativeLayout>
