@@ -17,6 +17,7 @@ import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import id.alin.espeedboat.LoginActivity;
 import id.alin.espeedboat.MainActivity;
+import id.alin.espeedboat.MyPointActivity;
 import id.alin.espeedboat.MyProfileActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
@@ -117,7 +118,8 @@ public class ProfileFragment extends Fragment {
         point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Ini Point User", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MyPointActivity.class);
+                startActivity(intent);
             }
         });
 
