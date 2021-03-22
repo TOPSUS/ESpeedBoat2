@@ -14,6 +14,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!--FULLSCREEN DIALOG-->
+    <style name="FullScreenDialog" parent="Theme.MaterialComponents.Light.DialogWhenLarge">
+        <item name="android:statusBarColor">@color/Blue_primary</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+    </style>
+
     <!--FLOATING ACTION BUTTON STYLE-->
     <style name="Shape" parent="">
         <item name="cornerFamily">rounded</item>

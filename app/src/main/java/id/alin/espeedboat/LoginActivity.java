@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -101,6 +103,7 @@ public class LoginActivity extends AppCompatActivity{
         this.tvregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvregister.setEnabled(false);
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
@@ -119,6 +122,7 @@ public class LoginActivity extends AppCompatActivity{
         this.tvlupapassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvlupapassword.setEnabled(false);
                 Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                 startActivity(intent);
             }
@@ -258,5 +262,13 @@ public class LoginActivity extends AppCompatActivity{
         editor.putString(Config.USER_JENIS_KELAMIN,data.getJeniskelamin());
 
         editor.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        tvregister.setEnabled(true);
+        tvlupapassword.setEnabled(true);
     }
 }

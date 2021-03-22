@@ -10,21 +10,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/register_bottom_sheet"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/Blue_primary"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="80dp"
-                android:layout_height="10dp"
-                app:cardBackgroundColor="@color/textColorSecondary"
-                app:cardCornerRadius="30dp"
-                />
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -57,7 +42,7 @@
             app:npBackgroundColor="@color/white"
             app:npSeparatorColor="@color/white"
             app:npTextColor="@color/black"
-            app:npTextSize="25sp"/>
+            app:npTextSize="40sp"/>
 
         </LinearLayout>
 

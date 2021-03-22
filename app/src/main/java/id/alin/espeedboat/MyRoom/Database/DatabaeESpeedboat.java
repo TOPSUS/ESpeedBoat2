@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase;
 
 import id.alin.espeedboat.MyRoom.DAO.BeritaEspeedDAO;
 import id.alin.espeedboat.MyRoom.DAO.BeritaPelabuhanDAO;
+import id.alin.espeedboat.MyRoom.DAO.JadwalDAO;
 import id.alin.espeedboat.MyRoom.DAO.PelabuhanDAO;
 import id.alin.espeedboat.MyRoom.Entity.BeritaEspeedEntity;
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
@@ -19,11 +20,12 @@ import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
         BeritaEspeedEntity.class,
         PelabuhanEntity.class,
         JadwalEntity.class
-},version = 6,exportSchema = false)
+},version = 8,exportSchema = false)
 public abstract class DatabaeESpeedboat extends RoomDatabase {
     public abstract BeritaPelabuhanDAO beritaPelabuhanDAO();
     public abstract BeritaEspeedDAO beritaEspeedDAO();
     public abstract PelabuhanDAO pelabuhanDAO();
+    public abstract JadwalDAO jadwalDAO();
 
     private static DatabaeESpeedboat INSTANCE;
 

@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class ForgotPasswordActivity extends AppCompatActivity implements LifecycleOwner {
@@ -32,6 +33,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Lifecyc
     Button btnTele, btnEmail;
     EditText email;
     ImageButton btnBack;
+    private LinearLayout loadinglayout,contentlayout;
 
     public static LupaPasswordActivityViewModel lupaPasswordActivityViewModel;
 
@@ -61,6 +63,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Lifecyc
         btnEmail = (Button) findViewById(R.id.btnEmailLupaPassword);
         btnTele = (Button) findViewById(R.id.btnTelegramLupaPassword);
         btnBack = (ImageButton) findViewById(R.id.backButton);
+        this.loadinglayout = findViewById(R.id.forgotPasswordloading);
+        this.contentlayout = findViewById(R.id.contentLayout);
     }
 
     private void eventListener(){
@@ -140,6 +144,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Lifecyc
     * MELAKUKAN PEMANGGILAN API KIRIM VERIFY EMAIL
     * */
     private void sendVerifyEmailAPI(String email){
+        setStateLoading(true);
         LupaPasswordServices services = ApiClient.getRetrofit().create(LupaPasswordServices.class);
         Call<ServerResponseModels> call = services.sendEmail(email);
 
@@ -152,10 +157,14 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Lifecyc
                     data.setEmail(ForgotPasswordActivity.this.email.getText().toString());
                     ForgotPasswordActivity.lupaPasswordActivityViewModel.setLupaPasswordDataMutableLiveData(data);
 
+                    setStateLoading(false);
+
                     emailVerifSuccess();
                 }else if(response.body().getResponse_code().matches("403")){
+                    setStateLoading(false);
                     Toast.makeText(ForgotPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }else{
+                    setStateLoading(false);
                     Toast.makeText(ForgotPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -165,5 +174,15 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Lifecyc
                 Toast.makeText(ForgotPasswordActivity.this, "TERJADI KESALAHAN", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setStateLoading(boolean status){
+        if(status){
+            this.loadinglayout.setVisibility(View.VISIBLE);
+            this.contentlayout.setClickable(false);
+        }else{
+            this.loadinglayout.setVisibility(View.INVISIBLE);
+            this.contentlayout.setClickable(true);
+        }
     }
 }

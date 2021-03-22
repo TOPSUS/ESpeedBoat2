@@ -13,6 +13,7 @@ public class PelabuhanEntity {
     private String nama_pelabuhan;
     private String lokasi_pelabuhan;
     private String alamat_kantor;
+    private String foto;
     private String latitude;
     private String longtitude;
     private String lama_beroperasi;
@@ -56,6 +57,14 @@ public class PelabuhanEntity {
 
     public void setAlamat_kantor(String alamat_kantor) {
         this.alamat_kantor = alamat_kantor;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public String getLatitude() {

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -16,11 +17,14 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import id.alin.espeedboat.MyAdapter.JadwalAdapter;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponseJadwalData;
 import id.alin.espeedboat.MyRetrofit.Services.JadwalServices;
+import id.alin.espeedboat.MyRoom.DAO.JadwalDAO;
+import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
@@ -45,6 +49,9 @@ public class PemesananJadwalActivity extends AppCompatActivity {
     private LinearLayout loadingLayout;
     private LinearLayout nodatalayout;
 
+    /*SQLITE*/
+    private DatabaeESpeedboat database;
+
     /*FLOATING BUTTON*/
     private FloatingActionButton fabfilter;
 
@@ -54,6 +61,13 @@ public class PemesananJadwalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pemesanan_jadwal);
         initWidget();
+        initDatabase();
+        setLoadingState();
+        getJadwalFromAPI();
+    }
+
+    private void initDatabase() {
+        this.database = DatabaeESpeedboat.createDatabase(this);
     }
 
     private void initWidget() {
@@ -95,9 +109,6 @@ public class PemesananJadwalActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        setLoadingState();
-        getJadwalFromAPI();
     }
 
     private void setReadyState(){
@@ -138,9 +149,22 @@ public class PemesananJadwalActivity extends AppCompatActivity {
                     setNoDataState();
                 }
                 else{
+
+                    PemesananJadwalActivity.this.database.jadwalDAO().truncateJadwalEntity();
+
+                    response.body().getJadwal().forEach(new Consumer<JadwalEntity>() {
+                        @Override
+                        public void accept(JadwalEntity jadwalEntity) {
+                            PemesananJadwalActivity.this.database.jadwalDAO().insertJadwalEntity(jadwalEntity);
+                        }
+                    });
+
                     setReadyState();
+
                     String html = "Berhasil menemukan <b>"+response.body().getJadwal().size()+"</b> jadwal";
+
                     PemesananJadwalActivity.this.tvHeader.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
+
                     fillRecyclerView(response.body().getJadwal());
                 }
             }

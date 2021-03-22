@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="#F1F1F1"
+    android:orientation="vertical"
     tools:context=".MyFragment.MainActivityFragment.PemesananJadwalFragment">
 
     <LinearLayout
@@ -17,88 +17,134 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="40dp"
         android:clipChildren="false"
-        android:scrollbarSize="0dp"
         android:clipToPadding="false"
-        android:paddingHorizontal="10dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/panelinputpemesananheader"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="6dp"
-            android:text="PENCARIAN JADWAL"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
+        android:paddingHorizontal="10dp"
+        android:paddingTop="40dp"
+        android:scrollbarSize="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="30dp"
-            android:paddingBottom="10dp"
-            android:background="@drawable/panelinputpemesananjadwal"
             android:orientation="vertical">
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:met_floatingLabelText="Dari :"
-                app:met_baseColor="@color/black"
-                app:met_errorColor="@android:color/holo_red_dark"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/Blue_primary"
-                app:met_floatingLabelAlwaysShown="true"
-                app:met_underlineColor="@color/Blue_primary"
+                android:background="@drawable/panelinputpemesananheader"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="6dp"
+                android:text="PENCARIAN JADWAL"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:met_floatingLabelText="Dari :"
-                app:met_baseColor="@color/black"
-                app:met_errorColor="@android:color/holo_red_dark"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/Blue_primary"
-                app:met_floatingLabelAlwaysShown="true"
-                app:met_underlineColor="@color/Blue_primary"
-                tools:ignore="HardcodedText" />
+                android:background="@drawable/panelinputpemesananjadwal"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="10dp">
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:met_floatingLabelText="Dari :"
-                app:met_baseColor="@color/black"
-                app:met_errorColor="@android:color/holo_red_dark"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/Blue_primary"
-                app:met_floatingLabelAlwaysShown="true"
-                app:met_underlineColor="@color/Blue_primary"
-                tools:ignore="HardcodedText" />
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metPemesananJadwalFragmentDari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Pelabuhan asal"
+                    app:met_textColorHint="@color/black"
+                    android:textColorHint="@color/black"
+                    app:met_baseColor="@color/Blue_primary"
+                    app:met_textColor="@color/espeedorange"
+                    app:met_floatingLabelTextColor="@color/black"
+                    app:met_errorColor="@android:color/holo_red_dark"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_floatingLabelText="Asal :"
+                    app:met_iconLeft="@drawable/ic_speedboat"
+                    app:met_iconPadding="3dp"
+                    app:met_primaryColor="@color/Blue_primary"
+                    app:met_underlineColor="@color/Blue_primary"
+                    tools:ignore="HardcodedText" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:met_floatingLabelText="Dari :"
-                app:met_baseColor="@color/black"
-                app:met_errorColor="@android:color/holo_red_dark"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/Blue_primary"
-                app:met_floatingLabelAlwaysShown="true"
-                app:met_underlineColor="@color/Blue_primary"
-                tools:ignore="HardcodedText" />
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metPemesananJadwalFragmentTujuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pelabuhan tujuan"
+                    android:focusable="false"
+                    app:met_textColorHint="@color/black"
+                    android:textColorHint="@color/black"
+                    app:met_baseColor="@color/Blue_primary"
+                    app:met_textColor="@color/espeedorange"
+                    app:met_floatingLabelTextColor="@color/black"
+                    app:met_errorColor="@android:color/holo_red_dark"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_floatingLabelText="Tujuan :"
+                    app:met_iconLeft="@drawable/ic_speedboat"
+                    app:met_iconPadding="3dp"
+                    app:met_primaryColor="@color/Blue_primary"
+                    app:met_underlineColor="@color/Blue_primary"
+                    tools:ignore="HardcodedText" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metPemesananJadwalFragmentTanggal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tanggal keberangkatan"
+                    android:focusable="false"
+                    app:met_textColor="@color/espeedorange"
+                    app:met_floatingLabelTextColor="@color/black"
+                    app:met_textColorHint="@color/black"
+                    android:textColorHint="@color/black"
+                    app:met_baseColor="@color/Blue_primary"
+                    app:met_errorColor="@android:color/holo_red_dark"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_floatingLabelText="Tanggal :"
+                    app:met_iconLeft="@drawable/ic_date"
+                    app:met_iconPadding="3dp"
+                    app:met_primaryColor="@color/Blue_primary"
+                    app:met_underlineColor="@color/Blue_primary"
+                    tools:ignore="HardcodedText" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metPemesananJadwalFragmentJumlahpenumpang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Jumlah penumpang"
+                    android:focusable="false"
+                    app:met_textColor="@color/espeedorange"
+                    app:met_floatingLabelTextColor="@color/black"
+                    app:met_textColorHint="@color/black"
+                    android:textColorHint="@color/black"
+                    app:met_baseColor="@color/Blue_primary"
+                    app:met_errorColor="@android:color/holo_red_dark"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_floatingLabelText="Jumlah penumpang :"
+                    app:met_iconLeft="@drawable/ic_penumpang"
+                    app:met_iconPadding="3dp"
+                    app:met_primaryColor="@color/Blue_primary"
+                    app:met_underlineColor="@color/Blue_primary"
+                    tools:ignore="HardcodedText" />
+
+                <Button
+                    android:id="@+id/btncari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:backgroundTint="@color/espeedorange"
+                    android:text="CARI"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
     </ScrollView>
 
 </RelativeLayout>
