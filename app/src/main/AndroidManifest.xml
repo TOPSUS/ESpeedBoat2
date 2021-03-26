@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="id.alin.espeedboat">
-<<<<<<< HEAD
-=======
 
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -12,8 +10,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
->>>>>>> 5f1b56ea9b3c71e525fb8a6d9ab7b260279dba0a
 
     <application
         android:allowBackup="true"
@@ -22,15 +25,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ESpeedBoat">
-<<<<<<< HEAD
         <activity android:name=".MyUnpaidTransactionActivity"></activity>
         <activity android:name=".MyPointHistoryActivity" />
         <activity android:name=".MyPointRewardActivity" />
         <activity android:name=".InputIdentitasPemesanActivity" />
-=======
-        <activity android:name=".MyPointRewardActivity"></activity>
-        <activity android:name=".InputIdentitasPemesanActivity"></activity>
->>>>>>> 5f1b56ea9b3c71e525fb8a6d9ab7b260279dba0a
         <activity android:name=".GantiPasswordActivity" />
         <activity android:name=".LupaPasswordVerifikasiEmailActivity" />
         <activity android:name=".PemesananJadwalActivity" />
@@ -54,23 +52,5 @@
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing" />
     </application>
-<<<<<<< HEAD
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-=======
->>>>>>> 5f1b56ea9b3c71e525fb8a6d9ab7b260279dba0a
 
 </manifest>

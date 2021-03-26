@@ -57,7 +57,6 @@ public class GantiPasswordActivity extends AppCompatActivity {
                 String confirm_password = etpassconfirm.getText().toString();
 
                 postNewPaswordAPI(code,email,password,confirm_password);
-
             }
         });
     }
@@ -90,10 +89,10 @@ public class GantiPasswordActivity extends AppCompatActivity {
 
     private void showSuccessChangePasswordModal(){
         MaterialDialog mDialog = new MaterialDialog.Builder(this)
-                .setTitle("Mengirim Email Kembali")
+                .setTitle("Sukses mengganti password")
                 .setMessage("Selamat password anda telah diganti")
                 .setCancelable(false)
-                .setAnimation(R.raw.loading)
+                .setAnimation(R.raw.animasi_boat)
                 .setPositiveButton("Ok", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
