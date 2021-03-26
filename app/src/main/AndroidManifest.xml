@@ -25,7 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ESpeedBoat">
-        <activity android:name=".MyUnpaidTransactionActivity"></activity>
+        <activity android:name=".MyUnpaidTransactionActivity"/>
         <activity android:name=".MyPointHistoryActivity" />
         <activity android:name=".MyPointRewardActivity" />
         <activity android:name=".InputIdentitasPemesanActivity" />
