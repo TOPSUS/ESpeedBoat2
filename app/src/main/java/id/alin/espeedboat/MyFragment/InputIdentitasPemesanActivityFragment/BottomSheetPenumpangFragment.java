@@ -7,7 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +27,7 @@ import id.alin.espeedboat.InputIdentitasPemesanActivity;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.PenumpangData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.R;
+import id.alin.espeedboat.RegisterActivity;
 
 public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
     private ImageButton close;
@@ -30,9 +35,16 @@ public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
     private String nama;
     private String nomor_identitas;
 
+    /*STATUS BTN SIMPAN*/
     private boolean btnsimpan_clicked;
 
+    /*FIELD NAMA DAN NO IDENTITAS*/
     private TextInputEditText tvnama, tvnoidentitas;
+
+    /*FIELD JENIS ID_CARD*/
+    private AutoCompleteTextView type_id_card;
+
+    /*BUTTON SIMPAN*/
     private MaterialButton btnsimpan;
 
     /*ANTI DOUBLE CLICK*/
@@ -64,6 +76,14 @@ public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
             }
         });
 
+        /*MEMBUAT PILIHAN ID_CARD*/
+        this.type_id_card = getView().findViewById(R.id.filled_exposed_dropdown);
+
+        String[] type = new String[]{"KTP", "SIM","Kartu Pelajar"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.text_view_dropdown_item, type);
+        this.type_id_card.setAdapter(adapter);
+
         this.tvnama = view.findViewById(R.id.namapengguna);
         this.tvnama.setText(nama);
 
@@ -85,6 +105,8 @@ public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
                         List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
                         penumpangDataList.get(index).setNama_pemegang_ticket(tvnama.getText().toString());
                         penumpangDataList.get(index).setNo_id_card(tvnoidentitas.getText().toString());
+                        penumpangDataList.get(index).setType_id_card(type_id_card.getText().toString());
+                        Toast.makeText(getContext(),type_id_card.getText().toString() , Toast.LENGTH_SHORT).show();
                         InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.setListPenumpangLivedata(penumpangDataList);
                         btnsimpan_clicked = true;
                         dismiss();
@@ -105,6 +127,11 @@ public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
         if(this.tvnoidentitas.getText().toString().matches("")){
             validation-= 1;
             this.tvnoidentitas.setError("Masukkan nomor identitas");
+        }
+
+        if(this.type_id_card.getText().toString().matches("")){
+            validation-=1;
+            this.type_id_card.setError("");
         }
 
         if(validation == 1){

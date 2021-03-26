@@ -2,19 +2,26 @@ package id.alin.espeedboat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
 import com.zcw.togglebutton.ToggleButton;
 
 import java.text.DecimalFormat;
@@ -24,15 +31,24 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import dev.shreyaspatil.MaterialDialog.AbstractDialog;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
+import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyAdapter.PenumpangAdapter;
 import id.alin.espeedboat.MyFragment.InputIdentitasPemesanActivityFragment.BottomSheetPenumpangFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.BottomSheetJumlahPenumpang;
+import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ServerResponseModels;
+import id.alin.espeedboat.MyRetrofit.Services.PemesananServices;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.InputIdentitasPemesanActivityViewModel;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.InputIdentitasPemesanActivityViewModelFactory;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.PenumpangData;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.TransaksiData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InputIdentitasPemesanActivity extends AppCompatActivity implements LifecycleOwner {
     private RecyclerView recyclerView;
@@ -43,12 +59,13 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     /*WIDGET*/
     private TextView tvasaltujuan, tvdetailjadwal, tvnamapemesan, tvemailpemesan, tvnomorpemesan,
                         tvtotalbiaya;
+    private Button btnlanjutkan;
+    private LinearLayout loading;
 
     public ToggleButton toggle;
 
     /*PEMESAN DIAMBIL DARI PROFILEDATA MAINACTIVITY*/
     private ProfileData pemesan;
-    private List<PenumpangData> penumpangData;
 
     /*PUBLIC STATIC KEY*/
     public static  final String INDEX_PENUMPANG = "INDEX_PENUMPANG";
@@ -116,6 +133,8 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         this.tvemailpemesan = findViewById(R.id.emailpemesan);
         this.toggle = findViewById(R.id.togglebuttonpemesanadalahpenumpang);
         this.tvtotalbiaya = findViewById(R.id.totalbiaya);
+        this.btnlanjutkan = findViewById(R.id.btnlanjutkanpembayaran);
+        this.loading = findViewById(R.id.loadinglayout);
 
         /*WIDGET UTIL*/
 
@@ -146,7 +165,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
                     }else{
                         InputIdentitasPemesanActivity.this.toggle.setToggleOn();
                     }
-                    return;
+                    return ;
                 }
                 else{
                     mLastClickTime = SystemClock.elapsedRealtime();
@@ -177,7 +196,26 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         kursIndonesia.setDecimalFormatSymbols(formatRp);
         String total_biaya_rupiah = "IDR " + kursIndonesia.format(total_biaya);
         this.tvtotalbiaya.setText(total_biaya_rupiah);
-    };
+
+        /*SET BUTTON PEMBAYARAN EVENT LISTENER*/
+        this.btnlanjutkan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(doValidate()){
+                    /*PREPARE POST DATA*/
+                    String id_pemesan = pemesan.getUser_id();
+                    String id_jadwal = String.valueOf(InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue().getId_jadwal());
+                    String token = pemesan.getToken();
+
+                    /*UBAH POJO MENJADI JSON*/
+                    Gson gson = new Gson();
+                    String penumpangjson = gson.toJson(InputIdentitasPemesanActivity.this.penumpangAdapter.penumpangData);
+
+                    showModalPersetujuanPemesanan(token, id_pemesan, id_jadwal,penumpangjson);
+                }
+            }
+        });
+    }
 
     /*FILL RECYCLERVIEW DENGAN DATA*/
     private void fillRecyclerView(){
@@ -194,7 +232,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
 
         /*AMBIL VIEW MODEL PENUMPANG*/
-        penumpangData = inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
+        List<PenumpangData> penumpangData = inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
 
         int jumlah_penumpang = Integer.parseInt(pemesananData.getJumlah_penumpang());
 
@@ -221,7 +259,6 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
 
     /*METHOD YANG DIGUNAKAN UNTUK MENAMPILKAN BOTTOMSHEET PENUMPANG*/
     public void showBottomSheet(String nama, String nomor_identitas, int index){
-
         BottomSheetPenumpangFragment bottomSheetJumlahPenumpang = new BottomSheetPenumpangFragment();
 
         Bundle bundle = new Bundle();
@@ -233,12 +270,111 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         bottomSheetJumlahPenumpang.showNow(getSupportFragmentManager(),"TAG");
     }
 
+    /*DIPANGGIL SAAT ACTIVITY DIHANCURKAN*/
     @Override
-    public void onBackPressed() {
+    protected void onDestroy() {
+        /*RESET PENUMPANG PADA VIEW MODEL*/
         List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
         penumpangDataList.clear();
         InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.setListPenumpangLivedata(penumpangDataList);
 
-        super.onBackPressed();
+        super.onDestroy();
+    }
+
+    /*METHOD YANG DIGUNAKAN UNTUK MENGIRIMKAN DATA PEMESANAN KE SERVER*/
+    private void postPemesananJadwalAPI(String token, String id_pemesan, String id_jadwal, String jsonPenumpang) {
+        Log.d("jsonpemesanan",jsonPenumpang);
+        showLoadingLayout(true);
+
+        PemesananServices services = ApiClient.getRetrofit().create(PemesananServices.class);
+        Call<ServerResponseModels> call = services.postPemesananTicket(
+            token,
+            id_pemesan,
+            id_jadwal,
+            jsonPenumpang
+        );
+
+        call.enqueue(new Callback<ServerResponseModels>() {
+            @Override
+            public void onResponse(Call<ServerResponseModels> call, Response<ServerResponseModels> response) {
+                if(response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")){
+                    Toast.makeText(InputIdentitasPemesanActivity.this, "SUKSES", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(InputIdentitasPemesanActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                showLoadingLayout(false);
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseModels> call, Throwable t) {
+                Toast.makeText(InputIdentitasPemesanActivity.this, "GAGAL : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                showLoadingLayout(false);
+            }
+        });
+    }
+
+    /*VALIDASI SEMUA INPUT REQUEST KE SERVER*/
+    private boolean doValidate() {
+        final int[] validation = {1};
+
+        List<PenumpangData> penumpangDataList = this.penumpangAdapter.penumpangData;
+
+        penumpangDataList.forEach(new Consumer<PenumpangData>() {
+            @Override
+            public void accept(PenumpangData penumpangData) {
+                if(penumpangData.getNama_pemegang_ticket().matches("")){
+                    validation[0] -=1;
+                }
+
+                if(penumpangData.getNo_id_card().matches("")){
+                    validation[0] -=1;
+                }
+
+                if(penumpangData.getType_id_card().matches("")){
+                    validation[0] -=1;
+                }
+            }
+        });
+
+        return validation[0] == 1;
+    }
+
+    /*METHOD UNTUK MODAL PERSETUJUAN PENGIRIMAN TIKET*/
+    private void showModalPersetujuanPemesanan(String token, String id_pemesan, String id_jadwal, String penumpangjson){
+        /*PEMBUATAN KALIMAT SAMBUTAN*/
+
+        /*INIT MODAL*/
+        MaterialDialog mDialog = new MaterialDialog.Builder(this)
+                .setTitle("LAKUKAN PEMESANAN ?")
+                .setMessage("Pesanan akan dibuat dan sebuah ticket akan dibooking untuk anda, mohon segera melakukan pembayaran setelahnya")
+                .setCancelable(false)
+                .setAnimation(R.raw.animation_boat_2)
+                .setPositiveButton("OKE", new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                        /*MEMANGGIL POST PEMSANAN JADWAL API*/
+                        postPemesananJadwalAPI(token,id_pemesan,id_jadwal,penumpangjson);
+                    }
+                })
+                .setNegativeButton("BACK", new AbstractDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .build();
+
+        // Show Dialog
+        mDialog.show();
+    }
+
+    /*METHOD YANG DIPANGGIL UNTUK MEMUNCULKAN LAYOUT LOADING*/
+    private void showLoadingLayout(boolean status){
+        if(status){
+            this.loading.setVisibility(View.VISIBLE);
+        }else{
+            this.loading.setVisibility(View.INVISIBLE);
+        }
     }
 }

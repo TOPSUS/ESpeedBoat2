@@ -1,13 +1,16 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -19,6 +22,12 @@ import id.alin.espeedboat.R;
 public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
     private MaterialNumberPicker materialNumberPicker;
     private Button btnPilih;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NORMAL,R.style.DialogStyle);
+    }
 
     @Nullable
     @Override
@@ -42,4 +51,6 @@ public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
             }
         });
     }
+
+
 }
