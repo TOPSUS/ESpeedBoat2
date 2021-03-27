@@ -1,5 +1,7 @@
 package id.alin.espeedboat.MyRetrofit.Services;
 
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.MetodePembayaran.ServerResponseMetodePembayaranData;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pembelian.ServerResponsePembelianData;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ServerResponseModels;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -11,10 +13,17 @@ public interface PemesananServices {
 
     @FormUrlEncoded
     @POST("/api/postpemesanan")
-    Call<ServerResponseModels> postPemesananTicket(
+    Call<ServerResponsePembelianData> postPemesananTicket(
             @Header("Authorization") String authorization,
             @Field("id_pemesan") String id_pemesan,
             @Field("id_jadwal") String id_jadwal,
+            @Field("id_metode_pembayaran") String id_metode_pembayaran,
             @Field("penumpang") String penumpang
     );
+
+    @POST("/api/getmetodepembayaran")
+    Call<ServerResponseMetodePembayaranData> getMetodePembayaran(
+            @Header("Authorization") String authorization
+    );
+
 }

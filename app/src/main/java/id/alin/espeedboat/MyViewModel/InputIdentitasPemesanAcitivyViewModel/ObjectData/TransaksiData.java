@@ -4,9 +4,11 @@ public class TransaksiData {
 
     private long id_jadwal;
     private long id_user;
+    private long id_metode_pembayaran;
+    private long total_biaya;
     private String bukti;
     private String tanggal;
-    private long total_biaya;
+    private String metode_pembayaran;
 
     public TransaksiData() {
         this.id_jadwal = 0;
@@ -14,6 +16,8 @@ public class TransaksiData {
         this.bukti = "";
         this.tanggal = "";
         this.total_biaya = 0;
+        this.metode_pembayaran = "";
+        this.id_metode_pembayaran = 0;
     }
 
     public long getId_jadwal() {
@@ -54,5 +58,21 @@ public class TransaksiData {
 
     public void setTotal_biaya(long total_biaya) {
         this.total_biaya = total_biaya;
+    }
+
+    public long getId_metode_pembayaran() {
+        return id_metode_pembayaran;
+    }
+
+    public void setId_metode_pembayaran(long id_metode_pembayaran) {
+        this.id_metode_pembayaran = id_metode_pembayaran;
+    }
+
+    public String getMetode_pembayaran() {
+        return metode_pembayaran;
+    }
+
+    public void setMetode_pembayaran(String metode_pembayaran) {
+        this.metode_pembayaran = metode_pembayaran;
     }
 }
