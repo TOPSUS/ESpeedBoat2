@@ -106,7 +106,7 @@ public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
                         penumpangDataList.get(index).setNama_pemegang_ticket(tvnama.getText().toString());
                         penumpangDataList.get(index).setNo_id_card(tvnoidentitas.getText().toString());
                         penumpangDataList.get(index).setType_id_card(type_id_card.getText().toString());
-                        Toast.makeText(getContext(),type_id_card.getText().toString() , Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(),type_id_card.getText().toString() , Toast.LENGTH_SHORT).show();
                         InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.setListPenumpangLivedata(penumpangDataList);
                         btnsimpan_clicked = true;
                         dismiss();

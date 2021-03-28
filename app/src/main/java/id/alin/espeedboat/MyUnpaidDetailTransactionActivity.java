@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     TextView tvStatusBayar, tvCountDown, tvKapal, tvTanggal, tvHarga, tvAsal, tvTujuan, tvBerangkat, tvSampai, tvNamaPemesan, tvEmailPemesan, tvTeleponPemesan;
     Button btnUploadBukti, btnBatalPesan;
-
+    ImageButton btnBack;
     RecyclerView recyclerView;
     PenumpangDetailAdapter penumpangDetailAdapter;
 
@@ -61,6 +62,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
 
         }
 
+        btnBack = (ImageButton) findViewById(R.id.backButton);
         detail = (NestedScrollView) findViewById(R.id.nestedDetail);
         loading = (LinearLayout) findViewById(R.id.loadinglayout);
         nodata = (LinearLayout) findViewById(R.id.nodatalayout);
@@ -77,11 +79,23 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         tvKapal = (TextView) findViewById(R.id.tvJenisKapalUnpaid);
         tvTanggal = (TextView) findViewById(R.id.tvTanggalUnpaid);
         tvHarga = (TextView) findViewById(R.id.tvHargaUnpaid);
+        tvAsal = (TextView) findViewById(R.id.tvAsalUnpaid);
+        tvTujuan = (TextView) findViewById(R.id.tvTujuanUnpaid);
+        tvBerangkat = (TextView) findViewById(R.id.tvWaktuAsalUnpaid);
+        tvSampai = (TextView) findViewById(R.id.tvWaktuTujuanUnpaid);
+
         tvNamaPemesan = (TextView) findViewById(R.id.namapemesan);
         tvEmailPemesan = (TextView) findViewById(R.id.emailpemesan);
         tvTeleponPemesan = (TextView) findViewById(R.id.nomorhppemesan);
 
         postDetailPesananFromApi();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void postDetailPesananFromApi(){
@@ -160,6 +174,10 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         tvKapal.setText(body.getKapal());
         tvHarga.setText(total_biaya_rupiah);
         tvTanggal.setText(day + " " + month + " " + year);
+        tvAsal.setText(body.getPelabuhan_asal());
+        tvTujuan.setText(body.getPelabuhan_tujuan());
+        tvBerangkat.setText(body.getWaktu_berangkat().substring(0, Math.min(body.getWaktu_berangkat().length(), 5))+ " WITA");
+        tvSampai.setText(body.getWaktu_sampai().substring(0, Math.min(body.getWaktu_sampai().length(), 5))+ " WITA");
 
         tvNamaPemesan.setText(body.getNama_pemesan());
         tvEmailPemesan.setText("Email: " + body.getEmail_pemesan());

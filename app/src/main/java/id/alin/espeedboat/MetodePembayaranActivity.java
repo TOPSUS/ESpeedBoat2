@@ -124,7 +124,10 @@ public class MetodePembayaranActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ServerResponsePembelianData> call, Response<ServerResponsePembelianData> response) {
                 if(response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")){
-                    Toast.makeText(MetodePembayaranActivity.this, String.valueOf(response.body().getPembelian().getId()), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MetodePembayaranActivity.this, MyUnpaidDetailTransactionActivity.class);
+                    intent.putExtra("id_trans", response.body().getPembelian().getId());
+                    startActivity(intent);
+                    //Toast.makeText(MetodePembayaranActivity.this, String.valueOf(response.body().getPembelian().getId()), Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(MetodePembayaranActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
