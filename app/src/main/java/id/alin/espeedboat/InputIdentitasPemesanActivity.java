@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -281,38 +282,6 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         super.onDestroy();
     }
 
-    /*METHOD YANG DIGUNAKAN UNTUK MENGIRIMKAN DATA PEMESANAN KE SERVER*/
-    private void postPemesananJadwalAPI(String token, String id_pemesan, String id_jadwal, String jsonPenumpang) {
-        Log.d("jsonpemesanan",jsonPenumpang);
-        showLoadingLayout(true);
-
-        PemesananServices services = ApiClient.getRetrofit().create(PemesananServices.class);
-        Call<ServerResponseModels> call = services.postPemesananTicket(
-            token,
-            id_pemesan,
-            id_jadwal,
-            jsonPenumpang
-        );
-
-        call.enqueue(new Callback<ServerResponseModels>() {
-            @Override
-            public void onResponse(Call<ServerResponseModels> call, Response<ServerResponseModels> response) {
-                if(response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")){
-                    Toast.makeText(InputIdentitasPemesanActivity.this, "SUKSES", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(InputIdentitasPemesanActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-                showLoadingLayout(false);
-            }
-
-            @Override
-            public void onFailure(Call<ServerResponseModels> call, Throwable t) {
-                Toast.makeText(InputIdentitasPemesanActivity.this, "GAGAL : "+t.getMessage(), Toast.LENGTH_SHORT).show();
-                showLoadingLayout(false);
-            }
-        });
-    }
-
     /*VALIDASI SEMUA INPUT REQUEST KE SERVER*/
     private boolean doValidate() {
         final int[] validation = {1};
@@ -354,7 +323,8 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
                     public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
                         dialogInterface.dismiss();
                         /*MEMANGGIL POST PEMSANAN JADWAL API*/
-                        postPemesananJadwalAPI(token,id_pemesan,id_jadwal,penumpangjson);
+                        Intent intent = new Intent(InputIdentitasPemesanActivity.this, MetodePembayaranActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton("BACK", new AbstractDialog.OnClickListener() {

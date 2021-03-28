@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ESpeedBoat">
+
         <activity android:name=".MyUnpaidDetailTransactionActivity"></activity>
+        <activity android:name=".MetodePembayaranActivity"></activity>
         <activity android:name=".MyUnpaidTransactionActivity" />
         <activity android:name=".MyPointHistoryActivity" />
         <activity android:name=".MyPointRewardActivity" />
