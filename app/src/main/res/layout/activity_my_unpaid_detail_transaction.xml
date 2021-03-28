@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_bg"
+    android:orientation="vertical"
+    tools:context=".MyUnpaidDetailTransactionActivity">
+
+    <!--HEADER-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/BarLayoutInputIdentitasActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.ESpeedBoat">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.ESpeedBoat">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry">
+
+                    <ImageButton
+                        android:id="@+id/backButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/Blue_primary"
+                        android:src="@drawable/ic_back" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Detail Pesanan"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!--FRAME LAYOUT-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/BarLayoutInputIdentitasActivity">
+
+        <!--CONTENT-->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/HeadingHome"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Detail Jadwal"
+                    android:textSize="15sp"
+                    tools:ignore="HardcodedText" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="2dp"
+                        android:id="@+id/cardViewUnpaidTransaction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="5dp"
+                        android:elevation="3dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingBottom="15dp"
+                                android:paddingTop="15dp"
+                                android:paddingHorizontal="15dp">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/tvJenisKapalUnpaid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Feri 001"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold"/>
+                                    <TextView
+                                        android:id="@+id/tvTanggalUnpaid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Rabu, 13 Maret 2021"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/tvHargaUnpaid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Rp. 50.000"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold"
+                                        android:layout_gravity="right"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#ededed"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/ic_boat"/>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:gravity="center_vertical"
+                                    android:layout_marginHorizontal="15dp">
+                                    <TextView
+                                        android:id="@+id/tvAsalUnpaid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Sanur"
+                                        android:textSize="17dp"
+                                        android:textColor="@color/black"/>
+                                    <TextView
+                                        android:id="@+id/tvWaktuAsalUnpaid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="13:30"
+                                        android:gravity="bottom"
+                                        android:textColor="@color/black"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical">
+                                    <ImageView
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:src="@drawable/ic_arrowtujuan"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:gravity="center_vertical"
+                                    android:layout_marginHorizontal="15dp">
+                                    <TextView
+                                        android:id="@+id/tvTujuanUnpaid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Tanjung Benoa"
+                                        android:textSize="17dp"
+                                        android:textColor="@color/black"/>
+                                    <TextView
+                                        android:id="@+id/tvWaktuTujuanUnpaid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="13:30"
+                                        android:gravity="bottom"
+                                        android:textColor="@color/black"/>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2">
+                                    <TextView
+                                        android:id="@+id/tvStatusBayar"
+                                        android:layout_margin="15dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Belum Dibayar"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/Danger_Red"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/tvCountDown"
+                                        android:layout_margin="15dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Batas Waktu: 00:16:23"
+                                        android:textStyle="bold"
+                                        android:layout_gravity="right"
+                                        android:textColor="@color/Safety_Green"/>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <TextView
+                    style="@style/HeadingHome"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Pemesan"
+                    android:layout_marginTop="15dp"
+                    android:textSize="15sp"
+                    tools:ignore="HardcodedText" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:contentPadding="10dp"
+                        app:cardCornerRadius="5dp"
+                        android:elevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/namapemesan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Abdi Purnawan"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/emailpemesan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Email: abdipurnawan1@gmail.com"
+                                android:scrollHorizontally="false"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:id="@+id/nomorhppemesan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Telepon: 081338960544"
+                                android:scrollHorizontally="false"
+                                android:textSize="12sp"
+                                tools:ignore="HardcodedText" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/HeadingHome"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Penumpang"
+                    android:textSize="15sp"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPenumpang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    style="@style/HeadingHome"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Tindakan"
+                    android:textSize="15sp"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="20dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:contentPadding="10dp">
+
+                    <!--PEMBAYARAN SECTION-->
+<!--                    LAYOUT UPLOAD BUKTI-->
+                    <LinearLayout
+                        android:id="@+id/layoutBelumDibayar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="15dp">
+                        <Button
+                            android:id="@+id/btnUploadBukti"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Upload Bukti Pembayaran"
+                            tools:ignore="HardcodedText" />
+                        <Button
+                            android:id="@+id/btnBatalPesan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Batalkan Pesanan"
+                            android:backgroundTint="@color/Danger_Red"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+<!--                    LAYOUT MENUNGGU KONFIRMASI-->
+                    <LinearLayout
+                        android:id="@+id/layoutMenungguKonfirmasi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="15dp">
+                        <Button
+                            android:id="@+id/btnDownloadBukti"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Download Bukti Pembayaran"
+                            tools:ignore="HardcodedText" />
+                        <Button
+                            android:id="@+id/btnUploadUlangBukti"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Upload Ulang Bukti Pembayaran"
+                            android:backgroundTint="@color/lightgrey"
+                            android:textColor="@color/black"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+<!--                    LAYOUT TERKONFIRMASI-->
+                    <LinearLayout
+                        android:id="@+id/layoutTerkonfirmasi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginHorizontal="15dp">
+                        <Button
+                            android:id="@+id/btnDownloadTiket"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Download Tiket"
+                            android:layout_gravity="center_vertical"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!--LOADING LAYOUT-->
+        <LinearLayout
+            android:id="@+id/loadinglayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="@color/white"
+            android:alpha="0.6"
+            android:visibility="invisible"
+            android:orientation="vertical">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:lottie_rawRes="@raw/loading"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
+                app:lottie_repeatCount="-1"
+                app:lottie_repeatMode="reverse"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"
+                android:textColor="@color/textColorSecondary"
+                android:text="Mohon Tunggu"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <!--ANIMATION MOHON TUNGGU-->
+        <LinearLayout
+            android:id="@+id/nodatalayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/sad_folder"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gagal memuat transaksi"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                android:textColor="@color/textColorSecondary"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</RelativeLayout>

@@ -2,10 +2,7 @@ package id.alin.espeedboat.MyAdapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
-import id.alin.espeedboat.MainActivity;
-import id.alin.espeedboat.MyPointRewardActivity;
-import id.alin.espeedboat.MyProfileActivity;
-import id.alin.espeedboat.MyRetrofit.ApiClient;
-import id.alin.espeedboat.MySharedPref.Config;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
 
 public class MyPointRedeemAdapter extends RecyclerView.Adapter<MyPointRedeemAdapter.ViewHolder> {

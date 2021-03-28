@@ -1,4 +1,4 @@
-package id.alin.espeedboat;
+package id.alin.espeedboat.MyProfile;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,17 +10,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
-import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
+import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
-import id.alin.espeedboat.MyRetrofit.Services.AuthServices;
 import id.alin.espeedboat.MyRetrofit.Services.UserServices;
 import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.Request;
-import okhttp3.RequestBody;
+import id.alin.espeedboat.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,9 +33,6 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -55,8 +48,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity implements LifecycleOwner {
 

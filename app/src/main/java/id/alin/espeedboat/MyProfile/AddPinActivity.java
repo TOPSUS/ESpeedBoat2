@@ -1,15 +1,17 @@
-package id.alin.espeedboat;
+package id.alin.espeedboat.MyProfile;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
+import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
 import id.alin.espeedboat.MyRetrofit.Services.UserServices;
 import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
+import id.alin.espeedboat.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,11 +25,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-public class EditPinActivity extends AppCompatActivity {
+public class AddPinActivity extends AppCompatActivity {
 
     Button btnUpdate, btnCancel;
     ImageButton backButton;
-    EditText etOldPin, etNewPin, etConfirmPin;
+    EditText etNewPin, etConfirmPin, etPassword;
     ProgressDialog dialog;
 
     /*SHARED PREFERENCE APLIKASI*/
@@ -37,7 +39,7 @@ public class EditPinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_pin);
+        setContentView(R.layout.activity_add_pin);
 
         /*DISABLE DARK MODE*/
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -50,17 +52,16 @@ public class EditPinActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
 
         //PROGRES BAR INIT
-        dialog = new ProgressDialog(EditPinActivity.this);
+        dialog = new ProgressDialog(AddPinActivity.this);
         dialog.setCancelable(false);
 
         backButton = (ImageButton) findViewById(R.id.backButton);
-        btnUpdate = (Button) findViewById(R.id.btnEditPin);
-        btnCancel = (Button) findViewById(R.id.btnCancelEditPin);
+        btnUpdate = (Button) findViewById(R.id.btnAddPin);
+        btnCancel = (Button) findViewById(R.id.btnCancelAddPin);
 
-        etOldPin = (EditText) findViewById(R.id.etOldPin);
-        etNewPin = (EditText) findViewById(R.id.etNewPin);
-        etConfirmPin = (EditText) findViewById(R.id.etConfirmPin);
-
+        etNewPin = (EditText) findViewById(R.id.etNewAddPin);
+        etConfirmPin = (EditText) findViewById(R.id.etConfirmAddPin);
+        etPassword = (EditText) findViewById(R.id.etPasswordAddPin);
     }
 
     private void eventListener() {
@@ -94,10 +95,10 @@ public class EditPinActivity extends AppCompatActivity {
         dialog.setMessage("Processing");
         dialog.show();
         UserServices services = ApiClient.getRetrofit().create(UserServices.class);
-        Call<ServerResponseProfileData> call = services.editPin(
+        Call<ServerResponseProfileData> call = services.addPin(
                 data.getToken(),
-                this.etOldPin.getText().toString().trim(),
-                this.etNewPin.getText().toString().trim()
+                this.etNewPin.getText().toString().trim(),
+                this.etPassword.getText().toString().trim()
 
         );
 
@@ -110,10 +111,10 @@ public class EditPinActivity extends AppCompatActivity {
                     setSharedPreferenceData(response.body());
                     MainActivity.mainActivityViewModel.setProfileData(data);
                     dialog.dismiss();
-                    modalShowEditPinBerhasil();
+                    modalShowAddPinBerhasil();
                 }else if(response.body().getStatus().matches("failed")){
                     dialog.dismiss();
-                    modalShowEditPinGagal();
+                    modalShowAddPinGagal();
                 }else{
                     modalShowError(response.body().getError().parseErrorAll());
                 }
@@ -137,28 +138,28 @@ public class EditPinActivity extends AppCompatActivity {
             etNewPin.setError("PIN Tidak Cocok");
             return false;
         }
-        if(etOldPin.getText().toString().isEmpty()){
-            etOldPin.setError("Masukkan PIN Saat Ini");
+        if(etPassword.getText().toString().isEmpty()){
+            etPassword.setError("Masukkan Password Anda");
             return false;
         }
         return true;
     }
 
     /*METHOD UNTUK MODAL*/
-    private void modalShowEditPinBerhasil(){
+    private void modalShowAddPinBerhasil(){
         /*PEMBUATAN KALIMAT SAMBUTAN*/
 
         /*INIT MODAL*/
         MaterialDialog mDialog = new MaterialDialog.Builder(this)
-                .setTitle("EDIT PIN BERHASIL")
-                .setMessage("Edit Pin Telah Berhasil Dilakukan")
+                .setTitle("PENAMBAHAN PIN BERHASIL")
+                .setMessage("Tambah Pin Telah Berhasil Dilakukan")
                 .setCancelable(false)
                 .setAnimation(R.raw.animation_boat_2)
                 .setPositiveButton("OKE", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         dialogInterface.dismiss();
-                        EditPinActivity.this.finish();
+                        AddPinActivity.this.finish();
                     }
                 })
                 .setNegativeButton("BACK", new AbstractDialog.OnClickListener() {
@@ -174,13 +175,13 @@ public class EditPinActivity extends AppCompatActivity {
     }
 
     /*METHOD UNTUK MODAL*/
-    private void modalShowEditPinGagal(){
+    private void modalShowAddPinGagal(){
         /*PEMBUATAN KALIMAT SAMBUTAN*/
 
         /*INIT MODAL*/
         MaterialDialog mDialog = new MaterialDialog.Builder(this)
-                .setTitle("EDIT PIN GAGAL")
-                .setMessage("PIN Lama Salah")
+                .setTitle("PENAMBAHAN PIN GAGAL")
+                .setMessage("Password Salah")
                 .setCancelable(false)
                 .setAnimation(R.raw.animation_boat_2)
                 .setPositiveButton("OKE", new MaterialDialog.OnClickListener() {

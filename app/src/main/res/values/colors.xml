@@ -16,6 +16,11 @@
     <color name="Blue_tertiary">#EAF8FF</color>
     <color name="grey_bg">#F1F1F1</color>
 
+    <!--    ABDI PUNYA-->
+    <color name="Danger_Red">#FF0000</color>
+    <color name="Warning_Orange">#ff6700</color>
+    <color name="Safety_Green">#5aa27c</color>
+
     <!--SHAMMER-->
     <color name="shimmer_bg">#BBE6FA</color>
 

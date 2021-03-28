@@ -19,7 +19,7 @@ import id.alin.espeedboat.LoginActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyPointActivity;
 import id.alin.espeedboat.MyPointHistoryActivity;
-import id.alin.espeedboat.MyProfileActivity;
+import id.alin.espeedboat.MyProfile.MyProfileActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
 import id.alin.espeedboat.MyRetrofit.Services.UserServices;
@@ -137,14 +137,18 @@ public class ProfileFragment extends Fragment {
         riwayat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Ini Riwayat Transaksi User", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MyUnpaidTransactionActivity.class);
+                intent.putExtra("status", "done");
+                startActivity(intent);
             }
         });
 
         active_trans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Ini Transaksi Aktif User", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MyUnpaidTransactionActivity.class);
+                intent.putExtra("status", "terkonfirmasi");
+                startActivity(intent);
             }
         });
 
@@ -152,6 +156,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MyUnpaidTransactionActivity.class);
+                intent.putExtra("status", "menunggu pembayaran");
                 startActivity(intent);
             }
         });
