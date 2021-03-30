@@ -14,19 +14,22 @@
         android:layout_alignParentTop="true"
         android:background="@color/Blue_primary" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingHorizontal="10dp"
         android:paddingTop="40dp"
+        android:fillViewport="true"
         android:scrollbarSize="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
+            android:layout_marginBottom="30dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,110 +44,34 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/panelinputpemesananjadwal"
                 android:orientation="vertical"
                 android:paddingHorizontal="10dp"
                 android:paddingTop="30dp"
                 android:paddingBottom="10dp">
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/metPemesananJadwalFragmentDari"
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tablayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="Pelabuhan asal"
-                    app:met_textColorHint="@color/black"
-                    android:textColorHint="@color/black"
-                    app:met_baseColor="@color/Blue_primary"
-                    app:met_textColor="@color/espeedorange"
-                    app:met_floatingLabelTextColor="@color/black"
-                    app:met_errorColor="@android:color/holo_red_dark"
-                    app:met_floatingLabel="highlight"
-                    app:met_floatingLabelAlwaysShown="true"
-                    app:met_floatingLabelText="Asal :"
-                    app:met_iconLeft="@drawable/ic_speedboat"
-                    app:met_iconPadding="3dp"
-                    app:met_primaryColor="@color/Blue_primary"
-                    app:met_underlineColor="@color/Blue_primary"
-                    tools:ignore="HardcodedText" />
+                    app:tabTextColor="@color/grey_bg"
+                    android:backgroundTint="@color/Blue_primary"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@android:color/white"
+                    app:tabIndicatorHeight="3dp"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@android:color/white" />
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/metPemesananJadwalFragmentTujuan"
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewpagerpemesanan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Pelabuhan tujuan"
-                    android:focusable="false"
-                    app:met_textColorHint="@color/black"
-                    android:textColorHint="@color/black"
-                    app:met_baseColor="@color/Blue_primary"
-                    app:met_textColor="@color/espeedorange"
-                    app:met_floatingLabelTextColor="@color/black"
-                    app:met_errorColor="@android:color/holo_red_dark"
-                    app:met_floatingLabel="highlight"
-                    app:met_floatingLabelAlwaysShown="true"
-                    app:met_floatingLabelText="Tujuan :"
-                    app:met_iconLeft="@drawable/ic_speedboat"
-                    app:met_iconPadding="3dp"
-                    app:met_primaryColor="@color/Blue_primary"
-                    app:met_underlineColor="@color/Blue_primary"
-                    tools:ignore="HardcodedText" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/metPemesananJadwalFragmentTanggal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Tanggal keberangkatan"
-                    android:focusable="false"
-                    app:met_textColor="@color/espeedorange"
-                    app:met_floatingLabelTextColor="@color/black"
-                    app:met_textColorHint="@color/black"
-                    android:textColorHint="@color/black"
-                    app:met_baseColor="@color/Blue_primary"
-                    app:met_errorColor="@android:color/holo_red_dark"
-                    app:met_floatingLabel="highlight"
-                    app:met_floatingLabelAlwaysShown="true"
-                    app:met_floatingLabelText="Tanggal :"
-                    app:met_iconLeft="@drawable/ic_date"
-                    app:met_iconPadding="3dp"
-                    app:met_primaryColor="@color/Blue_primary"
-                    app:met_underlineColor="@color/Blue_primary"
-                    tools:ignore="HardcodedText" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/metPemesananJadwalFragmentJumlahpenumpang"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:hint="Jumlah penumpang"
-                    android:focusable="false"
-                    app:met_textColor="@color/espeedorange"
-                    app:met_floatingLabelTextColor="@color/black"
-                    app:met_textColorHint="@color/black"
-                    android:textColorHint="@color/black"
-                    app:met_baseColor="@color/Blue_primary"
-                    app:met_errorColor="@android:color/holo_red_dark"
-                    app:met_floatingLabel="highlight"
-                    app:met_floatingLabelAlwaysShown="true"
-                    app:met_floatingLabelText="Jumlah penumpang :"
-                    app:met_iconLeft="@drawable/ic_penumpang"
-                    app:met_iconPadding="3dp"
-                    app:met_primaryColor="@color/Blue_primary"
-                    app:met_underlineColor="@color/Blue_primary"
-                    tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/btncari"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:backgroundTint="@color/espeedorange"
-                    android:text="CARI"
-                    tools:ignore="HardcodedText" />
+                    android:layout_height="match_parent"
+                    />
 
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

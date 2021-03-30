@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rajat.pdfviewer.PdfViewerActivity;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private LinearLayout loading, nodata, layoutBelumDibayar, layoutMenungguKonfirmasi, layoutTerkonfirmasi;
     CountDownTimer countDownTimer;
     TextView tvStatusBayar, tvCountDown, tvKapal, tvTanggal, tvHarga, tvAsal, tvTujuan, tvBerangkat, tvSampai, tvNamaPemesan, tvEmailPemesan, tvTeleponPemesan;
-    Button btnUploadBukti, btnBatalPesan;
+    Button btnUploadBukti, btnBatalPesan, btndownloadticket;
     ImageButton btnBack;
     RecyclerView recyclerView;
     PenumpangDetailAdapter penumpangDetailAdapter;
@@ -73,6 +75,20 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rvPenumpang);
         btnUploadBukti = (Button) findViewById(R.id.btnUploadBukti);
         btnBatalPesan = (Button) findViewById(R.id.btnBatalPesan);
+        this.btndownloadticket = findViewById(R.id.btnDownloadTiket);
+
+        this.btndownloadticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(PdfViewerActivity.Companion.launchPdfFromUrl(
+                        MyUnpaidDetailTransactionActivity.this,
+                        "https://www.espeedboat.xyz/storage/test_pdf/ticket_pdf.pdf",
+                        "E-Ticket",
+                        "",
+                        true
+                ));
+            }
+        });
 
         tvStatusBayar = (TextView) findViewById(R.id.tvStatusBayar);
         tvCountDown = (TextView) findViewById(R.id.tvCountDown);
