@@ -1,8 +1,6 @@
 package id.alin.espeedboat;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,21 +12,15 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.zcw.togglebutton.ToggleButton;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -37,19 +29,12 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyAdapter.PenumpangAdapter;
 import id.alin.espeedboat.MyFragment.InputIdentitasPemesanActivityFragment.BottomSheetPenumpangFragment;
-import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.BottomSheetJumlahPenumpang;
-import id.alin.espeedboat.MyRetrofit.ApiClient;
-import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ServerResponseModels;
-import id.alin.espeedboat.MyRetrofit.Services.PemesananServices;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.InputIdentitasPemesanActivityViewModel;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.InputIdentitasPemesanActivityViewModelFactory;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.PenumpangData;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.TransaksiData;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class InputIdentitasPemesanActivity extends AppCompatActivity implements LifecycleOwner {
     private RecyclerView recyclerView;
@@ -95,18 +80,18 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         }
 
         /*MENGAMBIL DATA PESANAN DARI VIEW MODEL MAINACTIVITY*/
-        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
-        Log.d("PEMESANAN DATA", pemesananData.getJumlah_penumpang());
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        Log.d("PEMESANAN DATA", pemesananSpeedboatData.getJumlah_penumpang());
 
         /*MEMASUKKAN DATA PROFILE DATA SEBAGAI PEMESAN*/
         pemesan = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
         /*MEMASUKKAN DATA PEMESAN KE TRANSAKSI DATA LIVE DATA*/
         TransaksiData transaksiData = inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue();
-        transaksiData.setId_jadwal(pemesananData.getJadwalEntity().getId());
+        transaksiData.setId_jadwal(pemesananSpeedboatData.getJadwalEntity().getId());
         transaksiData.setId_user(Long.parseLong(pemesan.getUser_id()));
-        transaksiData.setTanggal(pemesananData.getTanggal_variable());
-        transaksiData.setTotal_biaya((Long.parseLong(pemesananData.getJadwalEntity().getHarga()) * Long.parseLong(pemesananData.getJumlah_penumpang())));
+        transaksiData.setTanggal(pemesananSpeedboatData.getTanggal_variable());
+        transaksiData.setTotal_biaya((Long.parseLong(pemesananSpeedboatData.getJadwalEntity().getHarga()) * Long.parseLong(pemesananSpeedboatData.getJumlah_penumpang())));
         inputIdentitasPemesanActivityViewModel.setTransaksiMutableLiveData(transaksiData);
 
         /*INIT PENUMPANG DATA VIEW MODEL*/
@@ -140,14 +125,14 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         /*WIDGET UTIL*/
 
         /*SET DETAIL JADWAL*/
-        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
-        String asaltujuan = pemesananData.getAsal() + " > " + pemesananData.getTujuan();
-        String detai_jadwal = pemesananData.getJadwalEntity().getPelabuhan_asal_kode() +
-                                " >> " + pemesananData.getJadwalEntity().getPelabuhan_tujuan_kode() +
-                                " [ " + pemesananData.getTanggal() + " ] " +
-                                pemesananData.getJadwalEntity().getWaktu_berangkat();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        String asaltujuan = pemesananSpeedboatData.getAsal() + " > " + pemesananSpeedboatData.getTujuan();
+        String detai_jadwal = pemesananSpeedboatData.getJadwalEntity().getPelabuhan_asal_kode() +
+                                " >> " + pemesananSpeedboatData.getJadwalEntity().getPelabuhan_tujuan_kode() +
+                                " [ " + pemesananSpeedboatData.getTanggal() + " ] " +
+                                pemesananSpeedboatData.getJadwalEntity().getWaktu_berangkat();
 
-        Log.d("alin_pelabuhan", pemesananData.getAsal());
+        Log.d("alin_pelabuhan", pemesananSpeedboatData.getAsal());
         this.tvasaltujuan.setText(asaltujuan);
         this.tvdetailjadwal.setText(detai_jadwal);
 
@@ -230,17 +215,17 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         };
         this.recyclerView.setLayoutManager(this.layoutManager);
         /*AMBIL JUMLAH PENUMPANG*/
-        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
 
         /*AMBIL VIEW MODEL PENUMPANG*/
         List<PenumpangData> penumpangData = inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
 
-        int jumlah_penumpang = Integer.parseInt(pemesananData.getJumlah_penumpang());
+        int jumlah_penumpang = Integer.parseInt(pemesananSpeedboatData.getJumlah_penumpang());
 
         if(jumlah_penumpang != penumpangData.size()) {
             for (int i = 0; i < jumlah_penumpang; i++) {
                 PenumpangData penumpang = new PenumpangData();
-                penumpang.setHarga(Long.parseLong(pemesananData.getJadwalEntity().getHarga()));
+                penumpang.setHarga(Long.parseLong(pemesananSpeedboatData.getJadwalEntity().getHarga()));
                 penumpangData.add(penumpang);
             }
         }

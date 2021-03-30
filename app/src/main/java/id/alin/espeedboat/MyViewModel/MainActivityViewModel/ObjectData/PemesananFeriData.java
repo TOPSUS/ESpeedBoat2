@@ -1,9 +1,8 @@
 package id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData;
 
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
-import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
 
-public class PemesananData {
+public class PemesananFeriData {
     private String asal;
     private String tujuan;
     private long id_asal;
@@ -13,11 +12,10 @@ public class PemesananData {
     private String jumlah_penumpang;
     private JadwalEntity jadwalEntity;
 
-    public PemesananData() {
+    public PemesananFeriData() {
         this.asal = "";
-        this.tujuan = "";
         this.id_asal = 0;
-        this.tanggal = "";
+        this.tujuan = "";
         this.id_tujuan = 0;
         this.tanggal_variable = "";
         this.jumlah_penumpang = "";
@@ -40,6 +38,14 @@ public class PemesananData {
         this.tujuan = tujuan;
     }
 
+    public long getId_asal() {
+        return id_asal;
+    }
+
+    public void setId_asal(long id_asal) {
+        this.id_asal = id_asal;
+    }
+
     public String getTanggal() {
         return tanggal;
     }
@@ -48,12 +54,12 @@ public class PemesananData {
         this.tanggal = tanggal;
     }
 
-    public String getJumlah_penumpang() {
-        return jumlah_penumpang;
+    public long getId_tujuan() {
+        return id_tujuan;
     }
 
-    public void setJumlah_penumpang(String jumlah_penumpang) {
-        this.jumlah_penumpang = jumlah_penumpang;
+    public void setId_tujuan(long id_tujuan) {
+        this.id_tujuan = id_tujuan;
     }
 
     public String getTanggal_variable() {
@@ -64,20 +70,12 @@ public class PemesananData {
         this.tanggal_variable = tanggal_variable;
     }
 
-    public long getId_asal() {
-        return id_asal;
+    public String getJumlah_penumpang() {
+        return jumlah_penumpang;
     }
 
-    public void setId_asal(long id_asal) {
-        this.id_asal = id_asal;
-    }
-
-    public long getId_tujuan() {
-        return id_tujuan;
-    }
-
-    public void setId_tujuan(long id_tujuan) {
-        this.id_tujuan = id_tujuan;
+    public void setJumlah_penumpang(String jumlah_penumpang) {
+        this.jumlah_penumpang = jumlah_penumpang;
     }
 
     public JadwalEntity getJadwalEntity() {

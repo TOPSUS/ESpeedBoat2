@@ -1,8 +1,6 @@
 package id.alin.espeedboat.MyAdapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import id.alin.espeedboat.MetodePembayaranActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRoom.Entity.MetodePembayaranEntity;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.TransaksiData;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.R;
 
 public class MetodePembayaranAdapter extends RecyclerView.Adapter<MetodePembayaranAdapter.MyViewHolder> {

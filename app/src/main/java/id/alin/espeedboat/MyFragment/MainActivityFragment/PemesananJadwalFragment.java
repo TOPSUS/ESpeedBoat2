@@ -1,8 +1,5 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,26 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.applikeysolutions.cosmocalendar.dialog.CalendarDialog;
-import com.applikeysolutions.cosmocalendar.dialog.OnDaysSelectionListener;
-import com.applikeysolutions.cosmocalendar.utils.SelectionType;
-import com.applikeysolutions.cosmocalendar.model.Day;
 import com.google.android.material.tabs.TabLayout;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import id.alin.espeedboat.MainActivity;
-import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.BottomSheetJumlahPenumpang;
-import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.FullscreenDialogAsal;
-import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.FullscreenDialogTujuan;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.FeriFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.SpeedBoatFragment;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyHelper.HeightWrappingViewPager;
 import id.alin.espeedboat.PemesananJadwalActivity;
 import id.alin.espeedboat.R;
 
@@ -49,7 +38,7 @@ public class PemesananJadwalFragment extends Fragment implements LifecycleOwner 
     private MaterialEditText metjumlahpenumpang;
     private Button btncari;
 
-    private ViewPager viewPager;
+    private HeightWrappingViewPager viewPager;
     private TabLayout tabLayout;
 
     /*FRAGMENT TAGS*/
@@ -78,21 +67,26 @@ public class PemesananJadwalFragment extends Fragment implements LifecycleOwner 
 
         this.viewPager = view.findViewById(R.id.viewpagerpemesanan);
         createViewPager();
+
         this.tabLayout = view.findViewById(R.id.tablayout);
 
-
         this.tabLayout.setupWithViewPager(this.viewPager);
+
     }
 
     /*PEMBUATAN VIEW PAGER*/
     private void createViewPager(){
+
+        /*BUAT SECTIONPAGE ADAPTER*/
         SectionpagerAdapter sectionpagerAdapter = new SectionpagerAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-        sectionpagerAdapter.addFragments(SpeedBoatFragment.newInstance(),"SpeedBoat");
-        sectionpagerAdapter.addFragments(SpeedBoatFragment.newInstance(),"Feri");
+        /*BUAT FRAGMENT SPEEDBOAT*/
+        sectionpagerAdapter.addFragments(SpeedBoatFragment.newInstance(),"SPEEDBOAT");
+
+        /*BUAT FRAGMENT FERI*/
+        sectionpagerAdapter.addFragments(FeriFragment.newInstance(),"FERI");
 
         this.viewPager.setAdapter(sectionpagerAdapter);
-
     }
 
     /*CLASS UNTUK MELAKUKAN PEMSANANGAN FRAGMENT SPEEDBOAT*/

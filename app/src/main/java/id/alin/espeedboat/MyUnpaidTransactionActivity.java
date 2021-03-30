@@ -3,16 +3,10 @@ package id.alin.espeedboat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import id.alin.espeedboat.MyAdapter.MyUnpaidTransactionAdapter;
-import id.alin.espeedboat.MyAdapter.PelabuhanExpandedAdapter;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
-import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponseJadwalData;
-import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pelabuhan.ServerResponsePelabuhanData;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pembelian.ServerResponsePembelian;
-import id.alin.espeedboat.MyRetrofit.Services.PelabuhanServices;
 import id.alin.espeedboat.MyRetrofit.Services.PembelianServices;
-import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
 import id.alin.espeedboat.MyRoom.Entity.PembelianEntitiy;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyUnpaidTransactionActivity extends AppCompatActivity {

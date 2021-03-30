@@ -1,11 +1,9 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -16,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import biz.kasual.materialnumberpicker.MaterialNumberPicker;
 import id.alin.espeedboat.MainActivity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.R;
 
 public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
@@ -44,9 +42,9 @@ public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
         this.btnPilih.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
-                pemesananData.setJumlah_penumpang(String.valueOf(materialNumberPicker.getValue()));
-                MainActivity.mainActivityViewModel.setPemesananData(pemesananData);
+                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                pemesananSpeedboatData.setJumlah_penumpang(String.valueOf(materialNumberPicker.getValue()));
+                MainActivity.mainActivityViewModel.setPemesananData(pemesananSpeedboatData);
                 dismiss();
             }
         });

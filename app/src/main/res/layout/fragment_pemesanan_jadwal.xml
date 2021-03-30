@@ -48,22 +48,24 @@
                 android:background="@drawable/panelinputpemesananjadwal"
                 android:orientation="vertical"
                 android:paddingHorizontal="10dp"
-                android:paddingTop="30dp"
+                android:paddingTop="10dp"
                 android:paddingBottom="10dp">
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tablayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:tabTextColor="@color/grey_bg"
-                    android:backgroundTint="@color/Blue_primary"
+                    app:tabTextColor="@color/black"
+                    android:layout_marginBottom="20dp"
+                    app:tabRippleColor="@color/black"
+                    android:backgroundTint="@color/Blue_secondary"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="@android:color/white"
+                    app:tabIndicatorColor="@color/espeedorange"
                     app:tabIndicatorHeight="3dp"
                     app:tabMode="fixed"
-                    app:tabSelectedTextColor="@android:color/white" />
+                    app:tabSelectedTextColor="@color/espeedorange" />
 
-                <androidx.viewpager.widget.ViewPager
+                <id.alin.espeedboat.MyHelper.HeightWrappingViewPager
                     android:id="@+id/viewpagerpemesanan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

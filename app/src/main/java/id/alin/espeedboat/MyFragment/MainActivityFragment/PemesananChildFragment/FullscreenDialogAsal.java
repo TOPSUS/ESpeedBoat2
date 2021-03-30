@@ -24,7 +24,7 @@ import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pelabuhan.ServerResponsePelabuhanData;
 import id.alin.espeedboat.MyRetrofit.Services.PelabuhanServices;
 import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -118,10 +118,10 @@ public class FullscreenDialogAsal extends DialogFragment implements LifecycleOwn
         this.pelabuhanExpandedAdapter = new PelabuhanExpandedAdapter(pelabuhanEntities, getContext(), this.rvfullscreenpelabuhan, this) {
             @Override
             public void onSelectedItemPelabuhan(PelabuhanEntity pelabuhanEntity) {
-                PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
-                pemesananData.setAsal(pelabuhanEntity.getNama_pelabuhan());
-                pemesananData.setId_asal(pelabuhanEntity.getId());
-                MainActivity.mainActivityViewModel.setPemesananData(pemesananData);
+                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                pemesananSpeedboatData.setAsal(pelabuhanEntity.getNama_pelabuhan());
+                pemesananSpeedboatData.setId_asal(pelabuhanEntity.getId());
+                MainActivity.mainActivityViewModel.setPemesananData(pemesananSpeedboatData);
             }
         };
         this.rvfullscreenpelabuhan.setAdapter(this.pelabuhanExpandedAdapter);

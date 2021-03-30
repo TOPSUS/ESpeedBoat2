@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 
 public class MainActivityViewModel extends ViewModel {
@@ -17,7 +17,7 @@ public class MainActivityViewModel extends ViewModel {
     /*
     * PROPERTI YANG DIGUNAKAN OLEH FRAGMENT PEMESANAN
     * */
-    private static MutableLiveData<PemesananData> pemesananDataMutableLiveData;
+    private static MutableLiveData<PemesananSpeedboatData> pemesananDataMutableLiveData;
 
     /*
     * METHOD YANG DIGUNAKAN UNTUK MENGAMBIL LIVE DATA BISA DIOBSERVER DARI
@@ -49,7 +49,7 @@ public class MainActivityViewModel extends ViewModel {
     }
 
     /*DIGUNAKAN UNTUK MENGIRIM DATA PEMESANAN*/
-    public LiveData<PemesananData> getPemesananLiveData(){
+    public LiveData<PemesananSpeedboatData> getPemesananLiveData(){
         try{
             return pemesananDataMutableLiveData;
         }catch (NullPointerException e){
@@ -58,7 +58,7 @@ public class MainActivityViewModel extends ViewModel {
     }
 
     /*PEMESANAN DATA SET VALUENYA DISINI*/
-    public void setPemesananData(PemesananData data){
+    public void setPemesananData(PemesananSpeedboatData data){
         if(MainActivityViewModel.pemesananDataMutableLiveData == null){
             pemesananDataMutableLiveData = new MutableLiveData<>();
         }

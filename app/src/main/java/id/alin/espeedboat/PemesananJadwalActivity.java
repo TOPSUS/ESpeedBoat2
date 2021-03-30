@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -23,10 +22,9 @@ import id.alin.espeedboat.MyAdapter.JadwalAdapter;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponseJadwalData;
 import id.alin.espeedboat.MyRetrofit.Services.JadwalServices;
-import id.alin.espeedboat.MyRoom.DAO.JadwalDAO;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -130,15 +128,15 @@ public class PemesananJadwalActivity extends AppCompatActivity {
     }
 
     private void getJadwalFromAPI(){
-        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
         ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
         JadwalServices jadwalServices = ApiClient.getRetrofit().create(JadwalServices.class);
         Call<ServerResponseJadwalData> call = jadwalServices.getJadwal(
                 profileData.getToken(),
-                pemesananData.getTanggal_variable(),
-                String.valueOf(pemesananData.getId_asal()),
-                String.valueOf(pemesananData.getId_tujuan())
+                pemesananSpeedboatData.getTanggal_variable(),
+                String.valueOf(pemesananSpeedboatData.getId_asal()),
+                String.valueOf(pemesananSpeedboatData.getId_tujuan())
         );
 
         call.enqueue(new Callback<ServerResponseJadwalData>() {
