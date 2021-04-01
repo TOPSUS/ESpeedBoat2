@@ -334,6 +334,7 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
+
     /*
     * METHOD YANG DIGUNAKAN UNTUK MELAKUKAN REGISTER
     * */

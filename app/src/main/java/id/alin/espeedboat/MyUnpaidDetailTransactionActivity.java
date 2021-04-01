@@ -1,6 +1,8 @@
 package id.alin.espeedboat;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +18,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -28,16 +34,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.rajat.pdfviewer.PdfViewerActivity;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private long id = 0;
-    private long timeLeft = 60000;
+    private long timeLeft = 600000;
 
     private NestedScrollView detail;
     private LinearLayout loading, nodata, layoutBelumDibayar, layoutMenungguKonfirmasi, layoutTerkonfirmasi;
@@ -47,6 +55,18 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     ImageButton btnBack;
     RecyclerView recyclerView;
     PenumpangDetailAdapter penumpangDetailAdapter;
+
+    /*BOTTOM SHEET UPLOAD BUKTI*/
+    private BottomSheetDialog bottomSheetDialog;
+    private View bottomsheetview;
+
+    /*ATRIBUTE KAMERA UNTUK NGAMBIL BUKTI PEMBAYARAN*/
+    private static final int CAMERA_REQUEST = 1888;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
+
+    /*ATRIBUTE STORAGE UNTUK NGAMBIL BUKTI PEMBAYARAN*/
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    private static final int GALLERY_ADD_PROFILE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +130,13 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        this.btnUploadBukti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomDialogUploadBukti(true);
             }
         });
     }
@@ -282,6 +309,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         this.nodata.setVisibility(View.VISIBLE);
     }
 
+    /*COUNT DOWN METHOD*/
     private void countDown(){
         countDownTimer = new CountDownTimer(timeLeft, 10){
             @Override
@@ -297,6 +325,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         }.start();
     }
 
+    /*UPDATE METHOD UNTUK COUNTDOWN*/
     private void updateTimer(){
         int menit = (int) timeLeft/60000;
         int detik = (int) timeLeft%60000/1000;
@@ -312,5 +341,85 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         }else{
             tvCountDown.setText(timeLeft);
         }
+    }
+
+    /*SHOW BOTTOM DIALOG UNTUK UPLOPOAD BUKTI PEMBAYARAN*/
+    private void showBottomDialogUploadBukti(boolean status){
+        /*APABILA TRUE MAKA BUKA DIALOG*/
+        if(status){
+            bottomSheetDialog = new BottomSheetDialog(this,R.style.BottomSheetDialogTheme);
+            bottomsheetview = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_sheet_ambil_bukti_pembayaran, findViewById(R.id.bottom_sheet_ambil_bukti_pembayaran));
+            bottomSheetDialog.setContentView(bottomsheetview);
+
+            Button btn_camere = bottomsheetview.findViewById(R.id.btnMiniFragmentRegisterActivityTambahgambar);
+            btn_camere.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openCamera();
+                }
+            });
+
+            Button btn_storage = bottomsheetview.findViewById(R.id.storage);
+            btn_storage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pickFile();
+                }
+            });
+
+            bottomSheetDialog.show();
+        }else{
+            if(this.bottomSheetDialog != null){
+                if(this.bottomSheetDialog.isShowing()){
+                    this.bottomSheetDialog.dismiss();
+                }
+            }
+        }
+    }
+
+    /*METHOD UNTUK MEMBUKA KAMERA UPLOAD BUKTI PEMBAYARAN*/
+    private void openCamera(){
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+        }
+        else
+        {
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        }
+    }
+
+    /*METHOD UNTUK MEMBUKA STORAGE DAN MENGAMBIL BUKTI PEMBAYARAN*/
+    private void pickFile() {
+        if(requestRead()){
+            Intent fileintent = new Intent(Intent.ACTION_PICK);
+            fileintent.setType("image/*");
+            try {
+                startActivityForResult(fileintent,GALLERY_ADD_PROFILE);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(this, "NO STORAGE DETECTED", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    /*REQUEST READ FILE*/
+    public boolean requestRead() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(MyUnpaidDetailTransactionActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        showBottomDialogUploadBukti(false);
     }
 }

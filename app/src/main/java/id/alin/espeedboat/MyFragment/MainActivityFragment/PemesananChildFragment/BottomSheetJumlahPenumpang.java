@@ -24,7 +24,7 @@ public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL,R.style.DialogStyle);
+        setStyle(DialogFragment.STYLE_NORMAL,R.style.BottomSheetDialogTheme);
     }
 
     @Nullable
