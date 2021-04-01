@@ -71,7 +71,6 @@ public class PemesananJadwalFragment extends Fragment implements LifecycleOwner 
         this.tabLayout = view.findViewById(R.id.tablayout);
 
         this.tabLayout.setupWithViewPager(this.viewPager);
-
     }
 
     /*PEMBUATAN VIEW PAGER*/
