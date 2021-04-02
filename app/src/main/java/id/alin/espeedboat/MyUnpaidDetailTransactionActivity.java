@@ -66,7 +66,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private LinearLayout loading, nodata, layoutBelumDibayar, layoutMenungguKonfirmasi, layoutTerkonfirmasi;
     CountDownTimer countDownTimer;
     TextView tvStatusBayar, tvCountDown, tvKapal, tvTanggal, tvHarga, tvAsal, tvTujuan, tvBerangkat, tvSampai, tvNamaPemesan, tvEmailPemesan, tvTeleponPemesan;
-    Button btnUploadBukti, btnBatalPesan, btndownloadticket;
+    Button btnUploadBukti, btnBatalPesan, btndownloadticket, btnuploadulangbukti;
     ImageButton btnBack;
     RecyclerView recyclerView;
     PenumpangDetailAdapter penumpangDetailAdapter;
@@ -116,6 +116,8 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rvPenumpang);
         btnUploadBukti = (Button) findViewById(R.id.btnUploadBukti);
         btnBatalPesan = (Button) findViewById(R.id.btnBatalPesan);
+        btnuploadulangbukti = findViewById(R.id.btnUploadUlangBukti);
+
         this.btndownloadticket = findViewById(R.id.btnDownloadTiket);
 
         this.btndownloadticket.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +156,17 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             }
         });
 
+        // BTN UPLOAD BUKTI LISTENER
         this.btnUploadBukti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomDialogUploadBukti(true);
+            }
+        });
+
+        //BTN UPLOAD ULANG BUKTI
+
+        this.btnuploadulangbukti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showBottomDialogUploadBukti(true);
