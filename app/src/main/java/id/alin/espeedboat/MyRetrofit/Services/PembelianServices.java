@@ -39,4 +39,11 @@ public interface PembelianServices {
             @Part MultipartBody.Part image_bukti_pembayaran,
             @Part("id_pembelian") RequestBody id_pembelian
     );
+
+    @FormUrlEncoded
+    @POST("/api/batalkanpembelian")
+    Call<ServerResponseModels> postBatalkanPembelian(
+            @Header("Authorization") String Authorization,
+            @Field("id_pembelian") String id_pembelian
+    );
 }
