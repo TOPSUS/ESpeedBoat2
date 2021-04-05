@@ -13,6 +13,7 @@ public class PembelianEntitiy {
     private String waktu_berangkat;
     private String waktu_sampai;
 
+
     public long getId() {
         return id;
     }

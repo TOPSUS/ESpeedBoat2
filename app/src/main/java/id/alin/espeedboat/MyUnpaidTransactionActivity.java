@@ -26,7 +26,7 @@ public class MyUnpaidTransactionActivity extends AppCompatActivity {
     private LinearLayout loading, nodata;
     ImageButton btnBack;
     MyUnpaidTransactionAdapter myUnpaidTransactionAdapter;
-    RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     TextView tvHeader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

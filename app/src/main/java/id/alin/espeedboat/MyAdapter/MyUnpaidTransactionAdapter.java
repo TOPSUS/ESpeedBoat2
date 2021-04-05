@@ -124,6 +124,7 @@ public class MyUnpaidTransactionAdapter  extends RecyclerView.Adapter<MyUnpaidTr
                 //int id_trans = (int) pembelianEntity.get(position).getId();
                 Intent intent = new Intent(context, MyUnpaidDetailTransactionActivity.class);
                 intent.putExtra("id_trans", pembelianEntity.get(position).getId());
+                intent.putExtra("position", position);
                 Log.d("jejeje", String.valueOf(intent.getIntExtra("id_trans", 0)));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

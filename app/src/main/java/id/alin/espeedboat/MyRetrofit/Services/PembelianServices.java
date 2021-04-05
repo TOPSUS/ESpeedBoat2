@@ -46,4 +46,12 @@ public interface PembelianServices {
             @Header("Authorization") String Authorization,
             @Field("id_pembelian") String id_pembelian
     );
+
+    @FormUrlEncoded
+    @POST("/api/setpembelianstatus")
+    Call<ServerResponseModels> postPembelianStatus(
+            @Header("Authorization") String Authorization,
+            @Field("id") long id,
+            @Field("status") String status
+    );
 }

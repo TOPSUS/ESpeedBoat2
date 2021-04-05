@@ -26,6 +26,9 @@ public class ServerResponseDetailPembelian {
     private String telepon_pemesan;
     private String tiket;
     private String bukti;
+    private String metode_pembayaran;
+    private String rekening;
+    private String logo_metode;
     private List<PenumpangDetailEntity> penumpang;
 
     public String getResponse_code() {
@@ -170,6 +173,30 @@ public class ServerResponseDetailPembelian {
 
     public void setBukti(String bukti) {
         this.bukti = bukti;
+    }
+
+    public String getMetode_pembayaran() {
+        return metode_pembayaran;
+    }
+
+    public void setMetode_pembayaran(String metode_pembayaran) {
+        this.metode_pembayaran = metode_pembayaran;
+    }
+
+    public String getRekening() {
+        return rekening;
+    }
+
+    public void setRekening(String rekening) {
+        this.rekening = rekening;
+    }
+
+    public String getLogo_metode() {
+        return logo_metode;
+    }
+
+    public void setLogo_metode(String logo_metode) {
+        this.logo_metode = logo_metode;
     }
 
     public List<PenumpangDetailEntity> getPenumpang() {
