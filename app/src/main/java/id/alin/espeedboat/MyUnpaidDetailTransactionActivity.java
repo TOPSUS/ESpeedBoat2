@@ -589,13 +589,13 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             btn_kirim.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (file_image_bukti.exists()) {
+                    if (file_image_bukti != null) {
                         ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
                         postBuktiPembayaranToApi(file_image_bukti, profileData.getToken(), profileData.getUser_id());
 
                     } else {
-                        Toast.makeText(MyUnpaidDetailTransactionActivity.this, "TERJADI KESALAHAN", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyUnpaidDetailTransactionActivity.this, "Pilih bukti terlebih dahulu", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
