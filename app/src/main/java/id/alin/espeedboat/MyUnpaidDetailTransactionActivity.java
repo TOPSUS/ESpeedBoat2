@@ -279,9 +279,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         tvPenjelasanMetode.setText("Lakukan pembayaran dengan transfer ke nomor rekening berikut");
         tvRekening.setText("Nomor Rekening: " + body.getRekening());
 
-        timeLeft = body.getSisa_waktu();
-        Log.d("sisa", String.valueOf(timeLeft));
-        timeLeft = timeLeft * 60000;
+        timeLeft = body.getSisa_waktu();;
         countDown();
 
         StringBuilder url = new StringBuilder(ApiClient.BASE_LOGO_METODE_PEMBAYARAN);
@@ -307,6 +305,8 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             layoutMenungguKonfirmasi.setVisibility(View.VISIBLE);
             layoutBelumDibayar.setVisibility(View.INVISIBLE);
             layoutTerkonfirmasi.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         } else if (body.getStatus_transaksi().equals("terkonfirmasi")) {
             tvStatusBayar.setText("Dibayar");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Safety_Green));
@@ -314,20 +314,28 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             layoutMenungguKonfirmasi.setVisibility(View.INVISIBLE);
             layoutBelumDibayar.setVisibility(View.INVISIBLE);
             layoutTerkonfirmasi.setVisibility(View.VISIBLE);
+            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         } else if (body.getStatus_transaksi().equals("dibatalkan")) {
             tvStatusBayar.setText("Dibatalkan");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Danger_Red));
             tvCountDown.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         } else if (body.getStatus_transaksi().equals("expired")) {
             tvStatusBayar.setText("Kadaluwarsa");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Danger_Red));
             tvCountDown.setVisibility(View.INVISIBLE);
             tvCardTindakan.setVisibility(View.INVISIBLE);
             cvTindakan.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         } else if (body.getStatus_transaksi().equals("digunakan")) {
             tvStatusBayar.setText("Selesai");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Safety_Green));
             tvCountDown.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         }
     }
 
