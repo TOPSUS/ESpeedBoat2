@@ -97,7 +97,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private static final int GALLERY_ADD_PROFILE = 1;
 
-//    STATUS PEMBELIAN
+    // STATUS PEMBELIAN
     private String status;
 
     @Override
@@ -305,7 +305,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             layoutMenungguKonfirmasi.setVisibility(View.VISIBLE);
             layoutBelumDibayar.setVisibility(View.INVISIBLE);
             layoutTerkonfirmasi.setVisibility(View.INVISIBLE);
-            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.GONE);
             tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         } else if (body.getStatus_transaksi().equals("terkonfirmasi")) {
             tvStatusBayar.setText("Dibayar");
@@ -314,13 +314,13 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             layoutMenungguKonfirmasi.setVisibility(View.INVISIBLE);
             layoutBelumDibayar.setVisibility(View.INVISIBLE);
             layoutTerkonfirmasi.setVisibility(View.VISIBLE);
-            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.GONE);
             tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         } else if (body.getStatus_transaksi().equals("dibatalkan")) {
             tvStatusBayar.setText("Dibatalkan");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Danger_Red));
             tvCountDown.setVisibility(View.INVISIBLE);
-            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.GONE);
             tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         } else if (body.getStatus_transaksi().equals("expired")) {
             tvStatusBayar.setText("Kadaluwarsa");
@@ -328,13 +328,13 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             tvCountDown.setVisibility(View.INVISIBLE);
             tvCardTindakan.setVisibility(View.INVISIBLE);
             cvTindakan.setVisibility(View.INVISIBLE);
-            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.GONE);
             tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         } else if (body.getStatus_transaksi().equals("digunakan")) {
             tvStatusBayar.setText("Selesai");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Safety_Green));
             tvCountDown.setVisibility(View.INVISIBLE);
-            layoutCardPembayaran.setVisibility(View.INVISIBLE);
+            layoutCardPembayaran.setVisibility(View.GONE);
             tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         }
     }
