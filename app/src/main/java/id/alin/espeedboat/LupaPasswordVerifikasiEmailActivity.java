@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class LupaPasswordVerifikasiEmailActivity extends AppCompatActivity {
     private EditText etCode;
     private Button btnMasukkanCode;
     private TextView tvKirimPasswordLagi;
+    private FrameLayout loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,10 @@ public class LupaPasswordVerifikasiEmailActivity extends AppCompatActivity {
 
         if(this.btnMasukkanCode == null){
             this.btnMasukkanCode = findViewById(R.id.btnLupaPasswordVerifikasiEmailMasukkanCode);
+        }
+
+        if(this.loading == null){
+            this.loading = findViewById(R.id.forgotPasswordloading);
         }
 
         /*INIT LISTENER BUTTON*/
@@ -80,6 +87,10 @@ public class LupaPasswordVerifikasiEmailActivity extends AppCompatActivity {
      * MELAKUKAN PEMANGGILAN API KIRIM VERIFY EMAIL
      * */
     private void postVerifikasiLupaPasswordCodeAPI(String code, String email) {
+
+        // SET LOADING
+        setStateLoading(true);
+
         LupaPasswordServices services = ApiClient.getRetrofit().create(LupaPasswordServices.class);
         Call<ServerResponseModels> call = services.sendCode(
           code,
@@ -94,14 +105,19 @@ public class LupaPasswordVerifikasiEmailActivity extends AppCompatActivity {
                     lupaPasswordData.setKode_verifikasi_email(code);
                     ForgotPasswordActivity.lupaPasswordActivityViewModel.setLupaPasswordDataMutableLiveData(lupaPasswordData);
 
+                    setStateLoading(false);
+
                     showSuccessDialog();
+
                 }else{
+                    setStateLoading(false);
                     Toast.makeText(LupaPasswordVerifikasiEmailActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ServerResponseModels> call, Throwable t) {
+                setStateLoading(false);
                 Toast.makeText(LupaPasswordVerifikasiEmailActivity.this, "TERJADI KESALAHAN", Toast.LENGTH_SHORT).show();
             }
         });
@@ -194,5 +210,14 @@ public class LupaPasswordVerifikasiEmailActivity extends AppCompatActivity {
 
         // Show Dialog
         mDialog.show();
+    }
+
+    // SET LOADING PADA LAMAN INI
+    private void setStateLoading(boolean status){
+        if(status){
+            this.loading.setVisibility(View.VISIBLE);
+        }else{
+            this.loading.setVisibility(View.INVISIBLE);
+        }
     }
 }

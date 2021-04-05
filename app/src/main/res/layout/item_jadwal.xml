@@ -19,7 +19,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:background="@color/espeedorange"/>
+            android:background="@color/Blue_primary"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -194,6 +194,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
                     android:text="pilih"
+                    android:backgroundTint="@color/espeedorange"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>

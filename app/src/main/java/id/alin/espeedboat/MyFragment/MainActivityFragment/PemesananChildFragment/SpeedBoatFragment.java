@@ -28,7 +28,7 @@ import java.util.List;
 
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
-import id.alin.espeedboat.PemesananJadwalActivity;
+import id.alin.espeedboat.PemesananJadwalSpeedboatActivity;
 import id.alin.espeedboat.R;
 
 public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
@@ -173,7 +173,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 if(doValidateData()){
-                    Intent intent = new Intent(getContext(), PemesananJadwalActivity.class);
+                    Intent intent = new Intent(getContext(), PemesananJadwalSpeedboatActivity.class);
                     startActivity(intent);
                 }
             }

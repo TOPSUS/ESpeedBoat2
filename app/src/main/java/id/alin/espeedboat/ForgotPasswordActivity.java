@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -33,7 +34,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Lifecyc
     Button btnTele, btnEmail;
     EditText email;
     ImageButton btnBack;
-    private LinearLayout loadinglayout,contentlayout;
+    private LinearLayout contentlayout;
+    private FrameLayout loadinglayout;
 
     public static LupaPasswordActivityViewModel lupaPasswordActivityViewModel;
 

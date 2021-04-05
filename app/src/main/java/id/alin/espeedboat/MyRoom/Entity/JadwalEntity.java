@@ -8,7 +8,7 @@ public class JadwalEntity {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
-    private long id_speedboat;
+    private long id_kapal;
     private long id_asal_pelabuhan;
     private long id_tujuan_pelabuhan;
     private String waktu_sampai;
@@ -19,6 +19,8 @@ public class JadwalEntity {
     private String pelabuhan_tujuan_nama;
     private String pelabuhan_tujuan_kode;
     private String nama_speedboat;
+    private String tanggal;
+    private String estimasi_waktu;
     private long kapasitas;
     private long pemesanan_saat_ini;
     private long sisa;
@@ -35,12 +37,12 @@ public class JadwalEntity {
         this.id = id;
     }
 
-    public long getId_speedboat() {
-        return id_speedboat;
+    public long getId_kapal() {
+        return id_kapal;
     }
 
-    public void setId_speedboat(long id_speedboat) {
-        this.id_speedboat = id_speedboat;
+    public void setId_kapal(long id_kapal) {
+        this.id_kapal = id_kapal;
     }
 
     public long getId_asal_pelabuhan() {
@@ -177,5 +179,21 @@ public class JadwalEntity {
 
     public void setTanggal_beroperasi(String tanggal_beroperasi) {
         this.tanggal_beroperasi = tanggal_beroperasi;
+    }
+
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    public String getEstimasi_waktu() {
+        return estimasi_waktu;
+    }
+
+    public void setEstimasi_waktu(String estimasi_waktu) {
+        this.estimasi_waktu = estimasi_waktu;
     }
 }

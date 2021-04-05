@@ -9,6 +9,8 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface JadwalServices {
+    public static final String SPEEDBOAT = "speedboat";
+    public static final String FERI = "feri";
 
     @FormUrlEncoded
     @POST("/api/getjadwal")
@@ -16,6 +18,7 @@ public interface JadwalServices {
             @Header("Authorization") String Authorization,
             @Field("date") String date,
             @Field("id_asal_pelabuhan") String id_asal_pelabuhan,
-            @Field("id_tujuan_pelabuhan") String id_tujuan_pelabuhan
+            @Field("id_tujuan_pelabuhan") String id_tujuan_pelabuhan,
+            @Field("tipe_kapal") String tipe_kapal
     );
 }

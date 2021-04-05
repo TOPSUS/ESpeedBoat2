@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_alignParentTop="true"
-        android:background="@color/Blue_primary" />
+        android:background="@drawable/pemesanan_background" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

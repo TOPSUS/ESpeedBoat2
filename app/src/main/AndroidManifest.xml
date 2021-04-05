@@ -34,7 +34,7 @@
         <activity android:name=".InputIdentitasPemesanActivity" />
         <activity android:name=".GantiPasswordActivity" />
         <activity android:name=".LupaPasswordVerifikasiEmailActivity" />
-        <activity android:name=".PemesananJadwalActivity" />
+        <activity android:name=".PemesananJadwalSpeedboatActivity" />
         <activity android:name=".MyProfile.EditPinActivity" />
         <activity android:name=".MyProfile.AddPinActivity" />
         <activity android:name=".MyProfile.EditPasswordActivity" />

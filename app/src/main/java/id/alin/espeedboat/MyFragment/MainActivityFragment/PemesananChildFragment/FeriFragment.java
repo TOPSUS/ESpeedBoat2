@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.rengwuxian.materialedittext.MaterialEditText;
+
 import id.alin.espeedboat.R;
 
 public class FeriFragment extends Fragment {

@@ -54,36 +54,36 @@ import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 
 public class HomeFragment extends Fragment implements LifecycleOwner {
-    /*VIEW*/
+    //*VIEW*/
     private View view;
 
-    /*GET SWIPE REFRESH*/
+    //*GET SWIPE REFRESH*/
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    /*BAGIAN PROFILE*/
+    //*BAGIAN PROFILE*/
     private ShimmerFrameLayout shimmerprofile;
     private CircleImageView ciprofile;
     private TextView tvname, tvemail;
     private Button btnpointss, btnpayments;
 
-    /*BAGIAN PELABUHAN*/
+    //*BAGIAN PELABUHAN*/
     private ShimmerFrameLayout shimmerberitapelabuhan;
     private TextView tvberitapelabuhantitla, tvberitapelabuhandetail;
     private RecyclerView rvberitapelabuhan;
     private List<BeritaPelabuhanEntity> beritaPelabuhanEntities;
     private BeritaPelabuhanAdapter beritaPelabuhanAdapter;
 
-    /*BGAIAN ESPEED NEWS*/
+    //*BGAIAN ESPEED NEWS*/
     private ShimmerFrameLayout shimmerespeednews;
     private TextView tvespeednewstitle, tvespeednewsdetail;
     private RecyclerView rvespeednews;
     private List<BeritaEspeedEntity> beritaEspeedEntities;
     private BeritaEspeedAdapter beritaEspeedAdapter;
 
-    /*WARNA BACKGROUND SHIMMER*/
+    //*WARNA BACKGROUND SHIMMER*/
     private static final String SHAMMER_BACKGROUND = "#BBE6FA";
 
-    /*ESPEEDBOAT DATABASE*/
+    //*ESPEEDBOAT DATABASE*/
     private DatabaeESpeedboat databaeESpeedboat;
 
     public HomeFragment() {
@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         initEspeedNews();
     }
 
-    /*UNTUK REFRESH HALAMAN HOME FRAGMENT*/
+    //*UNTUK REFRESH HALAMAN HOME FRAGMENT*/
     private void refreashPage() {
         /*INIT PENGAMBILAN DATA*/
         getProfileFromApi();

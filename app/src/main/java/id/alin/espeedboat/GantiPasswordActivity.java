@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
@@ -24,6 +25,7 @@ public class GantiPasswordActivity extends AppCompatActivity {
 
     private EditText etpass, etpassconfirm;
     private Button btnSubmit;
+    private FrameLayout loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,10 @@ public class GantiPasswordActivity extends AppCompatActivity {
             this.btnSubmit = findViewById(R.id.btnGantiPasswordActivitySubmit);
         }
 
+        if(this.loading == null){
+            this.loading = findViewById(R.id.forgotPasswordloading);
+        }
+
         /*MEMBERIKAN EVENT LISTENER*/
         this.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +68,7 @@ public class GantiPasswordActivity extends AppCompatActivity {
     }
 
     private void postNewPaswordAPI(String code, String email, String password, String confirm_password){
+        setStateLoading(true);
         LupaPasswordServices services = ApiClient.getRetrofit().create(LupaPasswordServices.class);
         Call<ServerResponseModels> call = services.sendNewPassword(
                                                     code,
@@ -74,14 +81,17 @@ public class GantiPasswordActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ServerResponseModels> call, Response<ServerResponseModels> response) {
                 if(response.body().getResponse_code().matches("200") && response.body().getStatus().matches("success")){
+                    setStateLoading(false);
                     showSuccessChangePasswordModal();
                 }else{
+                    setStateLoading(false);
                     Toast.makeText(GantiPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ServerResponseModels> call, Throwable t) {
+                setStateLoading(false);
                 Toast.makeText(GantiPasswordActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -92,7 +102,7 @@ public class GantiPasswordActivity extends AppCompatActivity {
                 .setTitle("Sukses mengganti password")
                 .setMessage("Selamat password anda telah diganti")
                 .setCancelable(false)
-                .setAnimation(R.raw.animasi_boat)
+                .setAnimation(R.raw.animation_boat_2)
                 .setPositiveButton("Ok", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
@@ -115,5 +125,13 @@ public class GantiPasswordActivity extends AppCompatActivity {
 
         // Show Dialog
         mDialog.show();
+    }
+
+    private void setStateLoading(boolean status){
+        if(status){
+            this.loading.setVisibility(View.VISIBLE);
+        }else{
+            this.loading.setVisibility(View.INVISIBLE);
+        }
     }
 }

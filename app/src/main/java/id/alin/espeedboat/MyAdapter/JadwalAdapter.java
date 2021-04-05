@@ -30,6 +30,8 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
     private Context context;
     private List<JadwalEntity> jadwalEntities;
 
+    private final String ZONA_WAKTU = " WITA ";
+
     public JadwalAdapter(Context context, List<JadwalEntity> jadwalEntities) {
         this.context = context;
         this.jadwalEntities = jadwalEntities;
@@ -45,12 +47,17 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
+        // MENAMBAHKAN ZONA WAKTU
+        String waktu_berangkat = this.jadwalEntities.get(position).getWaktu_berangkat()+ZONA_WAKTU;
+        String waktu_sampai = this.jadwalEntities.get(position).getWaktu_sampai()+ZONA_WAKTU;
+
         holder.tvSpeedBoatName.setText(this.jadwalEntities.get(position).getNama_speedboat());
         holder.tvSpeedBoatDesc.setText(this.jadwalEntities.get(position).getDeskripsi_boat());
         holder.tvAsal.setText(this.jadwalEntities.get(position).getPelabuhan_asal_nama());
         holder.tvTujuan.setText(this.jadwalEntities.get(position).getPelabuhan_tujuan_nama());
-        holder.tvJamBerangkat.setText(this.jadwalEntities.get(position).getWaktu_berangkat());
-        holder.tvJamSampai.setText(this.jadwalEntities.get(position).getWaktu_sampai());
+        holder.tvJamBerangkat.setText(waktu_berangkat);
+        holder.tvJamSampai.setText(waktu_sampai);
 
         String kapasitas;
 

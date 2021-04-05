@@ -8,14 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -26,7 +23,6 @@ import java.util.List;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.FeriFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.SpeedBoatFragment;
 import id.alin.espeedboat.MyHelper.HeightWrappingViewPager;
-import id.alin.espeedboat.PemesananJadwalActivity;
 import id.alin.espeedboat.R;
 
 public class PemesananJadwalFragment extends Fragment implements LifecycleOwner {

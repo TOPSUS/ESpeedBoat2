@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PemesananJadwalActivity extends AppCompatActivity {
+public class PemesananJadwalSpeedboatActivity extends AppCompatActivity {
     /*BACK BUTTON*/
     private ImageButton imageButton;
 
@@ -136,7 +136,8 @@ public class PemesananJadwalActivity extends AppCompatActivity {
                 profileData.getToken(),
                 pemesananSpeedboatData.getTanggal_variable(),
                 String.valueOf(pemesananSpeedboatData.getId_asal()),
-                String.valueOf(pemesananSpeedboatData.getId_tujuan())
+                String.valueOf(pemesananSpeedboatData.getId_tujuan()),
+                JadwalServices.SPEEDBOAT
         );
 
         call.enqueue(new Callback<ServerResponseJadwalData>() {
@@ -148,12 +149,12 @@ public class PemesananJadwalActivity extends AppCompatActivity {
                 }
                 else{
 
-                    PemesananJadwalActivity.this.database.jadwalDAO().truncateJadwalEntity();
+                    PemesananJadwalSpeedboatActivity.this.database.jadwalDAO().truncateJadwalEntity();
 
                     response.body().getJadwal().forEach(new Consumer<JadwalEntity>() {
                         @Override
                         public void accept(JadwalEntity jadwalEntity) {
-                            PemesananJadwalActivity.this.database.jadwalDAO().insertJadwalEntity(jadwalEntity);
+                            PemesananJadwalSpeedboatActivity.this.database.jadwalDAO().insertJadwalEntity(jadwalEntity);
                         }
                     });
 
@@ -161,7 +162,7 @@ public class PemesananJadwalActivity extends AppCompatActivity {
 
                     String html = "Berhasil menemukan <b>"+response.body().getJadwal().size()+"</b> jadwal";
 
-                    PemesananJadwalActivity.this.tvHeader.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
+                    PemesananJadwalSpeedboatActivity.this.tvHeader.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
                     fillRecyclerView(response.body().getJadwal());
                 }
@@ -170,7 +171,7 @@ public class PemesananJadwalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ServerResponseJadwalData> call, Throwable t) {
                 setNoDataState();
-                Toast.makeText(PemesananJadwalActivity.this, "FAILURE", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PemesananJadwalSpeedboatActivity.this, "FAILURE", Toast.LENGTH_SHORT).show();
             }
         });
     }

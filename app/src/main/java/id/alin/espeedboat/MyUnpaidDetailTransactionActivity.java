@@ -89,7 +89,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private static final String IMAGE_PEMBAYARAN_FILE_NAME = "IMAGE_PEMBAYARAN_FILE_NAME.jpg";
     private Dialog loadingdialog;
 
-    /*ATRIBUTE KAMERA UNTUK NGAMBIL BUKTI PEMBAYARAN*/
+    //ATRIBUTE KAMERA UNTUK NGAMBIL BUKTI PEMBAYARAN*/
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     private static final int CAMERA_REQUEST = 2;
 
@@ -338,7 +338,6 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             tvLayoutPembayaran.setVisibility(View.INVISIBLE);
         }
     }
-
 
     //KELOLA PEMBAYARAB
 
@@ -699,6 +698,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
                 Toast.makeText(this, "TERJADI KESALAHAN", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
     //BITMAP TO FILE CONVERTER METHOD
