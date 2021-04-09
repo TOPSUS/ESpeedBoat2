@@ -10,9 +10,11 @@ import retrofit2.http.POST;
 
 public interface PelabuhanServices {
 
+    @FormUrlEncoded
     @POST("/api/readpelabuhan")
     Call<ServerResponsePelabuhanData> readPelabuhan(
-        @Header("Authorization") String Authorization
+        @Header("Authorization") String Authorization,
+        @Field("tipe_kapal") String tipe_kapal
     );
 
 }

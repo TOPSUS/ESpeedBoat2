@@ -17,6 +17,7 @@ public class PelabuhanEntity {
     private String latitude;
     private String longtitude;
     private String lama_beroperasi;
+    private String tipe_pelabuhan;
     private String status;
 
     public long getId() {
@@ -89,6 +90,14 @@ public class PelabuhanEntity {
 
     public void setLama_beroperasi(String lama_beroperasi) {
         this.lama_beroperasi = lama_beroperasi;
+    }
+
+    public String getTipe_pelabuhan() {
+        return tipe_pelabuhan;
+    }
+
+    public void setTipe_pelabuhan(String tipe_pelabuhan) {
+        this.tipe_pelabuhan = tipe_pelabuhan;
     }
 
     public String getStatus() {

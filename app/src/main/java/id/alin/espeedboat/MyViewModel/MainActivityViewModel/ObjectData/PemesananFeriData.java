@@ -4,12 +4,15 @@ import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
 
 public class PemesananFeriData {
     private String asal;
-    private String tujuan;
     private long id_asal;
-    private String tanggal;
+    private String tujuan;
     private long id_tujuan;
+    private String tanggal;
     private String tanggal_variable;
-    private String jumlah_penumpang;
+    private String tipe_jasa;
+    private String gologan_kendaraan;
+    private long id_golongan_kendaraan;
+    private long jumlah_penumpang;
     private JadwalEntity jadwalEntity;
 
     public PemesananFeriData() {
@@ -18,7 +21,7 @@ public class PemesananFeriData {
         this.tujuan = "";
         this.id_tujuan = 0;
         this.tanggal_variable = "";
-        this.jumlah_penumpang = "";
+        this.jumlah_penumpang = 0;
         this.jadwalEntity = new JadwalEntity();
     }
 
@@ -30,14 +33,6 @@ public class PemesananFeriData {
         this.asal = asal;
     }
 
-    public String getTujuan() {
-        return tujuan;
-    }
-
-    public void setTujuan(String tujuan) {
-        this.tujuan = tujuan;
-    }
-
     public long getId_asal() {
         return id_asal;
     }
@@ -46,12 +41,12 @@ public class PemesananFeriData {
         this.id_asal = id_asal;
     }
 
-    public String getTanggal() {
-        return tanggal;
+    public String getTujuan() {
+        return tujuan;
     }
 
-    public void setTanggal(String tanggal) {
-        this.tanggal = tanggal;
+    public void setTujuan(String tujuan) {
+        this.tujuan = tujuan;
     }
 
     public long getId_tujuan() {
@@ -62,6 +57,14 @@ public class PemesananFeriData {
         this.id_tujuan = id_tujuan;
     }
 
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
     public String getTanggal_variable() {
         return tanggal_variable;
     }
@@ -70,11 +73,35 @@ public class PemesananFeriData {
         this.tanggal_variable = tanggal_variable;
     }
 
-    public String getJumlah_penumpang() {
+    public String getTipe_jasa() {
+        return tipe_jasa;
+    }
+
+    public void setTipe_jasa(String tipe_jasa) {
+        this.tipe_jasa = tipe_jasa;
+    }
+
+    public String getGologan_kendaraan() {
+        return gologan_kendaraan;
+    }
+
+    public void setGologan_kendaraan(String gologan_kendaraan) {
+        this.gologan_kendaraan = gologan_kendaraan;
+    }
+
+    public long getId_golongan_kendaraan() {
+        return id_golongan_kendaraan;
+    }
+
+    public void setId_golongan_kendaraan(long id_golongan_kendaraan) {
+        this.id_golongan_kendaraan = id_golongan_kendaraan;
+    }
+
+    public long getJumlah_penumpang() {
         return jumlah_penumpang;
     }
 
-    public void setJumlah_penumpang(String jumlah_penumpang) {
+    public void setJumlah_penumpang(long jumlah_penumpang) {
         this.jumlah_penumpang = jumlah_penumpang;
     }
 

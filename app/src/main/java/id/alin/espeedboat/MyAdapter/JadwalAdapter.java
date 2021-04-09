@@ -104,9 +104,9 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
             @Override
             public void onClick(View v) {
 
-                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
                 pemesananSpeedboatData.setJadwalEntity(jadwalEntities.get(position));
-                MainActivity.mainActivityViewModel.setPemesananData(pemesananSpeedboatData);
+                MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
 
                 Intent intent = new Intent(context, InputIdentitasPemesanActivity.class);
                 context.startActivity(intent);

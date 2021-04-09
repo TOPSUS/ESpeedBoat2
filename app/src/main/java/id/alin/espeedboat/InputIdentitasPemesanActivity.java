@@ -80,7 +80,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         }
 
         /*MENGAMBIL DATA PESANAN DARI VIEW MODEL MAINACTIVITY*/
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
         Log.d("PEMESANAN DATA", pemesananSpeedboatData.getJumlah_penumpang());
 
         /*MEMASUKKAN DATA PROFILE DATA SEBAGAI PEMESAN*/
@@ -95,7 +95,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         inputIdentitasPemesanActivityViewModel.setTransaksiMutableLiveData(transaksiData);
 
         /*INIT PENUMPANG DATA VIEW MODEL*/
-        MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
         /*OBSERVER*/
         InputIdentitasPemesanActivity
@@ -125,7 +125,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         /*WIDGET UTIL*/
 
         /*SET DETAIL JADWAL*/
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
         String asaltujuan = pemesananSpeedboatData.getAsal() + " > " + pemesananSpeedboatData.getTujuan();
         String detai_jadwal = pemesananSpeedboatData.getJadwalEntity().getPelabuhan_asal_kode() +
                                 " >> " + pemesananSpeedboatData.getJadwalEntity().getPelabuhan_tujuan_kode() +
@@ -215,7 +215,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         };
         this.recyclerView.setLayoutManager(this.layoutManager);
         /*AMBIL JUMLAH PENUMPANG*/
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
         /*AMBIL VIEW MODEL PENUMPANG*/
         List<PenumpangData> penumpangData = inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();

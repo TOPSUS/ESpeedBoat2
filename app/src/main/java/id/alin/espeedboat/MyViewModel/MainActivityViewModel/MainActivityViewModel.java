@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 
@@ -18,6 +19,11 @@ public class MainActivityViewModel extends ViewModel {
     * PROPERTI YANG DIGUNAKAN OLEH FRAGMENT PEMESANAN
     * */
     private static MutableLiveData<PemesananSpeedboatData> pemesananDataMutableLiveData;
+
+    /*
+    * PROPERTI YANG AKAN DIGUNAKAN UNTUK MENYIMPAN LIVE DATA DARI PEMESANAN FERI
+    * */
+    private static MutableLiveData<PemesananFeriData> pemesananFeriDataMutableLiveData;
 
     /*
     * METHOD YANG DIGUNAKAN UNTUK MENGAMBIL LIVE DATA BISA DIOBSERVER DARI
@@ -49,7 +55,7 @@ public class MainActivityViewModel extends ViewModel {
     }
 
     /*DIGUNAKAN UNTUK MENGIRIM DATA PEMESANAN*/
-    public LiveData<PemesananSpeedboatData> getPemesananLiveData(){
+    public LiveData<PemesananSpeedboatData> getPemesananSpeedboatLiveData(){
         try{
             return pemesananDataMutableLiveData;
         }catch (NullPointerException e){
@@ -58,12 +64,30 @@ public class MainActivityViewModel extends ViewModel {
     }
 
     /*PEMESANAN DATA SET VALUENYA DISINI*/
-    public void setPemesananData(PemesananSpeedboatData data){
+    public void setPemesananSpeedboatData(PemesananSpeedboatData data){
         if(MainActivityViewModel.pemesananDataMutableLiveData == null){
             pemesananDataMutableLiveData = new MutableLiveData<>();
         }
 
         pemesananDataMutableLiveData.setValue(data);
+    }
+
+    /*METHOD UNTUK MENDAPATKAN PEMESANAN FERI LIVE DATA*/
+    public LiveData<PemesananFeriData> getPemesananFeriLiveData(){
+        try{
+            return pemesananFeriDataMutableLiveData;
+        }catch (NullPointerException e){
+            return null;
+        }
+    }
+
+    /*METHOD UNTUK MEMASANGKAN PEMESANAN FERI LIVE DATA*/
+    public void setPemesananFeriData(PemesananFeriData data){
+        if(MainActivityViewModel.pemesananFeriDataMutableLiveData == null){
+            pemesananFeriDataMutableLiveData = new MutableLiveData<>();
+        }
+
+        pemesananFeriDataMutableLiveData.setValue(data);
     }
 
 }

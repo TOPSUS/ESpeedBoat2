@@ -128,7 +128,7 @@ public class PemesananJadwalSpeedboatActivity extends AppCompatActivity {
     }
 
     private void getJadwalFromAPI(){
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
         ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
         JadwalServices jadwalServices = ApiClient.getRetrofit().create(JadwalServices.class);

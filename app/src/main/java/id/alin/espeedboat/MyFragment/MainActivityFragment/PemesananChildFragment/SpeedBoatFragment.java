@@ -43,6 +43,9 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
     public static final String FRAGMENT_FULLSCREEN_ASAL = "FRAGMENT_FULLSCREEN_ASAL";
     public static final String FRAGMENT_FULLSCREEN_TUJUAN = "FRAGMENT_FULLSCREEN_TUJUAN";
 
+    // STATIC PARAMS UNTUK GET KAPAL
+    public static final String TIPE_KAPAL = "TIPE_KAPAL";
+    public static final String SPEEDBOAT = "speedboat";
 
     public SpeedBoatFragment() {
         /*HARUS KOSONG*/
@@ -69,17 +72,16 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
 
         initWidget();
         initViewModel();
-
     }
 
     private void initViewModel() {
 
         /*INIT PERTAMA KALI VIEW MODEL PEMESANAN SUPAYA TIDAK KOSONG DATA PEMESANANNYA*/
-        MainActivity.mainActivityViewModel.setPemesananData(new PemesananSpeedboatData());
+        MainActivity.mainActivityViewModel.setPemesananSpeedboatData(new PemesananSpeedboatData());
 
 
         /*MELAKUKAN OBSERVER KE DALAM VIEW MODEL*/
-        MainActivity.mainActivityViewModel.getPemesananLiveData().observe(this, new Observer<PemesananSpeedboatData>() {
+        MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().observe(this, new Observer<PemesananSpeedboatData>() {
             @Override
             public void onChanged(PemesananSpeedboatData pemesananSpeedboatData) {
                 metasal.setText(pemesananSpeedboatData.getAsal());
@@ -97,6 +99,9 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 FullscreenDialogAsal fullscreenDialogAsal = FullscreenDialogAsal.createNewInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString(TIPE_KAPAL,SPEEDBOAT);
+                fullscreenDialogAsal.setArguments(bundle);
                 fullscreenDialogAsal.showNow(getChildFragmentManager(),FRAGMENT_FULLSCREEN_ASAL);
             }
         });
@@ -106,6 +111,9 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 FullscreenDialogTujuan fullscreenDialogTujuan = FullscreenDialogTujuan.createNewInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString(TIPE_KAPAL,SPEEDBOAT);
+                fullscreenDialogTujuan.setArguments(bundle);
                 fullscreenDialogTujuan.showNow(getChildFragmentManager(),FRAGMENT_FULLSCREEN_TUJUAN);
             }
         });
@@ -148,10 +156,10 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
                             tanggal_variable.append(selectedDays.get(0).getCalendar().get(Calendar.DAY_OF_MONTH));
 
 
-                            PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                            PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
                             pemesananSpeedboatData.setTanggal(date.toString());
                             pemesananSpeedboatData.setTanggal_variable(tanggal_variable.toString());
-                            MainActivity.mainActivityViewModel.setPemesananData(pemesananSpeedboatData);
+                            MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
                         }
                     }
                 });
@@ -164,6 +172,9 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 BottomSheetJumlahPenumpang bottomSheetJumlahPenumpang = new BottomSheetJumlahPenumpang();
+                Bundle bundle = new Bundle();
+                bundle.putString(BottomSheetJumlahPenumpang.FORM,BottomSheetJumlahPenumpang.SPEEDBOAT);
+                bottomSheetJumlahPenumpang.setArguments(bundle);
                 bottomSheetJumlahPenumpang.showNow(getChildFragmentManager(),"TAG");
             }
         });
@@ -183,7 +194,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
     private boolean doValidateData(){
         int validation = 1;
 
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
         if(pemesananSpeedboatData.getAsal().matches("")){
             validation -= 1;

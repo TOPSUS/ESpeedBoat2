@@ -24,21 +24,26 @@ import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pelabuhan.ServerResponsePelabuhanData;
 import id.alin.espeedboat.MyRetrofit.Services.PelabuhanServices;
 import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FullscreenDialogAsal extends DialogFragment implements LifecycleOwner {
+public class FullscreenDialogFeri extends DialogFragment implements LifecycleOwner {
     private LinearLayout loading, nodata;
     private RecyclerView rvfullscreenpelabuhan;
     private PelabuhanExpandedAdapter pelabuhanExpandedAdapter;
     private ImageButton closebutton;
 
+    // TIPE KAPAL & FORM YANG AKAN DIISI ASAL / TUJUAN YANG AKAN DICARI
+    private String tipe_kapal;
+    private String form;
+
     /*METHO STATIC UNTUK MEMBUAT INSTANCE BARU*/
-    public static FullscreenDialogAsal createNewInstance(){
-        return new FullscreenDialogAsal();
+    public static FullscreenDialogFeri createNewInstance(){
+        return new FullscreenDialogFeri();
     }
 
     @Override
@@ -57,10 +62,11 @@ public class FullscreenDialogAsal extends DialogFragment implements LifecycleOwn
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // MENGAMBIL TIPE KAPAL DARI BUNDLE YANG DIBERIKAN
+        tipe_kapal = getArguments().getString(FeriFragment.TIPE_KAPAL,"");
+        form = getArguments().getString(FeriFragment.FORM,"");
         initWidget();
         setStateLoading();
-        String tipe_kapal = getArguments().getString(SpeedBoatFragment.TIPE_KAPAL,"");
         getDataPelabuhanFromAPI(tipe_kapal);
     }
 
@@ -122,10 +128,17 @@ public class FullscreenDialogAsal extends DialogFragment implements LifecycleOwn
         this.pelabuhanExpandedAdapter = new PelabuhanExpandedAdapter(pelabuhanEntities, getContext(), this.rvfullscreenpelabuhan, this) {
             @Override
             public void onSelectedItemPelabuhan(PelabuhanEntity pelabuhanEntity) {
-                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-                pemesananSpeedboatData.setAsal(pelabuhanEntity.getNama_pelabuhan());
-                pemesananSpeedboatData.setId_asal(pelabuhanEntity.getId());
-                MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
+                if(form.matches(FeriFragment.ASAL)){
+                    PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+                    pemesananFeriData.setAsal(pelabuhanEntity.getNama_pelabuhan());
+                    pemesananFeriData.setId_asal(pelabuhanEntity.getId());
+                    MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
+                }else if (form.matches(FeriFragment.TUJUAN)){
+                    PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+                    pemesananFeriData.setTujuan(pelabuhanEntity.getNama_pelabuhan());
+                    pemesananFeriData.setId_tujuan(pelabuhanEntity.getId());
+                    MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
+                }
             }
         };
         this.rvfullscreenpelabuhan.setAdapter(this.pelabuhanExpandedAdapter);

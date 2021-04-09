@@ -59,7 +59,8 @@ public class FullscreenDialogTujuan extends DialogFragment implements LifecycleO
 
         initWidget();
         setStateLoading();
-        getDataPelabuhanFromAPI();
+        String tipe_kapal = getArguments().getString(SpeedBoatFragment.TIPE_KAPAL,"");
+        getDataPelabuhanFromAPI(tipe_kapal);
     }
 
     /*INIT WIDGET PERTAMA KALI*/
@@ -79,12 +80,15 @@ public class FullscreenDialogTujuan extends DialogFragment implements LifecycleO
     }
 
     /*MENGAMBIL DATA PELABUHAN DARI API PELABUHAN*/
-    private void getDataPelabuhanFromAPI(){
+    private void getDataPelabuhanFromAPI(String tipe_kapal){
 
         String authorization = MainActivity.mainActivityViewModel.getProfileLiveData().getValue().getToken();
 
         PelabuhanServices pelabuhanServices = ApiClient.getRetrofit().create(PelabuhanServices.class);
-        Call<ServerResponsePelabuhanData> call = pelabuhanServices.readPelabuhan(authorization);
+        Call<ServerResponsePelabuhanData> call = pelabuhanServices.readPelabuhan(
+                authorization,
+                tipe_kapal
+        );
 
         call.enqueue(new Callback<ServerResponsePelabuhanData>() {
             @Override
@@ -116,10 +120,10 @@ public class FullscreenDialogTujuan extends DialogFragment implements LifecycleO
         this.pelabuhanExpandedAdapter = new PelabuhanExpandedAdapter(pelabuhanEntities, getContext(), this.rvfullscreenpelabuhan, this) {
             @Override
             public void onSelectedItemPelabuhan(PelabuhanEntity pelabuhanEntity) {
-                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananLiveData().getValue();
+                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
                 pemesananSpeedboatData.setTujuan(pelabuhanEntity.getNama_pelabuhan());
                 pemesananSpeedboatData.setId_tujuan(pelabuhanEntity.getId());
-                MainActivity.mainActivityViewModel.setPemesananData(pemesananSpeedboatData);
+                MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
             }
         };
         this.rvfullscreenpelabuhan.setAdapter(this.pelabuhanExpandedAdapter);
