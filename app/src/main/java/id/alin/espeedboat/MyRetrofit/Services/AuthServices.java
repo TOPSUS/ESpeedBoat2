@@ -24,7 +24,8 @@ public interface AuthServices {
     @POST("/api/login")
     Call<ServerResponseProfileData> login(
             @Field("email") String email,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("fcm_token") String fcm_token
     );
 
     /*

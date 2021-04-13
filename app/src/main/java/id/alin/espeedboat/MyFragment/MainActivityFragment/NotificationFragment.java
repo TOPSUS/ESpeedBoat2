@@ -1,86 +1,92 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
+import net.cachapa.expandablelayout.ExpandableLayout;
 
-import androidx.recyclerview.widget.RecyclerView;
-import id.alin.espeedboat.MyAdapter.NotificationAdapter;
+import java.util.LinkedList;
+import java.util.List;
+
 import id.alin.espeedboat.R;
 
 public class NotificationFragment extends Fragment {
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    public ExpandableLayout expandableLayout;
 
-    private RecyclerView recyclerView;
-    NotificationAdapter notificationAdapter;
-    ArrayList<String> notifikasi;
-    ArrayList<String> waktu;
-
-    public NotificationFragment() {
-        // Required empty public constructor
-    }
-
-    public static NotificationFragment newInstance(String param1, String param2) {
-        NotificationFragment fragment = new NotificationFragment();
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    private void init(View view){
-        recyclerView = view.findViewById(R.id.recyclerViewNotification);
-
-        notifikasi = new ArrayList<>();
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-
-        waktu = new ArrayList<>();
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-        waktu.add("13 Januari 2021 13:00");
-
-        notificationAdapter = new NotificationAdapter(notifikasi, waktu, getContext());
-        recyclerView.setAdapter(notificationAdapter);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.notification_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        init(view);
+        super.onViewCreated(view, savedInstanceState);
+
+        initWidget();
+        
     }
 
+    // METHOD UNTUK MELAKUKAN INISIASI WIDGET
+    private void initWidget() {
+        // INISIASI VIEW PAGER DAN TAB LAYOUT
+        this.viewPager = getView().findViewById(R.id.viewpager);
+        this.tabLayout = getView().findViewById(R.id.tablayout);
+        this.expandableLayout = getView().findViewById(R.id.expand_tablayout);
 
+        // MEMBUAT SECTIONPAGER ADAPTER YANG AKAN DIMASUKKAN KE DALAM VIEWPAGER
+        SectionpagerAdapter sectionpagerAdapter = new SectionpagerAdapter(getChildFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        sectionpagerAdapter.addFragments(new NewNotificationFragment(),"NEW");
+        sectionpagerAdapter.addFragments(new NewNotificationFragment(),"HISTORY");
+        sectionpagerAdapter.addFragments(new NewNotificationFragment(),"CHAT");
 
+        // MEMASUKKAN ADAPTER KE DALAM VIEWPAGER
+        this.viewPager.setAdapter(sectionpagerAdapter);
 
+        // MEMASUKKAN TABLAYOUT
+        this.tabLayout.setupWithViewPager(this.viewPager);
+    }
+}
+
+// CLASS UNTUK MELAKUKAN PEMSANANGAN FRAGMENT SPEEDBOAT
+class SectionpagerAdapter extends FragmentPagerAdapter {
+    private final List<Fragment> fragments = new LinkedList<>();
+    private final List<String> titles = new LinkedList<>();
+
+    public SectionpagerAdapter(@NonNull FragmentManager fm, int behavior) {
+        super(fm, behavior);
+    }
+
+    void addFragments(Fragment fragment, String title){
+        this.fragments.add(fragment);
+        this.titles.add(title);
+    }
+
+    @NonNull
+    @Override
+    public Fragment getItem(int position) {
+        return fragments.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return fragments.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles.get(position);
+    }
 }

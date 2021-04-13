@@ -13,39 +13,34 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
 import id.alin.espeedboat.R;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
-
     private Context context;
-    ArrayList<String> notifikasi, waktu;
+    ArrayList<NotificationEntity> notifikasi;
 
-    public NotificationAdapter(ArrayList<String> notifikasi, ArrayList<String> waktu, Context context) {
+    public NotificationAdapter(ArrayList<NotificationEntity> notifikasi,Context context) {
         this.notifikasi = notifikasi;
-        this.waktu = waktu;
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification, parent, false);
 
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_notification, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.textView.setText(notifikasi.get(position));
-        holder.textView1.setText(waktu.get(position));
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Ini Notifikasi", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -53,7 +48,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public int getItemCount() {
-
         return notifikasi.size();
     }
 

@@ -136,6 +136,8 @@ public class LoginActivity extends AppCompatActivity{
         /*VALIDATE*/
         String email = Objects.requireNonNull(this.etemail.getText()).toString();
         String password = Objects.requireNonNull(this.etpassword.getText()).toString();
+        String fcm_token = sharedPreferences.getString(Config.USER_FCM_TOKEN,"");
+
         int validation_point = 4;
 
         /*CEK */
@@ -158,20 +160,21 @@ public class LoginActivity extends AppCompatActivity{
         }
 
         if(validation_point == 4){
-            postLoginAPI(email,password);
+            postLoginAPI(email,password,fcm_token);
             btnmasuk.startAnimation();
         }
 
     }
 
     /*POST API LOGIN KE SERVER*/
-    private void postLoginAPI(String email, String password) {
+    private void postLoginAPI(String email, String password, String fcm_token) {
 
         /*RETROFIT INIIIATION*/
         AuthServices services = ApiClient.getRetrofit().create(AuthServices.class);
         Call<ServerResponseProfileData> call = services.login(
                 email,
-                password
+                password,
+                fcm_token
         );
 
         call.enqueue(new Callback<ServerResponseProfileData>() {

@@ -16,6 +16,7 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import id.alin.espeedboat.MyFragment.MainActivityFragment.HomeFragment;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.NewNotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananJadwalFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     /*THE FOUR FRAGMENT*/
     private HomeFragment homeFragment;
     private PemesananJadwalFragment pemesananFragment;
-    private NotificationFragment notificationFragment;
+    private NotificationFragment NotificationFragment;
     private ProfileFragment profileFragment;
 
     /*SHARED PREF*/
@@ -89,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 sharedPreferences.getString(Config.USER_EMAIL,""),
                 sharedPreferences.getString(Config.USER_FOTO,""),
                 sharedPreferences.getString(Config.USER_NOHP,""),
-                sharedPreferences.getString(Config.USER_JENIS_KELAMIN,"")
+                sharedPreferences.getString(Config.USER_JENIS_KELAMIN,""),
+                sharedPreferences.getString(Config.USER_FCM_TOKEN,"")
         );
 
         mainActivityViewModel.setProfileData(profileData);
@@ -150,9 +152,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /*FRAGMENT NOTIFICATION*/
-        if(this.notificationFragment == null){
-            notificationFragment = new NotificationFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,notificationFragment,NOTIFIKASI_FRAGMENT_TAG).commit();
+        if(this.NotificationFragment == null){
+            NotificationFragment = new NotificationFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout, NotificationFragment,NOTIFIKASI_FRAGMENT_TAG).commit();
         }
 
         /*FRAGMENT PEMESANAN*/
@@ -201,8 +203,8 @@ public class MainActivity extends AppCompatActivity {
         Fragment notifikasi = getSupportFragmentManager().findFragmentByTag(NOTIFIKASI_FRAGMENT_TAG);
 
         if(notifikasi != null){
-            this.notificationFragment = (NotificationFragment) notifikasi;
-            if(this.notificationFragment.isVisible()){
+            this.NotificationFragment = (NotificationFragment) notifikasi;
+            if(this.NotificationFragment.isVisible()){
                 Notification();
             }
         }
@@ -234,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
-        getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(NotificationFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(profileFragment).commit();
 
     }
@@ -258,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
-        getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(NotificationFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(profileFragment).commit();
     }
 
@@ -266,14 +268,14 @@ public class MainActivity extends AppCompatActivity {
     * METHOD MEMANGGIL FRAGMENT NOTIFICATION
     * */
     private void Notification(){
-        if(notificationFragment != null){
+        if(NotificationFragment != null){
             Log.d("TEST","TEST 5");
-            getSupportFragmentManager().beginTransaction().show(notificationFragment).commit();
+            getSupportFragmentManager().beginTransaction().show(NotificationFragment).commit();
         }
-        else if(!notificationFragment.isVisible()){
+        else if(!NotificationFragment.isVisible()){
             Log.d("TEST","TEST 6");
-            notificationFragment = new NotificationFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout,notificationFragment,NOTIFIKASI_FRAGMENT_TAG).commit();
+            NotificationFragment = new NotificationFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.HomeFrameLayout, NotificationFragment,NOTIFIKASI_FRAGMENT_TAG).commit();
             getSupportFragmentManager().beginTransaction().show(pemesananFragment).commit();
         }
 
@@ -298,6 +300,6 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
-        getSupportFragmentManager().beginTransaction().hide(notificationFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(NotificationFragment).commit();
     }
 }

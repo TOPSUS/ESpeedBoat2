@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "530490334742",
+    "project_id": "espeedboat",
+    "storage_bucket": "espeedboat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530490334742:android:74b20199c73cbeac3edf37",
+        "android_client_info": {
+          "package_name": "id.alin.espeedboat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530490334742-m8hs3hnb8jekt7t8ud289g0099059cuf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHHKViOyq21QrjZ-4j2rv3F4xkfdra624"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530490334742-m8hs3hnb8jekt7t8ud289g0099059cuf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

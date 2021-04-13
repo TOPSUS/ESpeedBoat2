@@ -14,8 +14,11 @@ public class ProfileData implements Parcelable {
     private String foto;
     private String nohp;
     private String jeniskelamin;
+    private String fcm_token;
 
-    public ProfileData(String user_id, String token, String name, String alamat, String chat_id, String pin, String email, String foto, String nohp, String jeniskelamin) {
+    public ProfileData(String user_id, String token, String name, String alamat,
+                       String chat_id, String pin, String email, String foto,
+                       String nohp, String jeniskelamin, String fcm_token) {
         this.user_id = user_id;
         this.token = token;
         this.name = name;
@@ -26,6 +29,7 @@ public class ProfileData implements Parcelable {
         this.foto = foto;
         this.nohp = nohp;
         this.jeniskelamin = jeniskelamin;
+        this.fcm_token = fcm_token;
     }
 
     public static final Creator<ProfileData> CREATOR = new Creator<ProfileData>() {
@@ -120,6 +124,13 @@ public class ProfileData implements Parcelable {
         this.jeniskelamin = jeniskelamin;
     }
 
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
+    }
 
     @Override
     public int describeContents() {
