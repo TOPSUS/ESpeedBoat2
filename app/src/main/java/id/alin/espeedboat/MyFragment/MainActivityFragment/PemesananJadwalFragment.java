@@ -85,7 +85,7 @@ public class PemesananJadwalFragment extends Fragment implements LifecycleOwner 
     }
 
     /*CLASS UNTUK MELAKUKAN PEMSANANGAN FRAGMENT SPEEDBOAT*/
-    private class SectionpagerAdapter extends FragmentPagerAdapter {
+    class SectionpagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> fragments = new LinkedList<>();
         private final List<String> titles = new LinkedList<>();
 
@@ -115,4 +115,6 @@ public class PemesananJadwalFragment extends Fragment implements LifecycleOwner 
             return titles.get(position);
         }
     }
+
 }
+

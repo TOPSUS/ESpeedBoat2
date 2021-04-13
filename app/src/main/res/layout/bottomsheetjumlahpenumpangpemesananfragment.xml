@@ -42,7 +42,6 @@
                     app:npMaxValue="10"
                     app:npDefaultValue="1"
                     android:outlineAmbientShadowColor="@color/black"
-                    android:outlineSpotShadowColor="@color/black"
                     android:forceHasOverlappingRendering="true"
                     app:npBackgroundColor="@color/white"
                     app:npSeparatorColor="@color/white"

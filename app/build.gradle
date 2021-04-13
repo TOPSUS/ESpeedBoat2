@@ -57,6 +57,14 @@ dependencies {
     implementation 'com.github.afreakyelf:Pdf-Viewer:1.0.7'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
 
+    /*VIEW PAGER*/
+    implementation 'com.github.florent37:materialviewpager:1.2.3'
+
+    // Dependencies
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'com.jpardogo.materialtabstrip:library:1.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
     /*HTTP LOGGING*/
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 

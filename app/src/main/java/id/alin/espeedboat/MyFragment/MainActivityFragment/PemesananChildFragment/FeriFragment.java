@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import id.alin.espeedboat.MainActivity;
+import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.PenumpangData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityViewModel;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
@@ -47,6 +49,11 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
     public static final String ASAL = "ASAL";
     public static final String TUJUAN = "TUJUAN";
     public static final String FERI = "feri";
+
+    // PUBLIC STATIC TIPE JASA
+    public static final String PENUMPANG = "Penumpang";
+    public static final String KENDARAAN = "Kendaraan";
+
 
     // CONSTRUCTOR FRAGMENT HARUS KOSONG
     public FeriFragment(){
@@ -83,7 +90,7 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         this.mettanggal = getView().findViewById(R.id.metPemesananJadwalFragmentTanggal);
         this.metjasa = getView().findViewById(R.id.metJasaPenggunaanFeri);
         this.metgolongan = getView().findViewById(R.id.metGolonganKendaraan);
-        this.isGolonganVisible = true;
+
         this.metjumlahpenumpang = getView().findViewById(R.id.metPemesananJadwalFragmentJumlahpenumpang);
         this.btncari = getView().findViewById(R.id.btncari);
 
@@ -163,15 +170,8 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         this.metjasa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isGolonganVisible){
-                    metgolongan.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), "HILANG", Toast.LENGTH_SHORT).show();
-                    isGolonganVisible = false;
-                }else{
-                    metgolongan.setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(), "VISIBLE", Toast.LENGTH_SHORT).show();
-                    isGolonganVisible = true;
-                }
+                JasaDialogFragment jasaDialogFragment = new JasaDialogFragment();
+                jasaDialogFragment.showNow(getChildFragmentManager(),"TAG");
             }
         });
 
@@ -206,11 +206,22 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                 metasal.setText(pemesananFeriData.getAsal());
                 mettujuan.setText(pemesananFeriData.getTujuan());
                 metgolongan.setText(pemesananFeriData.getGologan_kendaraan());
-                metjasa.setText(pemesananFeriData.getTipe_jasa());
+
                 metjumlahpenumpang.setText(
                         (pemesananFeriData.getJumlah_penumpang() == 0) ? "" : String.valueOf(pemesananFeriData.getJumlah_penumpang())
                 );
                 mettanggal.setText(pemesananFeriData.getTanggal());
+
+                // MENENTUKAN JASA YANG DIGUNAKAN APA BILA KENDARAAN MAKA BUKA FORM GOLONGAN
+                if(pemesananFeriData.getTipe_jasa() != null){
+                    if(pemesananFeriData.getTipe_jasa().matches(KENDARAAN)){
+                        metgolongan.setVisibility(View.VISIBLE);
+                    }else{
+                        metgolongan.setVisibility(View.GONE);
+                    }
+                    metjasa.setText(pemesananFeriData.getTipe_jasa());
+                }
+
             }
         });
     }

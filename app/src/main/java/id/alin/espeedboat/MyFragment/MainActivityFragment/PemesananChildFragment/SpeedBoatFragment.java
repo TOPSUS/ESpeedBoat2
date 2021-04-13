@@ -92,7 +92,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
         });
     }
 
-    /*MELAKUKAN INIT WIDGET HALAMAN*/
+    // MELAKUKAN INIT WIDGET HALAMAN*/
     private void initWidget(){
         this.metasal = getView().findViewById(R.id.metPemesananJadwalFragmentDari);
         this.metasal.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +239,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
 
     }
 
-    /*METHOD UNTUK MENGUBAH BULAN ANGKA KE NAMA BULAN DALAM BAHASA INDONESIA*/
+    //METHOD UNTUK MENGUBAH BULAN ANGKA KE NAMA BULAN DALAM BAHASA INDONESIA*/
     public static String transformToBulanIndonesia(int bulan_angka){
         String bulan;
 
