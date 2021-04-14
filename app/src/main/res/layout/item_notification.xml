@@ -1,82 +1,84 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/conslayuser"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <ImageView
+        android:id="@+id/iconNotification"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_notification"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.522" />
+
+    <TextView
+        android:id="@+id/namaNotifikasi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iconNotification"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_notification"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.522" />
-
-        <TextView
-            android:id="@+id/namaNotifikasi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!"
-            android:textSize="13sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iconHistory"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.166"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonHistory"/>
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="3dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/messagenotifikasi"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonHistory"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.166"
+        tools:ignore="HardcodedText" />
 
 
-        <TextView
-            android:id="@+id/waktuNotifikasi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="13-01-2021 13:00"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonHistory"
-            app:layout_constraintHorizontal_bias="0.092"
-            app:layout_constraintStart_toEndOf="@+id/iconNotification"
-            app:layout_constraintTop_toBottomOf="@+id/namaNotifikasi"
-            app:layout_constraintVertical_bias="1.0" />
+    <TextView
+        android:id="@+id/messagenotifikasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="50dp"
+        android:text="Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/waktuNotifikasi"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonHistory"
+        app:layout_constraintStart_toEndOf="@+id/iconNotification"
+        app:layout_constraintTop_toBottomOf="@+id/namaNotifikasi"
+        app:layout_constraintVertical_bias="0.277"
+        tools:ignore="HardcodedText" />
 
-        <ImageButton
-            android:id="@+id/imageButtonHistory"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:background="#FFFF"
-            android:src="@drawable/ic_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/waktuNotifikasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonHistory"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toEndOf="@+id/iconNotification"
+        app:layout_constraintTop_toBottomOf="@+id/messagenotifikasi"
+        app:layout_constraintVertical_bias="1.0" />
 
-        </ImageButton>
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/imageButtonHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"
+        android:background="#FFFF"
+        android:src="@drawable/ic_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

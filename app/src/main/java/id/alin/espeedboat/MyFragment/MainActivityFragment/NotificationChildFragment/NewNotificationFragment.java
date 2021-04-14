@@ -1,4 +1,4 @@
-package id.alin.espeedboat.MyFragment.MainActivityFragment;
+package id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationChildFragment;
 
 import android.os.Bundle;
 
@@ -10,25 +10,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.tabs.TabLayout;
-
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import id.alin.espeedboat.MyAdapter.NotificationAdapter;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
+import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
 import id.alin.espeedboat.R;
 
 public class NewNotificationFragment extends Fragment {
 
     private RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
-    ArrayList<String> notifikasi;
-    ArrayList<String> waktu;
+    ArrayList<NotificationEntity> notifikasi;
 
     private ExpandableLayout expandableLayout;
 
@@ -53,26 +52,42 @@ public class NewNotificationFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.d("DX",String.valueOf(dy));
+                NotificationFragment notificationFragment = (NotificationFragment) getParentFragment();
+
                 if(dy > 0){
-                    NotificationFragment notificationFragment = (NotificationFragment) getParentFragment();
                     notificationFragment.expandableLayout.collapse();
-                }else{
-                    NotificationFragment notificationFragment = (NotificationFragment) getParentFragment();
+                }else if(dy < -200){
                     notificationFragment.expandableLayout.expand();
                 }
             }
         });
-//        notifikasi = new ArrayList<>();
-//        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-//        notifikasi.add("Pembayaranmu telah berhasil dilakukan! Klik untuk melihat status transaksi sekarang!");
-//
-//        waktu = new ArrayList<>();
-//        waktu.add("13 Januari 2021 13:00");
-//        waktu.add("13 Januari 2021 13:00");
-//
-//        notificationAdapter = new NotificationAdapter(notifikasi, waktu, getContext());
-//        recyclerView.setAdapter(notificationAdapter);
+        notifikasi = new ArrayList<>();
+        NotificationEntity notificationEntity = new NotificationEntity();
+        notificationEntity.setId(1);
+        notificationEntity.setTitle("Transaksi Sukses !");
+        notificationEntity.setMessage("Selamat transaksi anda telah berhasil dilakukan dan telah di verifikasi secara manual oleh admin sistem, silahkan segera persiapkan barang mu dan berangkat ke pelabuhan ! :)");
+        notificationEntity.setNotification_by("admin");
+        notificationEntity.setCreated_at("2020-01-01");
+        notificationEntity.setStatus("normal");
+
+        NotificationEntity notificationEntity2 = new NotificationEntity();
+        notificationEntity2.setId(1);
+        notificationEntity2.setTitle("Transaksi Sukses 1");
+        notificationEntity2.setMessage("Selamat transaksi anda telah berhasil dilakukan dan telah di verifikasi secara manual oleh admin sistem, silahkan segera persiapkan barang mu dan berangkat ke pelabuhan ! :)");
+        notificationEntity2.setNotification_by("admin");
+        notificationEntity2.setCreated_at("2020-01-01");
+        notificationEntity2.setStatus("normal");
+
+        notifikasi.add(notificationEntity2);
+        notifikasi.add(notificationEntity);
+        notifikasi.add(notificationEntity);
+        notifikasi.add(notificationEntity);
+        notifikasi.add(notificationEntity);
+        notifikasi.add(notificationEntity);
+
+
+        notificationAdapter = new NotificationAdapter(notifikasi, getContext());
+        recyclerView.setAdapter(notificationAdapter);
     }
 
     @Override

@@ -1,11 +1,13 @@
 package id.alin.espeedboat.MyFireBase;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,7 +18,10 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import id.alin.espeedboat.MainActivity;
+import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
+import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
 import id.alin.espeedboat.R;
+import id.alin.espeedboat.SplashScreenActivity;
 
 public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
     public static final String channelID = "default";
@@ -27,7 +32,6 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        // ...
 
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
@@ -38,15 +42,16 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
 
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getTitle());
-            Log.d(TAG, "Message Notification Title: " + remoteMessage.getNotification().getBody());
-        }
+        // MENAMPILKAN NOTIFICATION
         showNotification(remoteMessage);
 
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
+        // MELAKUKAN THREADING UNTUK MENYIMPAN NOTIFICATION
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                safeNotification(remoteMessage);
+            }
+        });
     }
 
     @Override
@@ -56,25 +61,45 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
     }
 
     private void showNotification(RemoteMessage remoteMessage){
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, SplashScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(remoteMessage.getNotification().getTitle())
-                .setContentText(remoteMessage.getNotification().getBody())
+                .setContentTitle(remoteMessage.getData().get("title"))
+                .setContentText(remoteMessage.getData().get("body"))
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent);
 
         NotificationManager manager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            Log.d("masuk sini ?","yes");
-            NotificationChannel channel = new NotificationChannel(channelID,"default",NotificationManager.IMPORTANCE_HIGH);
-            manager.createNotificationChannel(channel);
-        }
+        NotificationChannel channel = new NotificationChannel(channelID,"default",NotificationManager.IMPORTANCE_HIGH);
+        manager.createNotificationChannel(channel);
         manager.notify(0,builder.build());
+    }
+
+    private void safeNotification(RemoteMessage remoteMessage){
+        try {
+            // CHECK DULU APAKAH ID YANG DARI SERVER TELAH ADA DI DALAM SISTEM
+            NotificationEntity checkNotification = DatabaeESpeedboat.createDatabase(getBaseContext())
+                                                    .notificationDAO()
+                                                        .getNotificationEntityById(Long.valueOf(remoteMessage.getData().get("id")));
+
+            // KALAU TIDAK ADA MAKA BISA DISIMPAN
+            if(checkNotification == null){
+                NotificationEntity notificationEntity = new NotificationEntity();
+                notificationEntity.setId_server_notification(Long.parseLong(remoteMessage.getData().get("id")));
+                notificationEntity.setTitle(remoteMessage.getData().get("title"));
+                notificationEntity.setMessage(remoteMessage.getData().get("body"));
+                notificationEntity.setStatus(remoteMessage.getData().get("status"));
+                notificationEntity.setCreated_at(remoteMessage.getData().get("created_at"));
+                notificationEntity.setNotification_by(remoteMessage.getData().get("notification_by"));
+                DatabaeESpeedboat.createDatabase(getBaseContext()).notificationDAO().insertNotification(notificationEntity);
+            }
+
+        }catch (NullPointerException ignored){}
+
     }
 }

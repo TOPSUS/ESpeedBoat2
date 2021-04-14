@@ -16,7 +16,6 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import id.alin.espeedboat.MyFragment.MainActivityFragment.HomeFragment;
-import id.alin.espeedboat.MyFragment.MainActivityFragment.NewNotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananJadwalFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;

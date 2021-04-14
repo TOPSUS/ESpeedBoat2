@@ -36,7 +36,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        holder.title_notification.setText(this.notifikasi.get(position).getTitle());
+        holder.messange_notification.setText(this.notifikasi.get(position).getMessage());
+        holder.time_notification.setText(this.notifikasi.get(position).getCreated_at());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,15 +56,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView textView, textView1;
+        TextView title_notification, messange_notification, time_notification;
         ConstraintLayout constraintLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.iconNotification);
-            textView = itemView.findViewById(R.id.namaNotifikasi);
-            textView1 = itemView.findViewById(R.id.waktuNotifikasi);
+            title_notification = itemView.findViewById(R.id.namaNotifikasi);
+            messange_notification = itemView.findViewById(R.id.messagenotifikasi);
+            time_notification = itemView.findViewById(R.id.waktuNotifikasi);
             constraintLayout = itemView.findViewById(R.id.conslayuser);
         }
     }

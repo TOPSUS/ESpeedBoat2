@@ -17,6 +17,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import java.util.LinkedList;
 import java.util.List;
 
+import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationChildFragment.NewNotificationFragment;
 import id.alin.espeedboat.R;
 
 public class NotificationFragment extends Fragment {

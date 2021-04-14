@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey;
 @Entity
 public class NotificationEntity {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
+    private long id_server_notification;
     private String title;
     private String message;
     private String notification_by;
@@ -20,6 +21,14 @@ public class NotificationEntity {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getId_server_notification() {
+        return id_server_notification;
+    }
+
+    public void setId_server_notification(long id_server_notification) {
+        this.id_server_notification = id_server_notification;
     }
 
     public String getTitle() {

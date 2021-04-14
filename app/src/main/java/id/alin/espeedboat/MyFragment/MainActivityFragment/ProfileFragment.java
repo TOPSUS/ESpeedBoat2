@@ -244,7 +244,16 @@ public class ProfileFragment extends Fragment {
 
     private void clearSharedPreference(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
+        editor.remove(Config.USER_TOKEN);
+        editor.remove(Config.USER_FOTO);
+        editor.remove(Config.USER_JENIS_KELAMIN);
+        editor.remove(Config.USER_NOHP);
+        editor.remove(Config.USER_EMAIL);
+        editor.remove(Config.USER_PIN);
+        editor.remove(Config.USER_CHAT_ID);
+        editor.remove(Config.USER_ALAMAT);
+        editor.remove(Config.USER_NAMA);
+        editor.remove(Config.USER_ID);
         editor.apply();
     }
 
