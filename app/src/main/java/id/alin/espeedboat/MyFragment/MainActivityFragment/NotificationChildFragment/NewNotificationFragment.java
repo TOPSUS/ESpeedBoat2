@@ -13,40 +13,77 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import id.alin.espeedboat.MyAdapter.NotificationAdapter;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
+import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
 import id.alin.espeedboat.R;
+import io.perfmark.Link;
 
-public class NewNotificationFragment extends Fragment {
+public class NewNotificationFragment extends Fragment implements LifecycleOwner {
 
     private RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
-    ArrayList<NotificationEntity> notifikasi;
+    private List<NotificationEntity> notificationEntities;
 
-    private ExpandableLayout expandableLayout;
+    // LAYOUT
+    private LinearLayout content, nodatalayout;
+
+    // DATABASE SISTEM
+    private DatabaeESpeedboat databaeESpeedboat;
 
     public NewNotificationFragment() {
         // Required empty public constructor
-    }
-
-    public static NewNotificationFragment newInstance(String param1, String param2) {
-        NewNotificationFragment fragment = new NewNotificationFragment();
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // INIT DATABASE
+        databaeESpeedboat = DatabaeESpeedboat.createDatabase(getContext());
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_notification, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        init(view);
+        initViewModel();
+    }
+
+    // INISIASI MENGHIDUPKAN OBSERVER KE VIEW MODEL NOTIFICATION FRAGMENT PARENT
+    private void initViewModel() {
+        NotificationFragment.notificationViewModel.getAllNotification().observe(this, new Observer<List<NotificationEntity>>() {
+            @Override
+            public void onChanged(List<NotificationEntity> notificationEntities) {
+                    NewNotificationFragment.this.notificationEntities = notificationEntities;
+                    fillRecyclerView(notificationEntities);
+            }
+        });
+    }
+
+    // INISIASI SEMUA WIDGET
     private void init(View view){
+        // LAYOUT
+        this.content = view.findViewById(R.id.content);
+        this.nodatalayout = view.findViewById(R.id.nodatalayout);
+        this.notificationEntities = new LinkedList<>();
+        // RECYCLER VIEW
         recyclerView = view.findViewById(R.id.recyclerViewNotification);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -61,47 +98,39 @@ public class NewNotificationFragment extends Fragment {
                 }
             }
         });
-        notifikasi = new ArrayList<>();
-        NotificationEntity notificationEntity = new NotificationEntity();
-        notificationEntity.setId(1);
-        notificationEntity.setTitle("Transaksi Sukses !");
-        notificationEntity.setMessage("Selamat transaksi anda telah berhasil dilakukan dan telah di verifikasi secara manual oleh admin sistem, silahkan segera persiapkan barang mu dan berangkat ke pelabuhan ! :)");
-        notificationEntity.setNotification_by("admin");
-        notificationEntity.setCreated_at("2020-01-01");
-        notificationEntity.setStatus("normal");
-
-        NotificationEntity notificationEntity2 = new NotificationEntity();
-        notificationEntity2.setId(1);
-        notificationEntity2.setTitle("Transaksi Sukses 1");
-        notificationEntity2.setMessage("Selamat transaksi anda telah berhasil dilakukan dan telah di verifikasi secara manual oleh admin sistem, silahkan segera persiapkan barang mu dan berangkat ke pelabuhan ! :)");
-        notificationEntity2.setNotification_by("admin");
-        notificationEntity2.setCreated_at("2020-01-01");
-        notificationEntity2.setStatus("normal");
-
-        notifikasi.add(notificationEntity2);
-        notifikasi.add(notificationEntity);
-        notifikasi.add(notificationEntity);
-        notifikasi.add(notificationEntity);
-        notifikasi.add(notificationEntity);
-        notifikasi.add(notificationEntity);
-
-
-        notificationAdapter = new NotificationAdapter(notifikasi, getContext());
-        recyclerView.setAdapter(notificationAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        fillRecyclerView(this.notificationEntities);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+    // RECYCLERVIEW FILLER
+    private void fillRecyclerView(List<NotificationEntity> notificationEntities) {
+        try{
+            if(notificationEntities.size() != 0){
+                if(this.notificationAdapter == null){
+                    this.notificationAdapter = new NotificationAdapter(notificationEntities,getContext());
+                    this.recyclerView.setAdapter(this.notificationAdapter);
+                    Log.d("debuginku","masuk sini 1");
+                }else{
+                    this.notificationAdapter.notificationentities = notificationEntities;
+                    this.notificationAdapter.notifyDataSetChanged();
+                    Log.d("debuginku","masuk sini 2");
+                }
+                setStateReady();
+            }
+        }catch(Exception ignored){
+            setStateNoData();
+        }
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        init(view);
+    // SET STATE NO DATA
+    private void setStateNoData(){
+        this.nodatalayout.setVisibility(View.VISIBLE);
+        this.content.setVisibility(View.INVISIBLE);
     }
 
-
-
-
+    // SET STATE READY
+    private void setStateReady(){
+        this.nodatalayout.setVisibility(View.INVISIBLE);
+        this.content.setVisibility(View.VISIBLE);
+    }
 }

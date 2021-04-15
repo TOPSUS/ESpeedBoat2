@@ -4,6 +4,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import java.util.List;
+
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
 import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
 
@@ -14,4 +16,7 @@ public interface NotificationDAO {
 
     @Query("SELECT * FROM NotificationEntity WHERE id_server_notification = :id")
     NotificationEntity getNotificationEntityById(long id);
+
+    @Query("SELECT * FROM NotificationEntity")
+    List<NotificationEntity> getAllNotificationEntity();
 }

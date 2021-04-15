@@ -25,7 +25,7 @@ import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
         JadwalEntity.class,
         MetodePembayaranEntity.class,
         NotificationEntity.class
-},version = 15,exportSchema = false)
+},version = 20,exportSchema = false)
 public abstract class DatabaeESpeedboat extends RoomDatabase {
     public abstract BeritaPelabuhanDAO beritaPelabuhanDAO();
     public abstract BeritaEspeedDAO beritaEspeedDAO();

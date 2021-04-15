@@ -13,30 +13,25 @@
         app:el_expanded="true"
         app:el_parallax="0.5">
 
-        <LinearLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="100dp"
+            android:background="@color/Blue_primary" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/Blue_primary"/>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tablayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/Blue_secondary"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@color/espeedorange"
-                app:tabIndicatorHeight="3dp"
-                app:tabMode="fixed"
-                app:tabRippleColor="@color/black"
-                app:tabSelectedTextColor="@color/espeedorange"
-                app:tabTextColor="@color/black" />
-        </LinearLayout>
     </net.cachapa.expandablelayout.ExpandableLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Blue_secondary"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/espeedorange"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/black"
+        app:tabSelectedTextColor="@color/espeedorange"
+        app:tabTextColor="@color/black" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"

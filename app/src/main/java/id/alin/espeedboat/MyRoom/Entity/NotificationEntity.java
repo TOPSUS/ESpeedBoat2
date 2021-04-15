@@ -13,6 +13,7 @@ public class NotificationEntity {
     private String message;
     private String notification_by;
     private String status;
+    private short type;
     private String created_at;
 
     public long getId() {
@@ -61,6 +62,14 @@ public class NotificationEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public short getType() {
+        return type;
+    }
+
+    public void setType(short type) {
+        this.type = type;
     }
 
     public String getCreated_at() {

@@ -13,13 +13,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import id.alin.espeedboat.MainActivity;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
+import id.alin.espeedboat.MyViewModel.NotificationViewModel.NotificationViewModel;
+import id.alin.espeedboat.MyViewModel.NotificationViewModel.NotificationViewModelFactory;
 import id.alin.espeedboat.R;
 import id.alin.espeedboat.SplashScreenActivity;
 
@@ -89,14 +94,21 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
 
             // KALAU TIDAK ADA MAKA BISA DISIMPAN
             if(checkNotification == null){
+                // SIMPAN KE DALAM ROOM
                 NotificationEntity notificationEntity = new NotificationEntity();
                 notificationEntity.setId_server_notification(Long.parseLong(remoteMessage.getData().get("id")));
                 notificationEntity.setTitle(remoteMessage.getData().get("title"));
                 notificationEntity.setMessage(remoteMessage.getData().get("body"));
                 notificationEntity.setStatus(remoteMessage.getData().get("status"));
+                notificationEntity.setType(Short.parseShort(remoteMessage.getData().get("type")));
                 notificationEntity.setCreated_at(remoteMessage.getData().get("created_at"));
                 notificationEntity.setNotification_by(remoteMessage.getData().get("notification_by"));
                 DatabaeESpeedboat.createDatabase(getBaseContext()).notificationDAO().insertNotification(notificationEntity);
+
+                // MENAMBAHKAN DATA KE DALAM VIEW MODEL KALAU SUDAH ACTIVE
+                if(NotificationFragment.notificationViewModel != null){
+                    NotificationFragment.notificationViewModel.addSingleNotificationData(notificationEntity);
+                }
             }
 
         }catch (NullPointerException ignored){}
