@@ -185,6 +185,16 @@ public class LoginActivity extends AppCompatActivity{
                 /*APABILA SUKSES*/
                 if (response.body().getResponse_code().matches("200")) {
 
+                    // GANTI STATUS DARI AUTO_LAUNCH
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            editor = sharedPreferences.edit();
+                            editor.putInt(Config.Setting.AUTO_LAUNCH,0);
+                            editor.apply();
+                        }
+                    });
+
                     /*MEMBERIKAN DATA KE DALAM SHARED PREF*/
                     setSharedPreferenceData(response.body());
 

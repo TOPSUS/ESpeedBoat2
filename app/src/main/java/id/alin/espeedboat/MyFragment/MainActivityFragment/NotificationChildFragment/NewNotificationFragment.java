@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
@@ -71,8 +72,16 @@ public class NewNotificationFragment extends Fragment implements LifecycleOwner 
         NotificationFragment.notificationViewModel.getAllNotification().observe(this, new Observer<List<NotificationEntity>>() {
             @Override
             public void onChanged(List<NotificationEntity> notificationEntities) {
-                    NewNotificationFragment.this.notificationEntities = notificationEntities;
-                    fillRecyclerView(notificationEntities);
+                    NewNotificationFragment.this.notificationEntities.clear();
+                    notificationEntities.forEach(new Consumer<NotificationEntity>() {
+                        @Override
+                        public void accept(NotificationEntity notificationEntity) {
+                            if(notificationEntity.getStatus() == 0){
+                                NewNotificationFragment.this.notificationEntities.add(notificationEntity);
+                            }
+                        }
+                    });
+                    fillRecyclerView(NewNotificationFragment.this.notificationEntities);
             }
         });
     }

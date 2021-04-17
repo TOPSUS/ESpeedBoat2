@@ -86,7 +86,7 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
     }
 
     private void safeNotification(RemoteMessage remoteMessage){
-        try {
+//        try {
             // CHECK DULU APAKAH ID YANG DARI SERVER TELAH ADA DI DALAM SISTEM
             NotificationEntity checkNotification = DatabaeESpeedboat.createDatabase(getBaseContext())
                                                     .notificationDAO()
@@ -99,19 +99,21 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
                 notificationEntity.setId_server_notification(Long.parseLong(remoteMessage.getData().get("id")));
                 notificationEntity.setTitle(remoteMessage.getData().get("title"));
                 notificationEntity.setMessage(remoteMessage.getData().get("body"));
-                notificationEntity.setStatus(remoteMessage.getData().get("status"));
                 notificationEntity.setType(Short.parseShort(remoteMessage.getData().get("type")));
+                notificationEntity.setStatus(Short.parseShort(remoteMessage.getData().get("status")));
                 notificationEntity.setCreated_at(remoteMessage.getData().get("created_at"));
-                notificationEntity.setNotification_by(remoteMessage.getData().get("notification_by"));
+                notificationEntity.setNotification_by(Short.parseShort(remoteMessage.getData().get("notification_by")));
                 DatabaeESpeedboat.createDatabase(getBaseContext()).notificationDAO().insertNotification(notificationEntity);
 
                 // MENAMBAHKAN DATA KE DALAM VIEW MODEL KALAU SUDAH ACTIVE
                 if(NotificationFragment.notificationViewModel != null){
-                    NotificationFragment.notificationViewModel.addSingleNotificationData(notificationEntity);
+                    if(remoteMessage.getData().get("status").matches("0")){
+                        NotificationFragment.notificationViewModel.addSingleNotificationData(notificationEntity);
+                    }
                 }
             }
 
-        }catch (NullPointerException ignored){}
+//        }catch (Exception ignored){}
 
     }
 }

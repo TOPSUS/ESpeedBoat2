@@ -11,8 +11,8 @@ public class NotificationEntity {
     private long id_server_notification;
     private String title;
     private String message;
-    private String notification_by;
-    private String status;
+    private short notification_by;
+    private short status;
     private short type;
     private String created_at;
 
@@ -48,19 +48,19 @@ public class NotificationEntity {
         this.message = message;
     }
 
-    public String getNotification_by() {
+    public short getNotification_by() {
         return notification_by;
     }
 
-    public void setNotification_by(String notification_by) {
+    public void setNotification_by(short notification_by) {
         this.notification_by = notification_by;
     }
 
-    public String getStatus() {
+    public short getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(short status) {
         this.status = status;
     }
 

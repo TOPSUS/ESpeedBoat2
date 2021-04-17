@@ -221,8 +221,6 @@ public class ProfileFragment extends Fragment {
         call.enqueue(new Callback<ServerResponseProfileData>() {
             @Override
             public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
-                ServerResponseProfileData newData = response.body();
-                if(response.body().getStatus().matches("success")){
                     clearSharedPreference();
                     dialog.dismiss();
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -231,7 +229,6 @@ public class ProfileFragment extends Fragment {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     getActivity().finish();
-                }
             }
 
             @Override

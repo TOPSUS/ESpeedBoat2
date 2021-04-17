@@ -17,6 +17,6 @@ public interface NotificationDAO {
     @Query("SELECT * FROM NotificationEntity WHERE id_server_notification = :id")
     NotificationEntity getNotificationEntityById(long id);
 
-    @Query("SELECT * FROM NotificationEntity")
-    List<NotificationEntity> getAllNotificationEntity();
+    @Query("SELECT * FROM NotificationEntity WHERE status = 0 ORDER BY id DESC")
+    List<NotificationEntity> getAllNewNotificationEntity();
 }

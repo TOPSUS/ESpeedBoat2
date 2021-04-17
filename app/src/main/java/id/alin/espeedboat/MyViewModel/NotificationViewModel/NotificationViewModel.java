@@ -31,7 +31,7 @@ public class NotificationViewModel extends ViewModel {
 
         // MENAMBAHKAN SINGLE DATA
         List<NotificationEntity> notificationEntities = notificationEntityMutableLiveData.getValue();
-        notificationEntities.add(notificationEntity);
+        notificationEntities.add(0,notificationEntity);
         notificationEntityMutableLiveData.setValue(notificationEntities);
     }
 

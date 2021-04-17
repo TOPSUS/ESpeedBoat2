@@ -120,6 +120,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         getEspeedNewsFromApi();
     }
 
+    // MENDAPATKAN DATA PROFILE DARI SERVER
     private void getProfileFromApi() {
         /*MENGUBAH DULU TAMPILAN DARI VIEW PROFILE*/
         this.tvname.setBackgroundColor(Color.parseColor(HomeFragment.SHAMMER_BACKGROUND));
@@ -192,6 +193,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
     }
 
+    // MENDAPATKAN BERITA PELABUHAN DARI SERVER
     private void getBeritaPelabuhanFromApi() {
         /*MENGAKTIFKAN SHIMMER ATAU LOADING PAGE*/
         showShimmerBeritaPelabuhan(true);
@@ -260,6 +262,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         });
     }
 
+    // MENDAPATKAN BERITA ESPEED NEWS DARI SERVER
     private void getEspeedNewsFromApi() {
         /*AKTIFKAT SHIMMER*/
         showShimmerEspeedNews(true);
@@ -279,12 +282,14 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         }, 10000);
     }
 
+    // INISIASI DATABASE SQLITE
     private void initEspeedDatabase() {
         if (databaeESpeedboat == null) {
             this.databaeESpeedboat = DatabaeESpeedboat.createDatabase(getContext());
         }
     }
 
+    // INISIASI VIEW PROFILE
     private void initViewProfile() {
         /*INIT REFRESH*/
         swipeRefreshLayout = view.findViewById(R.id.srFragmentHomeRefresh);
@@ -342,6 +347,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         swipeRefreshLayout.setRefreshing(false);
     }
 
+    // INISIASI INFO BERITA PELBUHAN
     private void initBeritaPelabuhan() {
         /*INIT RV BERITA PELABUHAN*/
         if (this.rvberitapelabuhan == null) {
@@ -449,6 +455,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         tvespeednewsdetail.setBackground(null);
     }
 
+    // SHOW SHIMMER PROFILE "EFFECT LOADING"
     private void showShimmerProfile(boolean value) {
 
         /*INIT WIDGET SHIMMER*/
@@ -467,6 +474,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
     }
 
+    // SHOW SHIMMER BERITA PELBUHAN "EFFECT LOADING"
     private void showShimmerBeritaPelabuhan(boolean value) {
 
         /*INIT WIDGET SHIMMER*/
@@ -499,6 +507,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
     }
 
+    // SHOW SHIMMER ESPEED NEWS "EFFECT LOADING"
     @SuppressLint("SetTextI18n")
     private void showShimmerEspeedNews(boolean value) {
         /*INIT WIDGET SHIMMER*/

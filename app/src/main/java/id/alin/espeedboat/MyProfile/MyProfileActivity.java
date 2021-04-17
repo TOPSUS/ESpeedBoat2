@@ -199,18 +199,14 @@ public class MyProfileActivity extends AppCompatActivity {
         call.enqueue(new Callback<ServerResponseProfileData>() {
             @Override
             public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
-                ServerResponseProfileData newData = response.body();
-                if(response.body().getStatus().matches("success")){
-                    clearSharedPreference();
-                    dialog.dismiss();
-                    Intent intent = new Intent(MyProfileActivity.this, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    MyProfileActivity.this.finish();
-                    finish();
-                }
+                clearSharedPreference();
+                dialog.dismiss();
+                Intent intent = new Intent(MyProfileActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -223,7 +219,16 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private void clearSharedPreference(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
+        editor.remove(Config.USER_TOKEN);
+        editor.remove(Config.USER_FOTO);
+        editor.remove(Config.USER_JENIS_KELAMIN);
+        editor.remove(Config.USER_NOHP);
+        editor.remove(Config.USER_EMAIL);
+        editor.remove(Config.USER_PIN);
+        editor.remove(Config.USER_CHAT_ID);
+        editor.remove(Config.USER_ALAMAT);
+        editor.remove(Config.USER_NAMA);
+        editor.remove(Config.USER_ID);
         editor.apply();
     }
 }
