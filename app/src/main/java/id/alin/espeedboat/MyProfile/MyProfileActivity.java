@@ -216,7 +216,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
 
-
+    // TIDAK BOLEH MENGHAPUS FCM_TOKEN
     private void clearSharedPreference(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(Config.USER_TOKEN);

@@ -3,6 +3,7 @@ package id.alin.espeedboat.MyRoom.DAO;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -17,6 +18,11 @@ public interface NotificationDAO {
     @Query("SELECT * FROM NotificationEntity WHERE id_server_notification = :id")
     NotificationEntity getNotificationEntityById(long id);
 
+    // MENGAMBIL SEMUA DATA NOTIFIKASI YANG BARU DAN BELUM DIHAPUS
     @Query("SELECT * FROM NotificationEntity WHERE status = 0 ORDER BY id DESC")
     List<NotificationEntity> getAllNewNotificationEntity();
+
+    // UPDATE DATA NOTIFIKASI
+    @Update
+    void updateNotification(NotificationEntity... notificationEntities);
 }

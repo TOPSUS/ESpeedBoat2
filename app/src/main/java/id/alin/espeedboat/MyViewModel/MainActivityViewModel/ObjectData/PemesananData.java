@@ -3,7 +3,7 @@ package id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
 import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
 
-public class PemesananSpeedboatData {
+public class PemesananData {
     private String asal;
     private String tujuan;
     private long id_asal;
@@ -11,9 +11,12 @@ public class PemesananSpeedboatData {
     private long id_tujuan;
     private String tanggal_variable;
     private String jumlah_penumpang;
+    private String tipe_jasa;
+    private String gologan_kendaraan;
+    private long id_golongan_kendaraan;
     private JadwalEntity jadwalEntity;
 
-    public PemesananSpeedboatData() {
+    public PemesananData() {
         this.asal = "";
         this.tujuan = "";
         this.id_asal = 0;
@@ -21,6 +24,9 @@ public class PemesananSpeedboatData {
         this.id_tujuan = 0;
         this.tanggal_variable = "";
         this.jumlah_penumpang = "";
+        this.tipe_jasa = "";
+        this.gologan_kendaraan = "";
+        this.id_golongan_kendaraan = 0;
         this.jadwalEntity = new JadwalEntity();
     }
 
@@ -86,5 +92,29 @@ public class PemesananSpeedboatData {
 
     public void setJadwalEntity(JadwalEntity jadwalEntity) {
         this.jadwalEntity = jadwalEntity;
+    }
+
+    public String getTipe_jasa() {
+        return tipe_jasa;
+    }
+
+    public void setTipe_jasa(String tipe_jasa) {
+        this.tipe_jasa = tipe_jasa;
+    }
+
+    public String getGologan_kendaraan() {
+        return gologan_kendaraan;
+    }
+
+    public void setGologan_kendaraan(String gologan_kendaraan) {
+        this.gologan_kendaraan = gologan_kendaraan;
+    }
+
+    public long getId_golongan_kendaraan() {
+        return id_golongan_kendaraan;
+    }
+
+    public void setId_golongan_kendaraan(long id_golongan_kendaraan) {
+        this.id_golongan_kendaraan = id_golongan_kendaraan;
     }
 }

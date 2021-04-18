@@ -24,7 +24,7 @@ import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponse
 import id.alin.espeedboat.MyRetrofit.Services.JadwalServices;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -128,15 +128,15 @@ public class PemesananJadwalSpeedboatActivity extends AppCompatActivity {
     }
 
     private void getJadwalFromAPI(){
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
         ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
         JadwalServices jadwalServices = ApiClient.getRetrofit().create(JadwalServices.class);
         Call<ServerResponseJadwalData> call = jadwalServices.getJadwal(
                 profileData.getToken(),
-                pemesananSpeedboatData.getTanggal_variable(),
-                String.valueOf(pemesananSpeedboatData.getId_asal()),
-                String.valueOf(pemesananSpeedboatData.getId_tujuan()),
+                pemesananData.getTanggal_variable(),
+                String.valueOf(pemesananData.getId_asal()),
+                String.valueOf(pemesananData.getId_tujuan()),
                 JadwalServices.SPEEDBOAT
         );
 

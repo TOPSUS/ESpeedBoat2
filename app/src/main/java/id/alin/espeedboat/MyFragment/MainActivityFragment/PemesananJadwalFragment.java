@@ -27,13 +27,6 @@ import id.alin.espeedboat.R;
 
 public class PemesananJadwalFragment extends Fragment implements LifecycleOwner {
 
-    /*WIDGET YANG DIGUNAKAN PADA LAMAN*/
-    private MaterialEditText metasal;
-    private MaterialEditText mettujuan;
-    private MaterialEditText mettanggal;
-    private MaterialEditText metjumlahpenumpang;
-    private Button btncari;
-
     private HeightWrappingViewPager viewPager;
     private TabLayout tabLayout;
 
@@ -41,6 +34,7 @@ public class PemesananJadwalFragment extends Fragment implements LifecycleOwner 
     public static final String FRAGMENT_FULLSCREEN_ASAL = "FRAGMENT_FULLSCREEN_ASAL";
     public static final String FRAGMENT_FULLSCREEN_TUJUAN = "FRAGMENT_FULLSCREEN_TUJUAN";
 
+    // HARUS KOSONG
     public PemesananJadwalFragment() {
         // Required empty public constructor
     }

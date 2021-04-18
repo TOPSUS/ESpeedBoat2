@@ -25,14 +25,17 @@
         android:theme="@style/Theme.ESpeedBoat">
         <activity android:name=".TestPdfActivity"/>
         <activity android:name=".MyUnpaidDetailTransactionActivity" />
-        <activity android:name=".MetodePembayaranActivity" />
+        <activity android:name=".MetodePembayaranActivity"
+                android:taskAffinity=".pemesanan"/>
         <activity android:name=".MyUnpaidTransactionActivity" />
         <activity android:name=".MyPointHistoryActivity" />
         <activity android:name=".MyPointRewardActivity" />
-        <activity android:name=".InputIdentitasPemesanActivity" />
+        <activity android:name=".InputIdentitasPemesanActivity"
+                android:taskAffinity=".pemesanan"/>
         <activity android:name=".GantiPasswordActivity" />
         <activity android:name=".LupaPasswordVerifikasiEmailActivity" />
-        <activity android:name=".PemesananJadwalSpeedboatActivity" />
+        <activity android:name=".PemesananJadwalSpeedboatActivity"
+                android:taskAffinity=".pemesanan"/>
         <activity android:name=".MyProfile.EditPinActivity" />
         <activity android:name=".MyProfile.AddPinActivity" />
         <activity android:name=".MyProfile.EditPasswordActivity" />
@@ -51,7 +54,7 @@
         <activity android:name=".RegisterActivity" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing"/>
 
         <service
             android:name=".MyFireBase.MyFireBaseCloudMessaging"

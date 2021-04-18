@@ -86,15 +86,18 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
     }
 
     private void safeNotification(RemoteMessage remoteMessage){
-//        try {
+        try {
+            // BUAT INSTANCE DATABASE ESPEEDBOAT
+            DatabaeESpeedboat databaeESpeedboat = DatabaeESpeedboat.createDatabase(getBaseContext());
+
             // CHECK DULU APAKAH ID YANG DARI SERVER TELAH ADA DI DALAM SISTEM
-            NotificationEntity checkNotification = DatabaeESpeedboat.createDatabase(getBaseContext())
+            NotificationEntity checkNotification = databaeESpeedboat
                                                     .notificationDAO()
                                                         .getNotificationEntityById(Long.valueOf(remoteMessage.getData().get("id")));
 
             // KALAU TIDAK ADA MAKA BISA DISIMPAN
             if(checkNotification == null){
-                // SIMPAN KE DALAM ROOM
+                // BUAT OBJECT NOTIFICATION ENTITY
                 NotificationEntity notificationEntity = new NotificationEntity();
                 notificationEntity.setId_server_notification(Long.parseLong(remoteMessage.getData().get("id")));
                 notificationEntity.setTitle(remoteMessage.getData().get("title"));
@@ -103,17 +106,41 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
                 notificationEntity.setStatus(Short.parseShort(remoteMessage.getData().get("status")));
                 notificationEntity.setCreated_at(remoteMessage.getData().get("created_at"));
                 notificationEntity.setNotification_by(Short.parseShort(remoteMessage.getData().get("notification_by")));
-                DatabaeESpeedboat.createDatabase(getBaseContext()).notificationDAO().insertNotification(notificationEntity);
+
+                // SIMPAN KE DALAM ROOM BERUPA DATA BARU
+                databaeESpeedboat.notificationDAO().insertNotification(notificationEntity);
 
                 // MENAMBAHKAN DATA KE DALAM VIEW MODEL KALAU SUDAH ACTIVE
                 if(NotificationFragment.notificationViewModel != null){
-                    if(remoteMessage.getData().get("status").matches("0")){
-                        NotificationFragment.notificationViewModel.addSingleNotificationData(notificationEntity);
-                    }
+                    NotificationFragment.notificationViewModel.setNotificationData(
+                            databaeESpeedboat.notificationDAO().getAllNewNotificationEntity()
+                    );
+                }
+            }else{
+                // APABILA NOTIFIKASI DENGAN ID YANG SAMA TELAH ADA MAKA NOTIFICATION AKAN DIUPDATE
+                checkNotification.setTitle(remoteMessage.getData().get("title"));
+                checkNotification.setMessage(remoteMessage.getData().get("body"));
+                checkNotification.setType(Short.parseShort(remoteMessage.getData().get("type")));
+                checkNotification.setStatus(Short.parseShort(remoteMessage.getData().get("status")));
+                checkNotification.setCreated_at(remoteMessage.getData().get("created_at"));
+                checkNotification.setNotification_by(Short.parseShort(remoteMessage.getData().get("notification_by")));
+
+                // UPDATE KE DALAM ROOM BERUPA DATA BARU
+                databaeESpeedboat.notificationDAO().updateNotification(checkNotification);
+
+                // GET ALL NOTIFICATION FROM DATABASE
+
+
+                // MENAMBAHKAN DATA KE DALAM VIEW MODEL KALAU SUDAH ACTIVE
+                if(NotificationFragment.notificationViewModel != null){
+                    NotificationFragment.notificationViewModel.setNotificationData(
+                            databaeESpeedboat.notificationDAO().getAllNewNotificationEntity()
+                    );
                 }
             }
 
-//        }catch (Exception ignored){}
+
+        }catch (Exception ignored){}
 
     }
 }

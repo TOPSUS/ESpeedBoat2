@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import id.alin.espeedboat.MainActivity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.PemesananJadwalSpeedboatActivity;
 import id.alin.espeedboat.R;
 
@@ -77,17 +77,17 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
     private void initViewModel() {
 
         /*INIT PERTAMA KALI VIEW MODEL PEMESANAN SUPAYA TIDAK KOSONG DATA PEMESANANNYA*/
-        MainActivity.mainActivityViewModel.setPemesananSpeedboatData(new PemesananSpeedboatData());
+        MainActivity.mainActivityViewModel.setPemesananSpeedboatData(new PemesananData());
 
 
         /*MELAKUKAN OBSERVER KE DALAM VIEW MODEL*/
-        MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().observe(this, new Observer<PemesananSpeedboatData>() {
+        MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().observe(this, new Observer<PemesananData>() {
             @Override
-            public void onChanged(PemesananSpeedboatData pemesananSpeedboatData) {
-                metasal.setText(pemesananSpeedboatData.getAsal());
-                mettujuan.setText(pemesananSpeedboatData.getTujuan());
-                mettanggal.setText(pemesananSpeedboatData.getTanggal());
-                metjumlahpenumpang.setText(pemesananSpeedboatData.getJumlah_penumpang());
+            public void onChanged(PemesananData pemesananData) {
+                metasal.setText(pemesananData.getAsal());
+                mettujuan.setText(pemesananData.getTujuan());
+                mettanggal.setText(pemesananData.getTanggal());
+                metjumlahpenumpang.setText(pemesananData.getJumlah_penumpang());
             }
         });
     }
@@ -156,10 +156,10 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
                             tanggal_variable.append(selectedDays.get(0).getCalendar().get(Calendar.DAY_OF_MONTH));
 
 
-                            PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-                            pemesananSpeedboatData.setTanggal(date.toString());
-                            pemesananSpeedboatData.setTanggal_variable(tanggal_variable.toString());
-                            MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
+                            PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+                            pemesananData.setTanggal(date.toString());
+                            pemesananData.setTanggal_variable(tanggal_variable.toString());
+                            MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananData);
                         }
                     }
                 });
@@ -191,42 +191,43 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
         });
     }
 
+    // VALIDASI
     private boolean doValidateData(){
         int validation = 1;
 
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
-        if(pemesananSpeedboatData.getAsal().matches("")){
+        if(pemesananData.getAsal().matches("")){
             validation -= 1;
             metasal.setError("Mohon tentukan pelabuhan asal");
         }
 
-        if(pemesananSpeedboatData.getTujuan().matches("")){
+        if(pemesananData.getTujuan().matches("")){
             validation-=1;
             mettujuan.setError("Mohon tentukan pelabuhan tujuan");
         }
 
-        if(!pemesananSpeedboatData.getAsal().matches("") && !pemesananSpeedboatData.getTujuan().matches("")){
-            if(pemesananSpeedboatData.getTujuan().matches(pemesananSpeedboatData.getAsal())){
+        if(!pemesananData.getAsal().matches("") && !pemesananData.getTujuan().matches("")){
+            if(pemesananData.getTujuan().matches(pemesananData.getAsal())){
                 validation-=1;
                 metasal.setError("Tidak boleh sama dengan tujuan");
                 mettujuan.setError("Tidak boleh sama dengan asal");
             }
         }
 
-        if(pemesananSpeedboatData.getTanggal_variable().matches("")){
+        if(pemesananData.getTanggal_variable().matches("")){
             validation -= 1;
             mettanggal.setError("Tanggal harus diisi");
         }else {
             LocalDate hari_ini = LocalDate.now();
-            LocalDate hari_input = LocalDate.parse(pemesananSpeedboatData.getTanggal_variable(), DateTimeFormatter.ofPattern("yyyy-M-d"));
+            LocalDate hari_input = LocalDate.parse(pemesananData.getTanggal_variable(), DateTimeFormatter.ofPattern("yyyy-M-d"));
             if (hari_input.isBefore(hari_ini)) {
                 validation -= 1;
                 mettanggal.setError("Tanggal telah lewat");
             }
         }
 
-        if(pemesananSpeedboatData.getJumlah_penumpang().matches("")){
+        if(pemesananData.getJumlah_penumpang().matches("")){
             validation -= 1;
             metjumlahpenumpang.setError("Mohon tentukan jumlah penumpang");
         }

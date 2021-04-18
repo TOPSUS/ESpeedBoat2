@@ -33,7 +33,7 @@ import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.Inpu
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.InputIdentitasPemesanActivityViewModelFactory;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.PenumpangData;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.TransaksiData;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 
 public class InputIdentitasPemesanActivity extends AppCompatActivity implements LifecycleOwner {
@@ -80,18 +80,18 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         }
 
         /*MENGAMBIL DATA PESANAN DARI VIEW MODEL MAINACTIVITY*/
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-        Log.d("PEMESANAN DATA", pemesananSpeedboatData.getJumlah_penumpang());
+        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+        Log.d("PEMESANAN DATA", pemesananData.getJumlah_penumpang());
 
         /*MEMASUKKAN DATA PROFILE DATA SEBAGAI PEMESAN*/
         pemesan = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
         /*MEMASUKKAN DATA PEMESAN KE TRANSAKSI DATA LIVE DATA*/
         TransaksiData transaksiData = inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue();
-        transaksiData.setId_jadwal(pemesananSpeedboatData.getJadwalEntity().getId());
+        transaksiData.setId_jadwal(pemesananData.getJadwalEntity().getId());
         transaksiData.setId_user(Long.parseLong(pemesan.getUser_id()));
-        transaksiData.setTanggal(pemesananSpeedboatData.getTanggal_variable());
-        transaksiData.setTotal_biaya((Long.parseLong(pemesananSpeedboatData.getJadwalEntity().getHarga()) * Long.parseLong(pemesananSpeedboatData.getJumlah_penumpang())));
+        transaksiData.setTanggal(pemesananData.getTanggal_variable());
+        transaksiData.setTotal_biaya((Long.parseLong(pemesananData.getJadwalEntity().getHarga()) * Long.parseLong(pemesananData.getJumlah_penumpang())));
         inputIdentitasPemesanActivityViewModel.setTransaksiMutableLiveData(transaksiData);
 
         /*INIT PENUMPANG DATA VIEW MODEL*/
@@ -125,14 +125,14 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         /*WIDGET UTIL*/
 
         /*SET DETAIL JADWAL*/
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-        String asaltujuan = pemesananSpeedboatData.getAsal() + " > " + pemesananSpeedboatData.getTujuan();
-        String detai_jadwal = pemesananSpeedboatData.getJadwalEntity().getPelabuhan_asal_kode() +
-                                " >> " + pemesananSpeedboatData.getJadwalEntity().getPelabuhan_tujuan_kode() +
-                                " [ " + pemesananSpeedboatData.getTanggal() + " ] " +
-                                pemesananSpeedboatData.getJadwalEntity().getWaktu_berangkat();
+        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+        String asaltujuan = pemesananData.getAsal() + " > " + pemesananData.getTujuan();
+        String detai_jadwal = pemesananData.getJadwalEntity().getPelabuhan_asal_kode() +
+                                " >> " + pemesananData.getJadwalEntity().getPelabuhan_tujuan_kode() +
+                                " [ " + pemesananData.getTanggal() + " ] " +
+                                pemesananData.getJadwalEntity().getWaktu_berangkat();
 
-        Log.d("alin_pelabuhan", pemesananSpeedboatData.getAsal());
+        Log.d("alin_pelabuhan", pemesananData.getAsal());
         this.tvasaltujuan.setText(asaltujuan);
         this.tvdetailjadwal.setText(detai_jadwal);
 
@@ -215,17 +215,17 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         };
         this.recyclerView.setLayoutManager(this.layoutManager);
         /*AMBIL JUMLAH PENUMPANG*/
-        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
         /*AMBIL VIEW MODEL PENUMPANG*/
         List<PenumpangData> penumpangData = inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
 
-        int jumlah_penumpang = Integer.parseInt(pemesananSpeedboatData.getJumlah_penumpang());
+        int jumlah_penumpang = Integer.parseInt(pemesananData.getJumlah_penumpang());
 
         if(jumlah_penumpang != penumpangData.size()) {
             for (int i = 0; i < jumlah_penumpang; i++) {
                 PenumpangData penumpang = new PenumpangData();
-                penumpang.setHarga(Long.parseLong(pemesananSpeedboatData.getJadwalEntity().getHarga()));
+                penumpang.setHarga(Long.parseLong(pemesananData.getJadwalEntity().getHarga()));
                 penumpangData.add(penumpang);
             }
         }

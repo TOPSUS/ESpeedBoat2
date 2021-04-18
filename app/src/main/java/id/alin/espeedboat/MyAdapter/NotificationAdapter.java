@@ -66,8 +66,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.constraintLayout.setBackgroundColor(Color.parseColor("#e6f4f7"));
         }else{
             holder.imageView.setImageDrawable(context.getDrawable(R.drawable.ic_notification));
+            holder.constraintLayout.setBackgroundColor(Color.WHITE);
         }
-
 
     }
 

@@ -25,7 +25,6 @@ import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pelabuhan.ServerRespo
 import id.alin.espeedboat.MyRetrofit.Services.PelabuhanServices;
 import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -130,6 +129,8 @@ public class FullscreenDialogFeri extends DialogFragment implements LifecycleOwn
             public void onSelectedItemPelabuhan(PelabuhanEntity pelabuhanEntity) {
                 if(form.matches(FeriFragment.ASAL)){
                     PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+                    pemesananFeriData.setGologan_kendaraan("");
+                    pemesananFeriData.setId_golongan_kendaraan(0);
                     pemesananFeriData.setAsal(pelabuhanEntity.getNama_pelabuhan());
                     pemesananFeriData.setId_asal(pelabuhanEntity.getId());
                     MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);

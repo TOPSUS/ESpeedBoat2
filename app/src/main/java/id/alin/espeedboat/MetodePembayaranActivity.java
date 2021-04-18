@@ -123,8 +123,10 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                 if(response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")){
                     Intent intent = new Intent(MetodePembayaranActivity.this, MyUnpaidDetailTransactionActivity.class);
                     intent.putExtra("id_trans", response.body().getPembelian().getId());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    //Toast.makeText(MetodePembayaranActivity.this, String.valueOf(response.body().getPembelian().getId()), Toast.LENGTH_SHORT).show();
+                    finishAffinity();
+                    Toast.makeText(MetodePembayaranActivity.this, "OTW", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(MetodePembayaranActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }

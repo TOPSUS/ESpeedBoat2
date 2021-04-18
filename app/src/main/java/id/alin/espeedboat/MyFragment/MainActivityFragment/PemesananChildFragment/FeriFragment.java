@@ -3,11 +3,11 @@ package id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragmen
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -26,10 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import id.alin.espeedboat.MainActivity;
-import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.PenumpangData;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityViewModel;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.R;
 
 public class FeriFragment extends Fragment implements LifecycleOwner {
@@ -37,11 +34,10 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
     private MaterialEditText metasal, mettujuan, mettanggal, metjasa, metgolongan, metjumlahpenumpang;
     private Button btncari;
 
-    // TOOGLE STATUS
-    private boolean isGolonganVisible;
-
     // TAG FRAGMENT
-    private static final String TAG_FULLSCREEN_FRAGMENST = "TAG_FULLSCREEN_FRAGMENST";
+    private static final String TAG_FULLSCREEN_FRAGMENT = "TAG_FULLSCREEN_FRAGMENT";
+    private static final String TAG_TIPE_JASA = "TAG_TIPE_JASA";
+    private static final String TAG_GOLONGAN = "TAG_GOLONGAN";
 
     // PUBLIC STATIC UNTUK MENENTUKAN TIPE DARI KAPAL
     public static final String TIPE_KAPAL = "TIPE_KAPAL";
@@ -104,7 +100,7 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                 bundle.putString(TIPE_KAPAL,FERI);
                 bundle.putString(FORM,ASAL);
                 fullscreenDialogFeri.setArguments(bundle);
-                fullscreenDialogFeri.showNow(getChildFragmentManager(),TAG_FULLSCREEN_FRAGMENST);
+                fullscreenDialogFeri.showNow(getChildFragmentManager(), TAG_FULLSCREEN_FRAGMENT);
             }
         });
 
@@ -116,7 +112,7 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                 bundle.putString(TIPE_KAPAL,FERI);
                 bundle.putString(FORM,TUJUAN);
                 fullscreenDialogFeri.setArguments(bundle);
-                fullscreenDialogFeri.showNow(getChildFragmentManager(),TAG_FULLSCREEN_FRAGMENST);
+                fullscreenDialogFeri.showNow(getChildFragmentManager(), TAG_FULLSCREEN_FRAGMENT);
             }
         });
 
@@ -171,14 +167,17 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 JasaDialogFragment jasaDialogFragment = new JasaDialogFragment();
-                jasaDialogFragment.showNow(getChildFragmentManager(),"TAG");
+                jasaDialogFragment.showNow(getChildFragmentManager(),TAG_TIPE_JASA);
             }
         });
 
         this.metgolongan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "GOLONGAN", Toast.LENGTH_SHORT).show();
+                if(doValidateOpenGolongan()){
+                    FullscreenGolonganFragment fullscreenGolonganFragment = new FullscreenGolonganFragment();
+                    fullscreenGolonganFragment.showNow(getChildFragmentManager(),TAG_GOLONGAN);
+                }
             }
         });
 
@@ -221,8 +220,20 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                     }
                     metjasa.setText(pemesananFeriData.getTipe_jasa());
                 }
-
+                Log.d("apekaden","perulangan");
             }
         });
+    }
+
+    // CHECK DULU APAKAH ASAL PELABUHAN SUDAH TERISI
+    private boolean doValidateOpenGolongan(){
+        PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+        if(pemesananFeriData.getAsal().matches("")){
+            this.metasal.setError("Mohon tentukan asal pelabuhan terlebih dahulu");
+            return false;
+        }else{
+            return true;
+        }
+
     }
 }

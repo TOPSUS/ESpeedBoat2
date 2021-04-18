@@ -238,7 +238,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-
+    // TIDAK BOLEH HAPUS FCM_TOKEN
     private void clearSharedPreference(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(Config.USER_TOKEN);

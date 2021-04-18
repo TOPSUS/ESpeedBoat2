@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 sharedPreferences.getString(Config.USER_JENIS_KELAMIN,""),
                 sharedPreferences.getString(Config.USER_FCM_TOKEN,"")
         );
-
+        Log.d("apekaden_2",sharedPreferences.getString(Config.USER_FCM_TOKEN,""));
         mainActivityViewModel.setProfileData(profileData);
     }
 

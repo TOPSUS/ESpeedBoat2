@@ -23,7 +23,7 @@ import java.util.List;
 import id.alin.espeedboat.InputIdentitasPemesanActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
 import id.alin.espeedboat.R;
 
 public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHolder> {
@@ -104,9 +104,9 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
             @Override
             public void onClick(View v) {
 
-                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-                pemesananSpeedboatData.setJadwalEntity(jadwalEntities.get(position));
-                MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
+                PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+                pemesananData.setJadwalEntity(jadwalEntities.get(position));
+                MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananData);
 
                 Intent intent = new Intent(context, InputIdentitasPemesanActivity.class);
                 context.startActivity(intent);

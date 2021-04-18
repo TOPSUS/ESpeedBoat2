@@ -41,6 +41,8 @@ public class JasaDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
                 pemesananFeriData.setTipe_jasa(FeriFragment.PENUMPANG);
+                pemesananFeriData.setId_golongan_kendaraan(0);
+                pemesananFeriData.setGologan_kendaraan("");
                 MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
                 dismiss();
             }
@@ -51,6 +53,8 @@ public class JasaDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
                 pemesananFeriData.setTipe_jasa(FeriFragment.KENDARAAN);
+                pemesananFeriData.setId_golongan_kendaraan(0);
+                pemesananFeriData.setGologan_kendaraan("");
                 MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
                 dismiss();
             }
