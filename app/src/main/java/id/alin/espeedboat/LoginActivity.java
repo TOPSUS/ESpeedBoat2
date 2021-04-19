@@ -53,13 +53,13 @@ public class LoginActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Log.d("GOTAMA","LOGIN ACTIVITY");
-        /*INIT WIDGET HALAMAN LOGIN*/
-        initWidget();
+        Log.d("GOTAMA", "LOGIN ACTIVITY");
 
         /*INIT SHARED PREf*/
         initSharedPref();
 
+        /*INIT WIDGET HALAMAN LOGIN*/
+        initWidget();
     }
 
     /*METHOD INIT SHARED PREF*/
@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity{
         if (this.sharedPreferences == null){
             sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
         }
+        Log.d("check_token_login_init_shared",sharedPreferences.getString(Config.USER_FCM_TOKEN,"KOSONG"));
     }
 
     /*METHOD INIT WIDGET HALAMAN LOGIN*/
@@ -139,7 +140,7 @@ public class LoginActivity extends AppCompatActivity{
         String fcm_token = sharedPreferences.getString(Config.USER_FCM_TOKEN,"");
 
         int validation_point = 4;
-
+        Log.d("check_token_2",sharedPreferences.getString(Config.USER_FCM_TOKEN,"KOSONG"));
         /*CEK */
         if(email.matches("")){
             this.etemail.setError("Mohon inputkan email anda");

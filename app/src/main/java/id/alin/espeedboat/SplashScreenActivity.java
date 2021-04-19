@@ -42,6 +42,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         // INIT FIREBASE SERVICE
         if(sharedPreferences.getString(Config.USER_FCM_TOKEN,"").matches("")){
             initFireBase();
+            Log.d("check_token_splash",sharedPreferences.getString(Config.USER_FCM_TOKEN,"KOSONG"));
         }
 
         /*AMBIL STATUS DARI SHARED PREF*/
