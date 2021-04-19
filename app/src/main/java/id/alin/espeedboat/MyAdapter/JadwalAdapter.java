@@ -23,6 +23,7 @@ import java.util.List;
 import id.alin.espeedboat.InputIdentitasPemesanActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.PemesananJadwalSpeedboatActivity;
 import id.alin.espeedboat.R;
@@ -106,9 +107,15 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
         holder.btnpilih.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-                pemesananSpeedboatData.setJadwalEntity(jadwalEntities.get(position));
-                MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
+                if(tipe_kapal.matches(PemesananJadwalSpeedboatActivity.SPEEDBOAT)){
+                    PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+                    pemesananSpeedboatData.setJadwalEntity(jadwalEntities.get(position));
+                    MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
+                }else{
+                    PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+                    pemesananFeriData.setJadwalEntity(jadwalEntities.get(position));
+                    MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
+                }
 
                 // MENJALANKAN INTENT DENGAN MENGIRIMKAN TIPE KAPALNYA FERI ATAU SPEEDBOAT
                 Intent intent = new Intent(context, InputIdentitasPemesanActivity.class);

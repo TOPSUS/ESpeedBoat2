@@ -11,7 +11,10 @@ public class PemesananFeriData {
     private String tanggal_variable;
     private String tipe_jasa;
     private String gologan_kendaraan;
+    private String keterangan_golongan;
     private long id_golongan_kendaraan;
+    private String nomor_kendaraan;
+    private int harga;
     private long jumlah_penumpang;
     private JadwalEntity jadwalEntity;
 
@@ -105,8 +108,32 @@ public class PemesananFeriData {
         this.jumlah_penumpang = jumlah_penumpang;
     }
 
+    public int getHarga() {
+        return harga;
+    }
+
+    public void setHarga(int harga) {
+        this.harga = harga;
+    }
+
+    public String getKeterangan_golongan() {
+        return keterangan_golongan;
+    }
+
+    public void setKeterangan_golongan(String keterangan_golongan) {
+        this.keterangan_golongan = keterangan_golongan;
+    }
+
     public JadwalEntity getJadwalEntity() {
         return jadwalEntity;
+    }
+
+    public String getNomor_kendaraan() {
+        return nomor_kendaraan;
+    }
+
+    public void setNomor_kendaraan(String nomor_kendaraan) {
+        this.nomor_kendaraan = nomor_kendaraan;
     }
 
     public void setJadwalEntity(JadwalEntity jadwalEntity) {

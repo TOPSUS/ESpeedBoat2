@@ -22,7 +22,7 @@
             app:met_errorColor="@android:color/holo_red_dark"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_floatingLabelText="Asal :"
+            app:met_floatingLabelText="Asal"
             app:met_floatingLabelTextColor="@color/black"
             app:met_iconLeft="@drawable/ic_speedboat"
             app:met_iconPadding="3dp"
@@ -107,6 +107,7 @@
             android:visibility="gone"
             android:hint="Golongan Kendaraan"
             android:textColorHint="@color/black"
+            android:textAllCaps="true"
             app:met_baseColor="@color/Blue_primary"
             app:met_errorColor="@android:color/holo_red_dark"
             app:met_floatingLabel="highlight"
@@ -120,6 +121,29 @@
             app:met_textColorHint="@color/black"
             app:met_underlineColor="@color/Blue_primary"
             tools:ignore="HardcodedText"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/metPemesananJadwalFragmentNomorKendaraan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:hint="Nomor Kendaraan"
+            android:textColorHint="@color/black"
+            app:met_baseColor="@color/Blue_primary"
+            app:met_errorColor="@android:color/holo_red_dark"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_floatingLabelText="Nomor Kendaraan"
+            app:met_floatingLabelTextColor="@color/black"
+            app:met_iconLeft="@drawable/ic_speedboat"
+            app:met_iconPadding="3dp"
+            app:met_primaryColor="@color/Blue_primary"
+            app:met_textColor="@color/espeedorange"
+            app:met_textColorHint="@color/black"
+            app:met_underlineColor="@color/Blue_primary"
+            tools:ignore="HardcodedText" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/metPemesananJadwalFragmentJumlahpenumpang"

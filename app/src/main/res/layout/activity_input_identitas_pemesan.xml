@@ -136,6 +136,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/espeedcovidbanner" />
 
+                <!--PEMESAN-->
                 <TextView
                     style="@style/HeadingHome"
                     android:layout_width="200dp"
@@ -189,46 +190,122 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <TextView
-                    style="@style/HeadingHome"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="Penumpang"
-                    android:textSize="15sp"
-                    tools:ignore="HardcodedText" />
-
+                <!--FERI LAYOUT-->
                 <LinearLayout
+                    android:id="@+id/ferilayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    >
 
                     <TextView
-                        android:layout_width="0dp"
+                        style="@style/HeadingHome"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Masukkan pemesan"
+                        android:layout_marginBottom="10dp"
+                        android:text="Kendaraan"
+                        android:textSize="15sp"
                         tools:ignore="HardcodedText" />
 
-                    <com.zcw.togglebutton.ToggleButton
-                        android:id="@+id/togglebuttonpemesanadalahpenumpang"
-                        android:layout_width="55dp"
-                        android:layout_height="25dp"
-                        toggle:tbBorderWidth="2dp"
-                        toggle:tbOffColor="@color/lightgrey"
-                        toggle:tbOnColor="@color/Blue_secondary"
-                        toggle:tbSpotColor="@color/Blue_primary" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        app:cardBackgroundColor="@color/white"
+                        >
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/golongan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:padding="10dp"
+                                android:background="@color/Blue_primary"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:id="@+id/harga_golongan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scrollHorizontally="false"
+                                android:layout_margin="10dp"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:id="@+id/keterangan_golongan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:scrollHorizontally="false"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvInputIdentitas"
+                <LinearLayout
+                    android:id="@+id/penumpanglayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:nestedScrollingEnabled="false" />
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/HeadingHome"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Penumpang"
+                        android:textSize="15sp"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Masukkan pemesan"
+                            tools:ignore="HardcodedText" />
+
+                        <com.zcw.togglebutton.ToggleButton
+                            android:id="@+id/togglebuttonpemesanadalahpenumpang"
+                            android:layout_width="55dp"
+                            android:layout_height="25dp"
+                            toggle:tbBorderWidth="2dp"
+                            toggle:tbOffColor="@color/lightgrey"
+                            toggle:tbOnColor="@color/Blue_secondary"
+                            toggle:tbSpotColor="@color/Blue_primary" />
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvInputIdentitas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -290,29 +367,29 @@
             android:id="@+id/loadinglayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="@color/black"
             android:alpha="0.6"
-            android:visibility="invisible"
-            android:orientation="vertical">
+            android:background="@color/black"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                app:lottie_rawRes="@raw/loading"
-                app:lottie_loop="true"
                 app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading"
                 app:lottie_repeatCount="-1"
-                app:lottie_repeatMode="reverse"/>
+                app:lottie_repeatMode="reverse" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:text="Mohon tunggu sebentar"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:text="Mohon tunggu sebentar"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>

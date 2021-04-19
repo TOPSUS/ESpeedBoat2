@@ -19,6 +19,7 @@ import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyAdapter.MetodePembayaranAdapter;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.FeriFragment;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.MetodePembayaran.ServerResponseMetodePembayaranData;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pembelian.ServerResponsePembelianData;
@@ -26,6 +27,7 @@ import id.alin.espeedboat.MyRetrofit.Services.PemesananServices;
 import id.alin.espeedboat.MyRoom.Entity.MetodePembayaranEntity;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.PenumpangData;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.TransaksiData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,10 +46,23 @@ public class MetodePembayaranActivity extends AppCompatActivity {
     /*LAYOUT*/
     private LinearLayout content, nodata, loading;
 
+    // TIPE_KAPAL
+    private String tipe_kapal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metode_pembayaran);
+
+        // MENGAMBIL TIPE_KAPAL
+        this.tipe_kapal = getIntent().getStringExtra(FeriFragment.TIPE_KAPAL);
+
+        List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
+
+        Gson gson = new Gson();
+        String jsonPenumpang = gson.toJson(penumpangDataList);
+
+        Log.d("alin_debug",jsonPenumpang);
 
         initWidget();
         getMetodePembayaranFromAPI();
@@ -104,7 +119,9 @@ public class MetodePembayaranActivity extends AppCompatActivity {
     }
 
     /*METHOD YANG DIGUNAKAN UNTUK MENGIRIMKAN DATA PEMESANAN KE SERVER*/
-    private void postPemesananJadwalAPI(String token, String id_pemesan, String id_jadwal, String id_metode_pembayaran, String jsonPenumpang) {
+    private void postPemesananJadwalSpeedboatAPI(String token, String id_pemesan, String id_jadwal,
+                                                 String id_metode_pembayaran, String jsonPenumpang,
+                                                 String tipe_kapal) {
         Log.d("jsonpemesanan",jsonPenumpang);
         setStateLoading();
 
@@ -114,7 +131,8 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                 id_pemesan,
                 id_jadwal,
                 id_metode_pembayaran,
-                jsonPenumpang
+                jsonPenumpang,
+                tipe_kapal
         );
 
         call.enqueue(new Callback<ServerResponsePembelianData>() {
@@ -127,6 +145,44 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                     startActivity(intent);
                     finishAffinity();
                     Toast.makeText(MetodePembayaranActivity.this, "OTW", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MetodePembayaranActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                setStateReady();
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponsePembelianData> call, Throwable t) {
+                Toast.makeText(MetodePembayaranActivity.this, "GAGAL : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                setStateReady();
+            }
+        });
+    }
+
+    // POST PEMESANAN UNTUK FERI + KENDARAAN
+    private void postPemesananFeriKendaraanAPI(String token, String id_pemesan, String id_jadwal,
+                                               String id_metode_pembayaran, String jsonPenumpang,
+                                               String tipe_kapal,String nomor_polisi,String id_golongan){
+        Log.d("jsonpemesanan",jsonPenumpang);
+        setStateLoading();
+
+        PemesananServices services = ApiClient.getRetrofit().create(PemesananServices.class);
+        Call<ServerResponsePembelianData> call = services.postPemesananTicket(
+                token,
+                id_pemesan,
+                id_jadwal,
+                id_metode_pembayaran,
+                jsonPenumpang,
+                tipe_kapal,
+                id_golongan,
+                nomor_polisi
+        );
+
+        call.enqueue(new Callback<ServerResponsePembelianData>() {
+            @Override
+            public void onResponse(Call<ServerResponsePembelianData> call, Response<ServerResponsePembelianData> response) {
+                if(response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")){
+                    finishAffinity();
                 }else{
                     Toast.makeText(MetodePembayaranActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -176,20 +232,49 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         dialogInterface.dismiss();
-                        /*MEMANGGIL POST PEMSANAN JADWAL API*/
-                        TransaksiData transaksiData = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue();
-                        ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
-                        List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
+                        // MEMANGGIL POST PEMSANAN JADWAL API UNTUK SPEEDBOAT
+                        if(MetodePembayaranActivity.this.tipe_kapal.matches(PemesananJadwalSpeedboatActivity.SPEEDBOAT)){
+                            TransaksiData transaksiData = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue();
+                            ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
+                            List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
 
-                        String token = profileData.getToken();
-                        String id_pemesan = profileData.getUser_id();
-                        String id_jadwal = String.valueOf(transaksiData.getId_jadwal());
-                        String id_metode_pembayaran = String.valueOf(transaksiData.getId_metode_pembayaran());
+                            String token = profileData.getToken();
+                            String id_pemesan = profileData.getUser_id();
+                            String id_jadwal = String.valueOf(transaksiData.getId_jadwal());
+                            String id_metode_pembayaran = String.valueOf(transaksiData.getId_metode_pembayaran());
 
-                        Gson gson = new Gson();
-                        String jsonPenumpang = gson.toJson(penumpangDataList);
+                            Gson gson = new Gson();
+                            String jsonPenumpang = gson.toJson(penumpangDataList);
 
-                        postPemesananJadwalAPI(token,id_pemesan,id_jadwal,id_metode_pembayaran,jsonPenumpang);
+                            postPemesananJadwalSpeedboatAPI(token,id_pemesan,id_jadwal,id_metode_pembayaran,jsonPenumpang,PemesananJadwalSpeedboatActivity.SPEEDBOAT);
+                        }else{
+                            TransaksiData transaksiData = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue();
+                            ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
+                            PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+
+                            List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
+
+                            String token = profileData.getToken();
+                            String id_pemesan = profileData.getUser_id();
+                            String id_jadwal = String.valueOf(transaksiData.getId_jadwal());
+                            String id_metode_pembayaran = String.valueOf(transaksiData.getId_metode_pembayaran());
+
+                            Gson gson = new Gson();
+                            String jsonPenumpang = gson.toJson(penumpangDataList);
+
+                            String nomor_polisi = pemesananFeriData.getNomor_kendaraan();
+                            String id_golongan = String.valueOf(pemesananFeriData.getId_golongan_kendaraan());
+
+                            if(pemesananFeriData.getTipe_jasa().matches(FeriFragment.KENDARAAN)){
+                                postPemesananFeriKendaraanAPI(token,id_pemesan,id_jadwal,id_metode_pembayaran,jsonPenumpang,
+                                                                    tipe_kapal,nomor_polisi,id_golongan);
+                            }else{
+                                postPemesananJadwalSpeedboatAPI(token,id_pemesan,id_jadwal,id_metode_pembayaran,jsonPenumpang,PemesananJadwalSpeedboatActivity.FERI);
+                            }
+
+
+
+                        }
 
                     }
                 })

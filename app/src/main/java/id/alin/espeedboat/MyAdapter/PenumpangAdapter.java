@@ -22,6 +22,7 @@ import id.alin.espeedboat.R;
 public class PenumpangAdapter extends RecyclerView.Adapter<PenumpangAdapter.MyViewHolder> {
     private Context context;
     public List<PenumpangData> penumpangData;
+    private String tipe_jasa;
 
     public PenumpangAdapter(Context context, List<PenumpangData> PenumpangData) {
         this.context = context;

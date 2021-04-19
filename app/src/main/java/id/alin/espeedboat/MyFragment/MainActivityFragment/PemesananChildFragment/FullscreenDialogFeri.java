@@ -131,6 +131,7 @@ public class FullscreenDialogFeri extends DialogFragment implements LifecycleOwn
                     PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
                     pemesananFeriData.setGologan_kendaraan("");
                     pemesananFeriData.setId_golongan_kendaraan(0);
+                    pemesananFeriData.setNomor_kendaraan("");
                     pemesananFeriData.setAsal(pelabuhanEntity.getNama_pelabuhan());
                     pemesananFeriData.setId_asal(pelabuhanEntity.getId());
                     MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);

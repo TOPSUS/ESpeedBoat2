@@ -1,13 +1,16 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -27,17 +30,20 @@ import java.util.List;
 
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
+import id.alin.espeedboat.PemesananJadwalSpeedboatActivity;
 import id.alin.espeedboat.R;
 
 public class FeriFragment extends Fragment implements LifecycleOwner {
     // WIDGET HALAMAN FERI
-    private MaterialEditText metasal, mettujuan, mettanggal, metjasa, metgolongan, metjumlahpenumpang;
+    private MaterialEditText metasal, mettujuan, mettanggal, metjasa, metgolongan, metjumlahpenumpang,
+                                metnomorkendaraan;
     private Button btncari;
 
     // TAG FRAGMENT
     private static final String TAG_FULLSCREEN_FRAGMENT = "TAG_FULLSCREEN_FRAGMENT";
     private static final String TAG_TIPE_JASA = "TAG_TIPE_JASA";
     private static final String TAG_GOLONGAN = "TAG_GOLONGAN";
+    private static final String TAG_NOMOR_KENDARAAN = "TAG_NOMOR_KENDARAAN";
 
     // PUBLIC STATIC UNTUK MENENTUKAN TIPE DARI KAPAL
     public static final String TIPE_KAPAL = "TIPE_KAPAL";
@@ -86,6 +92,7 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         this.mettanggal = getView().findViewById(R.id.metPemesananJadwalFragmentTanggal);
         this.metjasa = getView().findViewById(R.id.metJasaPenggunaanFeri);
         this.metgolongan = getView().findViewById(R.id.metGolonganKendaraan);
+        this.metnomorkendaraan = getView().findViewById(R.id.metPemesananJadwalFragmentNomorKendaraan);
 
         this.metjumlahpenumpang = getView().findViewById(R.id.metPemesananJadwalFragmentJumlahpenumpang);
         this.btncari = getView().findViewById(R.id.btncari);
@@ -155,6 +162,7 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                             PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
                             pemesananFeriData.setTanggal(date.toString());
                             pemesananFeriData.setTanggal_variable(tanggal_variable.toString());
+                            Toast.makeText(getContext(), tanggal_variable.toString(), Toast.LENGTH_SHORT).show();
                             MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
                         }
                     }
@@ -191,6 +199,25 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                 bottomSheetJumlahPenumpang.showNow(getChildFragmentManager(),"TAG");
             }
         });
+
+        // EVENT LISTENER BUTTON BERISIKAN EXTRAS STRING TIPE KAPAL FERI
+        this.btncari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PemesananJadwalSpeedboatActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL,PemesananJadwalSpeedboatActivity.FERI);
+                startActivity(intent);
+            }
+        });
+
+        this.metnomorkendaraan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NomorKendaraanFragment nomorKendaraanFragment = new NomorKendaraanFragment();
+                nomorKendaraanFragment.show(getChildFragmentManager(),TAG_NOMOR_KENDARAAN);
+            }
+        });
     }
 
     // VIEW MODEL UNTUK FERI FRAGMENT
@@ -205,6 +232,7 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                 metasal.setText(pemesananFeriData.getAsal());
                 mettujuan.setText(pemesananFeriData.getTujuan());
                 metgolongan.setText(pemesananFeriData.getGologan_kendaraan());
+                metnomorkendaraan.setText(pemesananFeriData.getNomor_kendaraan());
 
                 metjumlahpenumpang.setText(
                         (pemesananFeriData.getJumlah_penumpang() == 0) ? "" : String.valueOf(pemesananFeriData.getJumlah_penumpang())
@@ -215,8 +243,10 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                 if(pemesananFeriData.getTipe_jasa() != null){
                     if(pemesananFeriData.getTipe_jasa().matches(KENDARAAN)){
                         metgolongan.setVisibility(View.VISIBLE);
+                        metnomorkendaraan.setVisibility(View.VISIBLE);
                     }else{
                         metgolongan.setVisibility(View.GONE);
+                        metnomorkendaraan.setVisibility(View.GONE);
                     }
                     metjasa.setText(pemesananFeriData.getTipe_jasa());
                 }
