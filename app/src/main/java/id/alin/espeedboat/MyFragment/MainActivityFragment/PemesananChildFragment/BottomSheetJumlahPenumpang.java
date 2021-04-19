@@ -15,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import biz.kasual.materialnumberpicker.MaterialNumberPicker;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.R;
 
 public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
@@ -55,9 +55,9 @@ public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if(form.matches(SPEEDBOAT)){
-                    PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-                    pemesananData.setJumlah_penumpang(String.valueOf(materialNumberPicker.getValue()));
-                    MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananData);
+                    PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+                    pemesananSpeedboatData.setJumlah_penumpang(String.valueOf(materialNumberPicker.getValue()));
+                    MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
                 }else if(form.matches(FERI)){
                     PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
                     pemesananFeriData.setJumlah_penumpang(materialNumberPicker.getValue());

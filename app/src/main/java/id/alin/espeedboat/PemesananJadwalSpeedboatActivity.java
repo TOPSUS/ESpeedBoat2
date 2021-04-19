@@ -24,35 +24,39 @@ import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponse
 import id.alin.espeedboat.MyRetrofit.Services.JadwalServices;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PemesananJadwalSpeedboatActivity extends AppCompatActivity {
-    /*BACK BUTTON*/
+    //BACK BUTTON*/
     private ImageButton imageButton;
 
-    /*TEXT VIEW HEADER*/
+    //TEXT VIEW HEADER*/
     private TextView tvHeader;
 
-    /*RECYCLER VIEW*/
+    //RECYCLER VIEW*/
     private RecyclerView recyclerView;
 
-    /*RECYCLERVIEW ADAPTER*/
+    //*RECYCLERVIEW ADAPTER*/
     private JadwalAdapter jadwalAdapter;
 
-    /*LOADING LAYOUTE*/
+    //LOADING LAYOUTE*/
     private LinearLayout loadingLayout;
     private LinearLayout nodatalayout;
 
-    /*SQLITE*/
+    //SQLITE*/
     private DatabaeESpeedboat database;
 
-    /*FLOATING BUTTON*/
+    //FLOATING BUTTON*/
     private FloatingActionButton fabfilter;
 
+    // STATIC ATRIBUTE YANG DIGUNAKAN UNTUK MENENTUKAN TIPE KAPAL FERI ATAU SPEEDBOAT
+    public static String TIPE_KAPAL = "TIPE_KAPAL";
+    public static String FERI = "feri";
+    public static String SPEEDBOAT = "speedboat";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,17 +131,18 @@ public class PemesananJadwalSpeedboatActivity extends AppCompatActivity {
         this.nodatalayout.setVisibility(View.VISIBLE);
     }
 
+    // METHOD UNTUK MENDAPATKAN JADWAL BERDASARKAN TIPE KAPAL
     private void getJadwalFromAPI(){
-        PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
         ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
         JadwalServices jadwalServices = ApiClient.getRetrofit().create(JadwalServices.class);
         Call<ServerResponseJadwalData> call = jadwalServices.getJadwal(
                 profileData.getToken(),
-                pemesananData.getTanggal_variable(),
-                String.valueOf(pemesananData.getId_asal()),
-                String.valueOf(pemesananData.getId_tujuan()),
-                JadwalServices.SPEEDBOAT
+                pemesananSpeedboatData.getTanggal_variable(),
+                String.valueOf(pemesananSpeedboatData.getId_asal()),
+                String.valueOf(pemesananSpeedboatData.getId_tujuan()),
+                PemesananJadwalSpeedboatActivity.this.getIntent().getStringExtra(TIPE_KAPAL).equals(FERI) ? FERI : SPEEDBOAT
         );
 
         call.enqueue(new Callback<ServerResponseJadwalData>() {
@@ -178,7 +183,7 @@ public class PemesananJadwalSpeedboatActivity extends AppCompatActivity {
 
     private void fillRecyclerView(List<JadwalEntity> jadwalEntities) {
         if(this.jadwalAdapter == null){
-            this.jadwalAdapter = new JadwalAdapter(this,jadwalEntities);
+            this.jadwalAdapter = new JadwalAdapter(this,jadwalEntities,getIntent().getStringExtra(TIPE_KAPAL));
         }
 
         this.recyclerView.setAdapter(this.jadwalAdapter);

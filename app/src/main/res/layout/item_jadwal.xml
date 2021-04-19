@@ -16,10 +16,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
+        <TextView
+            android:id="@+id/tipe_kapal"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/Blue_primary"/>
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@color/Blue_primary"
+            android:text="SPEEDBOAT"
+            android:textColor="@color/white"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

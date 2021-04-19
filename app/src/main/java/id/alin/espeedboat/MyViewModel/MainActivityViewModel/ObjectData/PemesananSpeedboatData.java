@@ -3,7 +3,7 @@ package id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
 import id.alin.espeedboat.MyRoom.Entity.PelabuhanEntity;
 
-public class PemesananData {
+public class PemesananSpeedboatData {
     private String asal;
     private String tujuan;
     private long id_asal;
@@ -16,7 +16,7 @@ public class PemesananData {
     private long id_golongan_kendaraan;
     private JadwalEntity jadwalEntity;
 
-    public PemesananData() {
+    public PemesananSpeedboatData() {
         this.asal = "";
         this.tujuan = "";
         this.id_asal = 0;

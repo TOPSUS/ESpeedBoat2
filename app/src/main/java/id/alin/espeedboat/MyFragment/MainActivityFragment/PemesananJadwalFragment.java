@@ -63,7 +63,7 @@ public class PemesananJadwalFragment extends Fragment implements LifecycleOwner 
         this.tabLayout.setupWithViewPager(this.viewPager);
     }
 
-    /*PEMBUATAN VIEW PAGER*/
+    //PEMBUATAN VIEW PAGER*/
     private void createViewPager(){
 
         /*BUAT SECTIONPAGE ADAPTER*/
@@ -78,7 +78,7 @@ public class PemesananJadwalFragment extends Fragment implements LifecycleOwner 
         this.viewPager.setAdapter(sectionpagerAdapter);
     }
 
-    /*CLASS UNTUK MELAKUKAN PEMSANANGAN FRAGMENT SPEEDBOAT*/
+    //CLASS UNTUK MELAKUKAN PEMSANANGAN FRAGMENT SPEEDBOAT*/
     class SectionpagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> fragments = new LinkedList<>();
         private final List<String> titles = new LinkedList<>();

@@ -23,7 +23,8 @@ import java.util.List;
 import id.alin.espeedboat.InputIdentitasPemesanActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyRoom.Entity.JadwalEntity;
-import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
+import id.alin.espeedboat.PemesananJadwalSpeedboatActivity;
 import id.alin.espeedboat.R;
 
 public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHolder> {
@@ -32,9 +33,13 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
 
     private final String ZONA_WAKTU = " WITA ";
 
-    public JadwalAdapter(Context context, List<JadwalEntity> jadwalEntities) {
+    // ATRIBUTE TIPE KAPAL
+    private String tipe_kapal;
+
+    public JadwalAdapter(Context context, List<JadwalEntity> jadwalEntities, String tipe_kapal) {
         this.context = context;
         this.jadwalEntities = jadwalEntities;
+        this.tipe_kapal = tipe_kapal;
     }
 
     @NonNull
@@ -42,7 +47,6 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_jadwal,parent,false);
         return new MyViewHolder(view);
-
     }
 
     @Override
@@ -58,6 +62,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
         holder.tvTujuan.setText(this.jadwalEntities.get(position).getPelabuhan_tujuan_nama());
         holder.tvJamBerangkat.setText(waktu_berangkat);
         holder.tvJamSampai.setText(waktu_sampai);
+        holder.tvtipekapal.setText(this.tipe_kapal);
 
         String kapasitas;
 
@@ -74,8 +79,6 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
                     jadwalEntities.get(position).getPemesanan_saat_ini();
             holder.tvkapasitasboat.setText(kapasitas);
         }
-
-
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +106,14 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
         holder.btnpilih.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+                pemesananSpeedboatData.setJadwalEntity(jadwalEntities.get(position));
+                MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
 
-                PemesananData pemesananData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-                pemesananData.setJadwalEntity(jadwalEntities.get(position));
-                MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananData);
-
+                // MENJALANKAN INTENT DENGAN MENGIRIMKAN TIPE KAPALNYA FERI ATAU SPEEDBOAT
                 Intent intent = new Intent(context, InputIdentitasPemesanActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL,tipe_kapal);
                 context.startActivity(intent);
             }
         });
@@ -121,7 +126,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView tvSpeedBoatName, tvSpeedBoatDesc, tvAsal,tvJamBerangkat,tvJamSampai,tvTujuan,
-                            tvHarga, tvkapasitasboat;
+                            tvHarga, tvkapasitasboat, tvtipekapal;
 
         private ExpandableLayout expandableLayout;
         private Button btnpilih;
@@ -140,6 +145,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
             this.btnpilih = itemView.findViewById(R.id.btnpilih);
             this.tvkapasitasboat = itemView.findViewById(R.id.tvKapasitasBoat);
             this.cardView = itemView.findViewById(R.id.cardviewroot);
+            this.tvtipekapal = itemView.findViewById(R.id.tipe_kapal);
         }
     }
 }
