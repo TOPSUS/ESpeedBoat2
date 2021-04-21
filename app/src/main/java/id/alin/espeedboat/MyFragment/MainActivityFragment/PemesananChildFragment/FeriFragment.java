@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -200,22 +199,24 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
             }
         });
 
-        // EVENT LISTENER BUTTON BERISIKAN EXTRAS STRING TIPE KAPAL FERI
-        this.btncari.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PemesananJadwalSpeedboatActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL,PemesananJadwalSpeedboatActivity.FERI);
-                startActivity(intent);
-            }
-        });
-
         this.metnomorkendaraan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NomorKendaraanFragment nomorKendaraanFragment = new NomorKendaraanFragment();
                 nomorKendaraanFragment.show(getChildFragmentManager(),TAG_NOMOR_KENDARAAN);
+            }
+        });
+
+        // EVENT LISTENER BUTTON BERISIKAN EXTRAS STRING TIPE KAPAL FERI
+        this.btncari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(doValiadateCariFeri()){
+                    Intent intent = new Intent(getContext(), PemesananJadwalSpeedboatActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL,PemesananJadwalSpeedboatActivity.FERI);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -265,5 +266,49 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
             return true;
         }
 
+    }
+
+    // VALIDASI TOMBOL CARE FERI
+    private boolean doValiadateCariFeri(){
+        int validastion = 1;
+
+        PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+
+        if(pemesananFeriData.getAsal().matches("")){
+            validastion -= 1;
+            this.metasal.setError("Tentukan asal pelabuhan");
+        }
+
+        if(pemesananFeriData.getTujuan().matches("")){
+            validastion -= 1;
+            this.mettujuan.setError("Tentukan tujuan pelabuhan");
+        }
+
+        if(pemesananFeriData.getTanggal().matches("")){
+            validastion-=1;
+            this.mettanggal.setError("Tentukan tanggal keberangkatan");
+        }
+
+        if(pemesananFeriData.getTipe_jasa().matches("")){
+            validastion-=1;
+            this.metjasa.setError("Tentukan tipe jasa");
+        }else if(pemesananFeriData.getTipe_jasa().matches(KENDARAAN)){
+            if(pemesananFeriData.getGologan_kendaraan().matches("")){
+                validastion -=1;
+                this.metgolongan.setError("Tentukan golongan kendaraan");
+            }
+
+            if(pemesananFeriData.getNomor_kendaraan().matches("")){
+                validastion -=1;
+                this.metnomorkendaraan.setError("Masukkan nomor kendaraan");
+            }
+        }
+
+        if(pemesananFeriData.getJumlah_penumpang() == 0){
+            validastion-=1;
+            this.metjumlahpenumpang.setError("Tentukan jumlah penumpang");
+        }
+
+        return validastion == 1;
     }
 }

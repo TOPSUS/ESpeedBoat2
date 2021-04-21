@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zcw.togglebutton.ToggleButton;
@@ -48,9 +49,9 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
 
     /*WIDGET*/
     private TextView tvasaltujuan, tvdetailjadwal, tvnamapemesan, tvemailpemesan, tvnomorpemesan,
-                        tvtotalbiaya, tvnamapengendara, tvgolongan, tvhargagolongan, tvketerangangolongan;
+            tvtotalbiaya, tvnamapengendara, tvgolongan, tvhargagolongan, tvketerangangolongan;
     private Button btnlanjutkan;
-    private LinearLayout loading,layout_feri,layout_penumpang;
+    private LinearLayout loading, layout_feri, layout_penumpang;
 
     public ToggleButton toggle;
 
@@ -58,9 +59,9 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     private ProfileData pemesan;
 
     /*PUBLIC STATIC KEY*/
-    public static  final String INDEX_PENUMPANG = "INDEX_PENUMPANG";
-    public static  final String NAMA_PENUMPANG = "NAMA_PENUMPANG";
-    public static  final String NOMOR_IDENTITAS = "NOMOR_IDENTITAS";
+    public static final String INDEX_PENUMPANG = "INDEX_PENUMPANG";
+    public static final String NAMA_PENUMPANG = "NAMA_PENUMPANG";
+    public static final String NOMOR_IDENTITAS = "NOMOR_IDENTITAS";
 
     /*BUTTON ANTI DOUBLE CLICK*/
     private long mLastClickTime = 0;
@@ -70,11 +71,11 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_identitas_pemesan);
 
-        if(getIntent().getStringExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL).matches(PemesananJadwalSpeedboatActivity.SPEEDBOAT)){
+        if (getIntent().getStringExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL).matches(PemesananJadwalSpeedboatActivity.SPEEDBOAT)) {
             initViewModelSpeedboat();
             initWidgetSpeedboat();
             fillRecyclerViewSpeedboat();
-        }else{
+        } else {
             initViewModelFeri();
             initWidgetFeri();
             fillRecyclerViewFeri();
@@ -84,12 +85,12 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     // MEMBENTUK VIEW MODEL
     private void initViewModelSpeedboat() {
         // MEMBUYAT VIEW MODEL*/
-        if(inputIdentitasPemesanActivityViewModel == null){
+        if (inputIdentitasPemesanActivityViewModel == null) {
             inputIdentitasPemesanActivityViewModel = new ViewModelProvider(this, new InputIdentitasPemesanActivityViewModelFactory())
                     .get(InputIdentitasPemesanActivityViewModel.class);
         }
 
-         // MENGAMBIL DATA PESANAN DARI VIEW MODEL MAINACTIVITY*/
+        // MENGAMBIL DATA PESANAN DARI VIEW MODEL MAINACTIVITY*/
         PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
         Log.d("PEMESANAN DATA", pemesananSpeedboatData.getJumlah_penumpang());
 
@@ -141,9 +142,9 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
         String asaltujuan = pemesananSpeedboatData.getAsal() + " > " + pemesananSpeedboatData.getTujuan();
         String detai_jadwal = pemesananSpeedboatData.getJadwalEntity().getPelabuhan_asal_kode() +
-                                " >> " + pemesananSpeedboatData.getJadwalEntity().getPelabuhan_tujuan_kode() +
-                                " [ " + pemesananSpeedboatData.getTanggal() + " ] " +
-                                pemesananSpeedboatData.getJadwalEntity().getWaktu_berangkat();
+                " >> " + pemesananSpeedboatData.getJadwalEntity().getPelabuhan_tujuan_kode() +
+                " [ " + pemesananSpeedboatData.getTanggal() + " ] " +
+                pemesananSpeedboatData.getJadwalEntity().getWaktu_berangkat();
 
         Log.d("alin_pelabuhan", pemesananSpeedboatData.getAsal());
         this.tvasaltujuan.setText(asaltujuan);
@@ -158,19 +159,18 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         this.toggle.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
-                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
-                    if(on){
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    if (on) {
                         InputIdentitasPemesanActivity.this.toggle.setToggleOff();
-                    }else{
+                    } else {
                         InputIdentitasPemesanActivity.this.toggle.setToggleOn();
                     }
-                    return ;
-                }
-                else{
+                    return;
+                } else {
                     mLastClickTime = SystemClock.elapsedRealtime();
-                    if(on){
-                        showBottomSheet(pemesan.getName(),"",0);
-                    }else{
+                    if (on) {
+                        showBottomSheet(pemesan.getName(), "", 0);
+                    } else {
                         List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
                         penumpangDataList.get(0).setNama_pemegang_ticket("");
                         penumpangDataList.get(0).setNo_id_card("");
@@ -200,7 +200,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         this.btnlanjutkan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(doValidate()){
+                if (doValidate()) {
                     showModalPersetujuanPemesanan();
                 }
             }
@@ -208,10 +208,10 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     }
 
     // FILL RECYCLERVIEW DENGAN DATA
-    private void fillRecyclerViewSpeedboat(){
+    private void fillRecyclerViewSpeedboat() {
         // PRE FILL
         this.recyclerView = findViewById(R.id.rvInputIdentitas);
-        this.layoutManager = new LinearLayoutManager(this){
+        this.layoutManager = new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -227,7 +227,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
 
         int jumlah_penumpang = Integer.parseInt(pemesananSpeedboatData.getJumlah_penumpang());
 
-        if(jumlah_penumpang != penumpangData.size()) {
+        if (jumlah_penumpang != penumpangData.size()) {
             for (int i = 0; i < jumlah_penumpang; i++) {
                 PenumpangData penumpang = new PenumpangData();
                 penumpang.setHarga(Long.parseLong(pemesananSpeedboatData.getJadwalEntity().getHarga()));
@@ -236,14 +236,14 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         }
 
         // TOOGLE FIXING*/
-        if(!penumpangData.get(0).getNama_pemegang_ticket().matches("")){
+        if (!penumpangData.get(0).getNama_pemegang_ticket().matches("")) {
             toggle.setToggleOn();
         }
 
-         // MASUKKAN PENUMPANG DATA KE DALAM VIEWMODEL*/
+        // MASUKKAN PENUMPANG DATA KE DALAM VIEWMODEL*/
         inputIdentitasPemesanActivityViewModel.setListPenumpangLivedata(penumpangData);
 
-        this.penumpangAdapter = new PenumpangAdapter(this,penumpangData);
+        this.penumpangAdapter = new PenumpangAdapter(this, penumpangData);
         this.recyclerView.setAdapter(this.penumpangAdapter);
         this.recyclerView.setNestedScrollingEnabled(false);
     }
@@ -251,7 +251,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     // MEMBENTUK VIEW MODEL
     private void initViewModelFeri() {
         // MEMBUYAT VIEW MODEL*/
-        if(inputIdentitasPemesanActivityViewModel == null){
+        if (inputIdentitasPemesanActivityViewModel == null) {
             inputIdentitasPemesanActivityViewModel = new ViewModelProvider(this, new InputIdentitasPemesanActivityViewModelFactory())
                     .get(InputIdentitasPemesanActivityViewModel.class);
         }
@@ -269,20 +269,20 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         transaksiData.setTanggal(pemesananFeriData.getTanggal_variable());
 
         // MENTUKAN HARGA BERDASARKAN GOLONGAN KENDARAAN APABILA ADA
-        if(pemesananFeriData.getTipe_jasa().matches(FeriFragment.KENDARAAN)){
+        if (pemesananFeriData.getTipe_jasa().matches(FeriFragment.KENDARAAN)) {
             int total_harga = 0;
 
             // TOTAL DITAMBAH DENGAN INCLUDE DARI GOLONGAN TERLEBIH DAHULU
             total_harga += pemesananFeriData.getHarga();
-            Log.d("apakaden",String.valueOf(pemesananFeriData.getHarga()));
+            Log.d("apakaden", String.valueOf(pemesananFeriData.getHarga()));
             // TAMBAHKAN DENGAN SISA PENUMPANG
-            total_harga += ((pemesananFeriData.getJumlah_penumpang() - 1)*Integer.parseInt(pemesananFeriData.getJadwalEntity().getHarga()));
+            total_harga += ((pemesananFeriData.getJumlah_penumpang() - 1) * Integer.parseInt(pemesananFeriData.getJadwalEntity().getHarga()));
             transaksiData.setTotal_biaya(total_harga);
             inputIdentitasPemesanActivityViewModel.setTransaksiMutableLiveData(transaksiData);
-        }else{
+        } else {
             int total_harga = 0;
 
-            total_harga += pemesananFeriData.getJumlah_penumpang()*Integer.parseInt(pemesananFeriData.getJadwalEntity().getHarga());
+            total_harga += pemesananFeriData.getJumlah_penumpang() * Integer.parseInt(pemesananFeriData.getJadwalEntity().getHarga());
             transaksiData.setTotal_biaya((total_harga));
             inputIdentitasPemesanActivityViewModel.setTransaksiMutableLiveData(transaksiData);
         }
@@ -306,7 +306,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     }
 
     // INI UNTUK WIDGET FERI
-    private void initWidgetFeri(){
+    private void initWidgetFeri() {
         this.tvasaltujuan = findViewById(R.id.pelabuhanasaltujuan);
         this.tvdetailjadwal = findViewById(R.id.jadwaldetail);
         this.tvnamapemesan = findViewById(R.id.namapemesan);
@@ -341,9 +341,9 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         this.tvnomorpemesan.setText(this.pemesan.getNohp());
 
         // PERLIHATKAN GOLONGAN APABILA TIPE JASA ITU KENDARAAN
-        if(MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue().getTipe_jasa().matches(FeriFragment.KENDARAAN)){
+        if (MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue().getTipe_jasa().matches(FeriFragment.KENDARAAN)) {
             this.layout_feri.setVisibility(View.VISIBLE);
-            String kendaraan = pemesananFeriData.getGologan_kendaraan()+" - [ "+pemesananFeriData.getNomor_kendaraan()+" ]";
+            String kendaraan = pemesananFeriData.getGologan_kendaraan() + " - [ " + pemesananFeriData.getNomor_kendaraan() + " ]";
             this.tvgolongan.setText(kendaraan);
             this.tvgolongan.setAllCaps(true);
             this.tvketerangangolongan.setText(pemesananFeriData.getKeterangan_golongan());
@@ -408,7 +408,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         this.btnlanjutkan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(doValidate()){
+                if (doValidate()) {
                     showModalPersetujuanPemesanan();
                 }
             }
@@ -416,10 +416,10 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     }
 
     // FILL RECYCLERVIEW UNTUK FERI
-    private void fillRecyclerViewFeri(){
+    private void fillRecyclerViewFeri() {
         // PRE FILL
         this.recyclerView = findViewById(R.id.rvInputIdentitas);
-        this.layoutManager = new LinearLayoutManager(this){
+        this.layoutManager = new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -435,38 +435,49 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
 
         long jumlah_penumpang = pemesananFeriData.getJumlah_penumpang();
 
-        if(jumlah_penumpang != penumpangData.size()) {
+        if (jumlah_penumpang != penumpangData.size()) {
             for (int i = 0; i < jumlah_penumpang; i++) {
                 PenumpangData penumpang = new PenumpangData();
-                penumpang.setHarga(Long.parseLong(pemesananFeriData.getJadwalEntity().getHarga()));
-                penumpangData.add(penumpang);
+                if (pemesananFeriData.getTipe_jasa().matches(FeriFragment.KENDARAAN) && i == 0) {
+                    penumpang.setHarga(pemesananFeriData.getHarga());
+                    penumpangData.add(penumpang);
+                    Log.d("apekaden_1",String.valueOf(pemesananFeriData.getHarga()));
+                } else {
+                    penumpang.setHarga(Long.parseLong(pemesananFeriData.getJadwalEntity().getHarga()));
+                    penumpangData.add(penumpang);
+                    Log.d("apekaden_2",String.valueOf(pemesananFeriData.getJadwalEntity().getHarga()));
+                }
             }
         }
 
+        Gson gson = new Gson();
+        String jsonPenumpang = gson.toJson(penumpangData);
+        Log.d("apekaden_3",jsonPenumpang);
+
         // TOOGLE FIXING*/
-        if(!penumpangData.get(0).getNama_pemegang_ticket().matches("")){
+        if (!penumpangData.get(0).getNama_pemegang_ticket().matches("")) {
             toggle.setToggleOn();
         }
 
         // MASUKKAN PENUMPANG DATA KE DALAM VIEWMODEL*/
         inputIdentitasPemesanActivityViewModel.setListPenumpangLivedata(penumpangData);
 
-        this.penumpangAdapter = new PenumpangAdapter(this,penumpangData);
+        this.penumpangAdapter = new PenumpangAdapter(this, penumpangData);
         this.recyclerView.setAdapter(this.penumpangAdapter);
         this.recyclerView.setNestedScrollingEnabled(false);
     }
 
     // METHOD YANG DIGUNAKAN UNTUK MENAMPILKAN BOTTOMSHEET PENUMPANG
-    public void showBottomSheet(String nama, String nomor_identitas, int index){
+    public void showBottomSheet(String nama, String nomor_identitas, int index) {
         BottomSheetPenumpangFragment bottomSheetJumlahPenumpang = new BottomSheetPenumpangFragment();
 
         Bundle bundle = new Bundle();
         bundle.putInt(INDEX_PENUMPANG, index);
         bundle.putString(NAMA_PENUMPANG, nama);
-        bundle.putString(NOMOR_IDENTITAS,nomor_identitas);
+        bundle.putString(NOMOR_IDENTITAS, nomor_identitas);
         bottomSheetJumlahPenumpang.setArguments(bundle);
 
-        bottomSheetJumlahPenumpang.showNow(getSupportFragmentManager(),"TAG");
+        bottomSheetJumlahPenumpang.showNow(getSupportFragmentManager(), "TAG");
     }
 
     // DIPANGGIL SAAT ACTIVITY DIHANCURKAN
@@ -489,16 +500,16 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         penumpangDataList.forEach(new Consumer<PenumpangData>() {
             @Override
             public void accept(PenumpangData penumpangData) {
-                if(penumpangData.getNama_pemegang_ticket().matches("")){
-                    validation[0] -=1;
+                if (penumpangData.getNama_pemegang_ticket().matches("")) {
+                    validation[0] -= 1;
                 }
 
-                if(penumpangData.getNo_id_card().matches("")){
-                    validation[0] -=1;
+                if (penumpangData.getNo_id_card().matches("")) {
+                    validation[0] -= 1;
                 }
 
-                if(penumpangData.getType_id_card().matches("")){
-                    validation[0] -=1;
+                if (penumpangData.getType_id_card().matches("")) {
+                    validation[0] -= 1;
                 }
             }
         });
@@ -507,7 +518,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     }
 
     // METHOD UNTUK MODAL PERSETUJUAN PENGIRIMAN TIKET
-    private void showModalPersetujuanPemesanan(){
+    private void showModalPersetujuanPemesanan() {
         /*PEMBUATAN KALIMAT SAMBUTAN*/
 
         /*INIT MODAL*/
@@ -525,7 +536,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
                         /*MEMANGGIL POST PEMSANAN JADWAL API*/
                         Intent intent = new Intent(InputIdentitasPemesanActivity.this, MetodePembayaranActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        intent.putExtra(FeriFragment.TIPE_KAPAL,tipe_kapal);
+                        intent.putExtra(FeriFragment.TIPE_KAPAL, tipe_kapal);
                         startActivity(intent);
                     }
                 })
@@ -542,10 +553,10 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     }
 
     // METHOD YANG DIPANGGIL UNTUK MEMUNCULKAN LAYOUT LOADING
-    private void showLoadingLayout(boolean status){
-        if(status){
+    private void showLoadingLayout(boolean status) {
+        if (status) {
             this.loading.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             this.loading.setVisibility(View.INVISIBLE);
         }
     }

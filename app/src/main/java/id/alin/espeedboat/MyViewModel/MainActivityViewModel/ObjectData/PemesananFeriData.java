@@ -23,7 +23,14 @@ public class PemesananFeriData {
         this.id_asal = 0;
         this.tujuan = "";
         this.id_tujuan = 0;
+        this.tanggal = "";
         this.tanggal_variable = "";
+        this.tipe_jasa = "";
+        this.gologan_kendaraan = "";
+        this.keterangan_golongan = "";
+        this.id_golongan_kendaraan = 0;
+        this.nomor_kendaraan = "";
+        this.harga = 0;
         this.jumlah_penumpang = 0;
         this.jadwalEntity = new JadwalEntity();
     }

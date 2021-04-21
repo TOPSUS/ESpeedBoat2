@@ -43,6 +43,8 @@ public class JasaDialogFragment extends DialogFragment {
                 pemesananFeriData.setTipe_jasa(FeriFragment.PENUMPANG);
                 pemesananFeriData.setId_golongan_kendaraan(0);
                 pemesananFeriData.setGologan_kendaraan("");
+                pemesananFeriData.setKeterangan_golongan("");
+                pemesananFeriData.setNomor_kendaraan("");
                 MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
                 dismiss();
             }

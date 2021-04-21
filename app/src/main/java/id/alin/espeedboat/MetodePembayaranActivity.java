@@ -261,7 +261,7 @@ public class MetodePembayaranActivity extends AppCompatActivity {
 
                             Gson gson = new Gson();
                             String jsonPenumpang = gson.toJson(penumpangDataList);
-
+                            Log.d("apeladen_4",jsonPenumpang);
                             String nomor_polisi = pemesananFeriData.getNomor_kendaraan();
                             String id_golongan = String.valueOf(pemesananFeriData.getId_golongan_kendaraan());
 
@@ -271,8 +271,6 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                             }else{
                                 postPemesananJadwalSpeedboatAPI(token,id_pemesan,id_jadwal,id_metode_pembayaran,jsonPenumpang,PemesananJadwalSpeedboatActivity.FERI);
                             }
-
-
 
                         }
 
