@@ -29,6 +29,9 @@ public class ServerResponseDetailPembelian {
     private String metode_pembayaran;
     private String rekening;
     private String logo_metode;
+    private String nomor_polisi;
+    private String golongan;
+    private long harga_golongan;
     private List<PenumpangDetailEntity> penumpang;
 
     public String getResponse_code() {
@@ -197,6 +200,30 @@ public class ServerResponseDetailPembelian {
 
     public void setLogo_metode(String logo_metode) {
         this.logo_metode = logo_metode;
+    }
+
+    public String getNomor_polisi() {
+        return nomor_polisi;
+    }
+
+    public void setNomor_polisi(String nomor_polisi) {
+        this.nomor_polisi = nomor_polisi;
+    }
+
+    public String getGolongan() {
+        return golongan;
+    }
+
+    public void setGolongan(String golongan) {
+        this.golongan = golongan;
+    }
+
+    public long getHarga_golongan() {
+        return harga_golongan;
+    }
+
+    public void setHarga_golongan(long harga_golongan) {
+        this.harga_golongan = harga_golongan;
     }
 
     public List<PenumpangDetailEntity> getPenumpang() {

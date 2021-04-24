@@ -69,10 +69,10 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private long timeLeft;
 
     private NestedScrollView detail;
-    private LinearLayout loading, nodata, layoutBelumDibayar, layoutMenungguKonfirmasi, layoutTerkonfirmasi, layoutPembayaran, layoutCardPembayaran;
+    private LinearLayout loading, nodata, layoutBelumDibayar, layoutMenungguKonfirmasi, layoutTerkonfirmasi, layoutPembayaran, layoutCardPembayaran, layoutKendaraan;
     CountDownTimer countDownTimer;
     ImageView ivMetode;
-    TextView tvStatusBayar, tvCountDown, tvKapal, tvTanggal, tvHarga, tvAsal, tvTujuan, tvBerangkat, tvSampai, tvNamaPemesan, tvEmailPemesan, tvTeleponPemesan, tvMetode, tvPenjelasanMetode, tvRekening, tvLayoutPembayaran, tvCardTindakan;
+    TextView tvStatusBayar, tvCountDown, tvKapal, tvTanggal, tvHarga, tvAsal, tvTujuan, tvBerangkat, tvSampai, tvNamaPemesan, tvEmailPemesan, tvTeleponPemesan, tvMetode, tvPenjelasanMetode, tvRekening, tvLayoutPembayaran, tvCardTindakan, tvKendaraan, tvGolongan, tvNopol, tvHargaGolongan;
     Button btnUploadBukti, btnBatalPesan, btndownloadticket, btnuploadulangbukti, btnExtend;
     ImageButton btnBack;
     RecyclerView recyclerView;
@@ -122,6 +122,13 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         tvRekening = (TextView) findViewById(R.id.rekening);
         tvLayoutPembayaran = (TextView) findViewById(R.id.tvLayoutPembayaran);
         tvCardTindakan = (TextView) findViewById(R.id.tvTindakan);
+
+        //init kendaraan
+        tvKendaraan = (TextView) findViewById(R.id.tvKendaraan);
+        layoutKendaraan = (LinearLayout) findViewById(R.id.layoutKendaraan);
+        tvGolongan = (TextView) findViewById(R.id.golongan);
+        tvNopol = (TextView) findViewById(R.id.nopol);
+        tvHargaGolongan = (TextView) findViewById(R.id.harga_golongan);
 
         btnBack = (ImageButton) findViewById(R.id.backButton);
         btnExtend = (Button) findViewById(R.id.btnExtendPembayaran);
@@ -229,6 +236,16 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         kursIndonesia.setDecimalFormatSymbols(formatRp);
         String total_biaya_rupiah = "IDR " + kursIndonesia.format(body.getHarga());
 
+        if(body.getGolongan().equals("NOPE")){
+            tvKendaraan.setVisibility(View.GONE);
+            layoutKendaraan.setVisibility(View.GONE);
+        }else{
+            String harga_golongan = "IDR " + kursIndonesia.format(body.getHarga_golongan());
+            tvGolongan.setText(body.getGolongan());
+            tvNopol.setText("Nomor Polisi: " + body.getNomor_polisi());
+            tvHargaGolongan.setText(harga_golongan);
+        }
+
         //FORMAT TANGGAL
         String tanggal[] = body.getTanggal().split("-", 3);
         String day = tanggal[2];
@@ -279,6 +296,8 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         tvPenjelasanMetode.setText("Lakukan pembayaran dengan transfer ke nomor rekening berikut");
         tvRekening.setText("Nomor Rekening: " + body.getRekening());
 
+
+
         timeLeft = body.getSisa_waktu();;
         countDown();
 
@@ -293,49 +312,53 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         if (body.getStatus_transaksi().equals("menunggu pembayaran")) {
             tvStatusBayar.setText("Belum Dibayar");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Danger_Red));
-            layoutMenungguKonfirmasi.setVisibility(View.INVISIBLE);
+            layoutMenungguKonfirmasi.setVisibility(View.GONE);
             layoutBelumDibayar.setVisibility(View.VISIBLE);
-            layoutTerkonfirmasi.setVisibility(View.INVISIBLE);
+            layoutTerkonfirmasi.setVisibility(View.GONE);
             layoutCardPembayaran.setVisibility(View.VISIBLE);
             tvLayoutPembayaran.setVisibility(View.VISIBLE);
         } else if (body.getStatus_transaksi().equals("menunggu konfirmasi")) {
             tvStatusBayar.setText("Menunggu Konfirmasi");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Warning_Orange));
-            tvCountDown.setVisibility(View.INVISIBLE);
+            tvCountDown.setVisibility(View.GONE);
             layoutMenungguKonfirmasi.setVisibility(View.VISIBLE);
-            layoutBelumDibayar.setVisibility(View.INVISIBLE);
-            layoutTerkonfirmasi.setVisibility(View.INVISIBLE);
+            layoutBelumDibayar.setVisibility(View.GONE);
+            layoutTerkonfirmasi.setVisibility(View.GONE);
             layoutCardPembayaran.setVisibility(View.GONE);
-            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.GONE);
         } else if (body.getStatus_transaksi().equals("terkonfirmasi")) {
             tvStatusBayar.setText("Dibayar");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Safety_Green));
-            tvCountDown.setVisibility(View.INVISIBLE);
-            layoutMenungguKonfirmasi.setVisibility(View.INVISIBLE);
-            layoutBelumDibayar.setVisibility(View.INVISIBLE);
+            tvCountDown.setVisibility(View.GONE);
+            layoutMenungguKonfirmasi.setVisibility(View.GONE);
+            layoutBelumDibayar.setVisibility(View.GONE);
             layoutTerkonfirmasi.setVisibility(View.VISIBLE);
             layoutCardPembayaran.setVisibility(View.GONE);
-            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.GONE);
         } else if (body.getStatus_transaksi().equals("dibatalkan")) {
             tvStatusBayar.setText("Dibatalkan");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Danger_Red));
-            tvCountDown.setVisibility(View.INVISIBLE);
+            tvCountDown.setVisibility(View.GONE);
+            layoutTerkonfirmasi.setVisibility(View.GONE);
             layoutCardPembayaran.setVisibility(View.GONE);
-            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.GONE);
+            tvCardTindakan.setVisibility(View.GONE);
+            cvTindakan.setVisibility(View.GONE);
         } else if (body.getStatus_transaksi().equals("expired")) {
             tvStatusBayar.setText("Kadaluwarsa");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Danger_Red));
-            tvCountDown.setVisibility(View.INVISIBLE);
-            tvCardTindakan.setVisibility(View.INVISIBLE);
-            cvTindakan.setVisibility(View.INVISIBLE);
+            tvCountDown.setVisibility(View.GONE);
+            tvCardTindakan.setVisibility(View.GONE);
+            cvTindakan.setVisibility(View.GONE);
             layoutCardPembayaran.setVisibility(View.GONE);
-            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.GONE);
+            layoutMenungguKonfirmasi.setVisibility(View.GONE);
         } else if (body.getStatus_transaksi().equals("digunakan")) {
             tvStatusBayar.setText("Selesai");
             tvStatusBayar.setTextColor(ContextCompat.getColor(MyUnpaidDetailTransactionActivity.this, R.color.Safety_Green));
-            tvCountDown.setVisibility(View.INVISIBLE);
+            tvCountDown.setVisibility(View.GONE);
             layoutCardPembayaran.setVisibility(View.GONE);
-            tvLayoutPembayaran.setVisibility(View.INVISIBLE);
+            tvLayoutPembayaran.setVisibility(View.GONE);
         }
     }
 
@@ -362,13 +385,14 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
                     showBottomDialogUploadBukti(false);
                 } else {
                     setStateNodata();
-                    Toast.makeText(MyUnpaidDetailTransactionActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyUnpaidDetailTransactionActivity.this, response.body().getResponse_code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ServerResponseDetailPembelian> call, Throwable t) {
                 setStateNodata();
+                Toast.makeText(MyUnpaidDetailTransactionActivity.this, "Gagal memuat transaksi", Toast.LENGTH_SHORT).show();
             }
         });
     }

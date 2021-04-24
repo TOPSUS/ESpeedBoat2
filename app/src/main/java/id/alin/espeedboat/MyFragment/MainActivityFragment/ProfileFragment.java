@@ -27,6 +27,7 @@ import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyUnpaidTransactionActivity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
+import id.alin.espeedboat.ReviewKapalActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -164,7 +165,8 @@ public class ProfileFragment extends Fragment {
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Ini Ulasan Transaksi User", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ReviewKapalActivity.class);
+                startActivity(intent);
             }
         });
 

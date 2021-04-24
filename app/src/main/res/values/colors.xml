@@ -20,6 +20,7 @@
     <color name="Danger_Red">#FF0000</color>
     <color name="Warning_Orange">#ff6700</color>
     <color name="Safety_Green">#5aa27c</color>
+    <color name="Rating_Yellow">#FDCC0D</color>
 
     <!--SHAMMER-->
     <color name="shimmer_bg">#BBE6FA</color>
