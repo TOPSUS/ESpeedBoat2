@@ -32,6 +32,8 @@ public class ServerResponseDetailPembelian {
     private String nomor_polisi;
     private String golongan;
     private long harga_golongan;
+    private long rating;
+    private String review;
     private List<PenumpangDetailEntity> penumpang;
 
     public String getResponse_code() {
@@ -224,6 +226,22 @@ public class ServerResponseDetailPembelian {
 
     public void setHarga_golongan(long harga_golongan) {
         this.harga_golongan = harga_golongan;
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public void setRating(long rating) {
+        this.rating = rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 
     public List<PenumpangDetailEntity> getPenumpang() {

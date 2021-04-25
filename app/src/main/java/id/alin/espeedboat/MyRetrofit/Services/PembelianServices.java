@@ -54,4 +54,13 @@ public interface PembelianServices {
             @Field("id") long id,
             @Field("status") String status
     );
+
+    @FormUrlEncoded
+    @POST("/api/setReview")
+    Call<ServerResponseModels> postReview(
+            @Header("Authorization") String Authorization,
+            @Field("id") long id,
+            @Field("rating") int rating,
+            @Field("review") String review
+    );
 }

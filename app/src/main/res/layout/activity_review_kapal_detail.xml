@@ -1,186 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LupaPasswordVerifikasiEmailActivity">
+    android:background="#F1F1F1"
+    tools:context=".MyUnpaidTransactionActivity"
+    android:orientation="vertical">
 
-    <!--UTAMA-->
-    <LinearLayout
+    <!--HEADER-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/BarLayoutMainActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.ESpeedBoat">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/BarLayoutMainActivity"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.ESpeedBoat">
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.ESpeedBoat">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/Theme.ESpeedBoat">
+                android:orientation="horizontal">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry">
+
+                    <ImageButton
+                        android:id="@+id/backButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_back"
+                        android:backgroundTint="@color/Blue_primary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    >
+                    <TextView
+                        android:id="@+id/tvHeaderTransaksi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ulasan Kapal"
+                        android:textSize="18dp"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/BarLayoutMainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+            <androidx.cardview.widget.CardView
+                android:layout_margin="2dp"
+                android:id="@+id/cardViewUnpaidTransaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                android:elevation="3dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
+                    android:orientation="vertical">
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        tools:ignore="RtlSymmetry">
-
-                        <ImageButton
-                            android:id="@+id/backButton"
-                            android:layout_width="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingHorizontal="15dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/Blue_primary"
-                            android:src="@drawable/ic_back" />
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvJenisKapalUnpaid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Feri 001"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tvTanggalUnpaid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rabu, 13 Maret 2021"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvHargaUnpaid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rp. 50.000"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:layout_gravity="right"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingStart="10dp">
-
-                        <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ededed"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/ic_boat"/>
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="Verifikasi Email"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            tools:ignore="HardcodedText" />
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:layout_marginHorizontal="15dp">
+
+                            <TextView
+                                android:id="@+id/tvAsalUnpaid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Sanur"
+                                android:textColor="@color/black"
+                                android:textSize="17dp" />
+                            <TextView
+                                android:id="@+id/tvWaktuAsalUnpaid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="13:30"
+                                android:gravity="bottom"
+                                android:textColor="@color/black"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_arrowtujuan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:layout_marginHorizontal="15dp">
+                            <TextView
+                                android:id="@+id/tvTujuanUnpaid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tanjung Benoa"
+                                android:textSize="17dp"
+                                android:textColor="@color/black"/>
+                            <TextView
+                                android:id="@+id/tvWaktuTujuanUnpaid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="13:30"
+                                android:gravity="bottom"
+                                android:textColor="@color/black"/>
+
+                        </LinearLayout>
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tvStatusBayar"
+                            android:layout_margin="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Belum Dibayar"
+                            android:textStyle="bold"
+                            android:textColor="@color/Danger_Red"/>
+                    </LinearLayout>
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
-            </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            android:progressTint="@color/Rating_Yellow"
+            android:layout_gravity="center"/>
 
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <LinearLayout
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="30dp">
+            android:id="@+id/etUlasanKapal"
+            android:hint="Masukkan Ulasan Anda"
+            android:padding="12sp"
+            android:lines="4"
+            android:textSize="15dp"
+            android:gravity="top"
+            android:background="@drawable/edittext_bg"/>
 
-            <RatingBar
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="0.1"
-                android:layout_gravity="center"
-                android:isIndicator="true" />
-
-            <EditText
-                android:id="@+id/etLupaPasswordVerifikasiEmailCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_bg"
-                android:hint="Masukkan Kode Verifikasi dari email"
-                android:inputType="text"
-                android:padding="13dp"
-                android:textSize="15sp"
-                tools:ignore="HardcodedText,TextFields" />
-
-            <Button
-                android:id="@+id/btnLupaPasswordVerifikasiEmailMasukkanCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="masukkan code"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/tvLupaPasswordVerifikasiEmailKirimUlang"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Kirim Ulang E-mail"
-                android:textColor="@color/Blue_primary"
-                tools:ignore="HardcodedText" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/LoadingLupaPasswordVerifikasiEmailLayout"
+        <Button
+            android:id="@+id/btnSubmitReview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="invisible">
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            tools:ignore="HardcodedText" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                app:lottie_autoPlay="true"
-                app:lottie_rawRes="@raw/loading"
-                app:lottie_repeatCount="-1"
-                app:lottie_repeatMode="reverse" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:text="Mohon tunggu sebentar"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
+
 
     </LinearLayout>
 
-    <!--LOADING-->
-    <FrameLayout
-        android:id="@+id/forgotPasswordloading"
+    <!--ANIMATION MOHON TUNGGU-->
+    <LinearLayout
+        android:id="@+id/nodatalayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.7"
-        android:background="@color/black"
-        android:clickable="true"
         android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        android:background="@color/white"
+        android:orientation="vertical">
+
         <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/sad_folder"/>
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/black"
-            android:alpha="0.7"/>
+            android:layout_height="wrap_content"
+            android:text="Tidak ada transaksi"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:textColor="@color/textColorSecondary"
+            tools:ignore="HardcodedText" />
 
-        <LinearLayout
+    </LinearLayout>
+
+    <!--ANIMATION MOHON TUNGGU-->
+    <LinearLayout
+        android:id="@+id/loadinglayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:lottie_autoPlay="true"
+            app:lottie_repeatCount="-1"
+            app:lottie_repeatMode="reverse"
+            app:lottie_rawRes="@raw/loading"
+            />
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:text="Mohon Tunggu"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:textColor="@color/textColorSecondary"
+            tools:ignore="HardcodedText" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                app:lottie_autoPlay="true"
-                android:alpha="1"
-                app:lottie_rawRes="@raw/loading"
-                app:lottie_repeatCount="-1"
-                app:lottie_repeatMode="reverse" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mohon Tunggu"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-
-    </FrameLayout>
-
-</FrameLayout>
+</RelativeLayout>
