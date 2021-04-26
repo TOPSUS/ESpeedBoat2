@@ -117,4 +117,11 @@ public class ReviewKapalActivity extends AppCompatActivity {
         this.loading.setVisibility(View.INVISIBLE);
         this.nodata.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setStateLoading();
+        getDataTransaksiFromAPI();
+    }
 }

@@ -123,4 +123,10 @@ public class MyUnpaidTransactionActivity extends AppCompatActivity {
         this.nodata.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setStateLoading();
+        getDataTransaksiFromAPI();
+    }
 }
