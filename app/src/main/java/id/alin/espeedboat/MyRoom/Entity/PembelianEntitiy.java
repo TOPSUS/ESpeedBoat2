@@ -10,6 +10,7 @@ public class PembelianEntitiy {
     private String pelabuhan_asal_nama;
     private String pelabuhan_tujuan_nama;
     private String nama_speedboat;
+    private long review;
     private String waktu_berangkat;
     private String waktu_sampai;
 
@@ -84,6 +85,14 @@ public class PembelianEntitiy {
 
     public void setNama_speedboat(String nama_speedboat) {
         this.nama_speedboat = nama_speedboat;
+    }
+
+    public long getReview() {
+        return review;
+    }
+
+    public void setReview(long review) {
+        this.review = review;
     }
 
     public String getWaktu_berangkat() {

@@ -1,5 +1,6 @@
 package id.alin.espeedboat;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -28,15 +29,19 @@ import retrofit2.Response;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,13 +72,14 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private long id = 0;
     private int position;
     private long timeLeft;
+    private static final int PERMISSION_STORAGE_CODE = 1000;
 
     private NestedScrollView detail;
     private LinearLayout loading, nodata, layoutBelumDibayar, layoutMenungguKonfirmasi, layoutTerkonfirmasi, layoutPembayaran, layoutCardPembayaran, layoutKendaraan;
     CountDownTimer countDownTimer;
     ImageView ivMetode;
     TextView tvStatusBayar, tvCountDown, tvKapal, tvTanggal, tvHarga, tvAsal, tvTujuan, tvBerangkat, tvSampai, tvNamaPemesan, tvEmailPemesan, tvTeleponPemesan, tvMetode, tvPenjelasanMetode, tvRekening, tvLayoutPembayaran, tvCardTindakan, tvKendaraan, tvGolongan, tvNopol, tvHargaGolongan;
-    Button btnUploadBukti, btnBatalPesan, btndownloadticket, btnuploadulangbukti, btnExtend;
+    Button btnUploadBukti, btnBatalPesan, btndownloadticket, btnuploadulangbukti, btnExtend, btnDownloadBukti;
     ImageButton btnBack;
     RecyclerView recyclerView;
     PenumpangDetailAdapter penumpangDetailAdapter;
@@ -96,6 +102,10 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     /*ATRIBUTE STORAGE UNTUK NGAMBIL BUKTI PEMBAYARAN*/
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private static final int GALLERY_ADD_PROFILE = 1;
+
+    /*URL DOWNLOAD BUKTI*/
+    private String downloadUrl = ApiClient.BASE_FILE_BUKTI_PEMBAYARAN;
+    private String namaBukti;
 
     // STATUS PEMBELIAN
     private String status;
@@ -147,7 +157,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         btnUploadBukti = (Button) findViewById(R.id.btnUploadBukti);
         btnBatalPesan = (Button) findViewById(R.id.btnBatalPesan);
         btnuploadulangbukti = findViewById(R.id.btnUploadUlangBukti);
-
+        btnDownloadBukti = (Button) findViewById(R.id.btnDownloadBukti);
         this.btndownloadticket = findViewById(R.id.btnDownloadTiket);
 
         this.btndownloadticket.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +170,13 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
                         "",
                         true
                 ));
+            }
+        });
+
+        this.btnDownloadBukti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postBuktiPembayaranFromApi();
             }
         });
 
@@ -295,6 +312,8 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         tvMetode.setText(body.getMetode_pembayaran());
         tvPenjelasanMetode.setText("Lakukan pembayaran dengan transfer ke nomor rekening berikut");
         tvRekening.setText("Nomor Rekening: " + body.getRekening());
+        downloadUrl = downloadUrl+body.getBukti();
+        namaBukti = body.getBukti();
 
 
 
@@ -359,6 +378,8 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             tvCountDown.setVisibility(View.GONE);
             layoutCardPembayaran.setVisibility(View.GONE);
             tvLayoutPembayaran.setVisibility(View.GONE);
+            btnuploadulangbukti.setVisibility(View.GONE);
+            btnBatalPesan.setVisibility(View.GONE);
         }
     }
 
@@ -469,7 +490,51 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
 
     //DOWNLOAD BUKTI PEMBAYARAN
     private void postBuktiPembayaranFromApi() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                //if denied, grant it
+                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+                //popup
+                requestPermissions(permissions, PERMISSION_STORAGE_CODE);
+            }else{
+                startDownload();
+            }
+        }else{
+
+        }
+        Toast.makeText(getApplicationContext(), "Downloading", Toast.LENGTH_SHORT).show();
+    }
+
+    private void startDownload(){
+        //download req from url
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
+            
+        //ijin koneksi wifi dan data
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+//        request.setTitle("Download");
+//        request.setDescription("Downloading Journal...");
+
+        request.allowScanningByMediaScanner();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, System.currentTimeMillis()+namaBukti); //get datetime untuk nama file nantinya
+
+        //download service
+        DownloadManager manager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+        manager.enqueue(request);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case PERMISSION_STORAGE_CODE:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    startDownload();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Permission Denied!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     //DOWNLOAD TIKET
