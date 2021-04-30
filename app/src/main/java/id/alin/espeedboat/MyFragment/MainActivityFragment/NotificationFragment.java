@@ -30,6 +30,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import java.util.LinkedList;
 import java.util.List;
 
+import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationChildFragment.HistoryNotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationChildFragment.NewNotificationFragment;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MySharedPref.Config;
@@ -95,7 +96,7 @@ public class NotificationFragment extends Fragment implements LifecycleOwner {
         // MEMBUAT SECTIONPAGER ADAPTER YANG AKAN DIMASUKKAN KE DALAM VIEWPAGER
         SectionpagerAdapter sectionpagerAdapter = new SectionpagerAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         sectionpagerAdapter.addFragments(new NewNotificationFragment(), "NEW");
-        sectionpagerAdapter.addFragments(new NewNotificationFragment(), "HISTORY");
+        sectionpagerAdapter.addFragments(new HistoryNotificationFragment(), "HISTORY");
 
         // MEMASUKKAN ADAPTER KE DALAM VIEWPAGER
         this.viewPager.setAdapter(sectionpagerAdapter);

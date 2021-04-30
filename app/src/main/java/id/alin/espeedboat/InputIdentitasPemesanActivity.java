@@ -13,6 +13,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
     private TextView tvasaltujuan, tvdetailjadwal, tvnamapemesan, tvemailpemesan, tvnomorpemesan,
             tvtotalbiaya, tvnamapengendara, tvgolongan, tvhargagolongan, tvketerangangolongan;
     private Button btnlanjutkan;
+    private ImageButton backbutton;
     private LinearLayout loading, layout_feri, layout_penumpang;
 
     public ToggleButton toggle;
@@ -135,7 +137,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         this.layout_penumpang = findViewById(R.id.penumpanglayout);
 
         this.layout_penumpang.setVisibility(View.VISIBLE);
-
+        this.backbutton = findViewById(R.id.backButton);
         /*WIDGET UTIL*/
 
         /*SET DETAIL JADWAL*/
@@ -203,6 +205,14 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
                 if (doValidate()) {
                     showModalPersetujuanPemesanan();
                 }
+            }
+        });
+
+        // SET BACK BUTTON EVENT LISTENER
+        this.backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -322,6 +332,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
         this.tvgolongan = findViewById(R.id.golongan);
         this.tvketerangangolongan = findViewById(R.id.keterangan_golongan);
         this.tvhargagolongan = findViewById(R.id.harga_golongan);
+        this.backbutton = findViewById(R.id.backButton);
 
         /*SET DETAIL JADWAL*/
         PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
@@ -411,6 +422,14 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
                 if (doValidate()) {
                     showModalPersetujuanPemesanan();
                 }
+            }
+        });
+
+        // SET BACK BUTTON EVENT LISTENER
+        this.backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

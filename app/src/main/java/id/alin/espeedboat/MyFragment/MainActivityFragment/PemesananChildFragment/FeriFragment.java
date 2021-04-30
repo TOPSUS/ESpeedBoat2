@@ -39,9 +39,11 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
     private Button btncari;
 
     // TAG FRAGMENT
-    private static final String TAG_FULLSCREEN_FRAGMENT = "TAG_FULLSCREEN_FRAGMENT";
+    private static final String TAG_FULLSCREEN_ASAL = "TAG_FULLSCREEN_ASAL";
+    private static final String TAG_FULLSCREEN_TUJUAN = "TAG_FULLSCREEN_TUJUAN";
     private static final String TAG_TIPE_JASA = "TAG_TIPE_JASA";
     private static final String TAG_GOLONGAN = "TAG_GOLONGAN";
+    private static final String TAG_JUMLAH_PENUMPANG = "TAG_JUMLAH_PENUMPANG";
     private static final String TAG_NOMOR_KENDARAAN = "TAG_NOMOR_KENDARAAN";
 
     // PUBLIC STATIC UNTUK MENENTUKAN TIPE DARI KAPAL
@@ -101,24 +103,28 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         this.metasal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FullscreenDialogFeri fullscreenDialogFeri = new FullscreenDialogFeri();
-                Bundle bundle = new Bundle();
-                bundle.putString(TIPE_KAPAL,FERI);
-                bundle.putString(FORM,ASAL);
-                fullscreenDialogFeri.setArguments(bundle);
-                fullscreenDialogFeri.showNow(getChildFragmentManager(), TAG_FULLSCREEN_FRAGMENT);
+                if(getChildFragmentManager().findFragmentByTag(TAG_FULLSCREEN_ASAL) == null){
+                    FullscreenDialogFeri fullscreenDialogFeri = new FullscreenDialogFeri();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(TIPE_KAPAL,FERI);
+                    bundle.putString(FORM,ASAL);
+                    fullscreenDialogFeri.setArguments(bundle);
+                    fullscreenDialogFeri.showNow(getChildFragmentManager(), TAG_FULLSCREEN_ASAL);
+                }
             }
         });
 
         this.mettujuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FullscreenDialogFeri fullscreenDialogFeri = new FullscreenDialogFeri();
-                Bundle bundle = new Bundle();
-                bundle.putString(TIPE_KAPAL,FERI);
-                bundle.putString(FORM,TUJUAN);
-                fullscreenDialogFeri.setArguments(bundle);
-                fullscreenDialogFeri.showNow(getChildFragmentManager(), TAG_FULLSCREEN_FRAGMENT);
+                if(getChildFragmentManager().findFragmentByTag(TAG_FULLSCREEN_TUJUAN) == null){
+                    FullscreenDialogFeri fullscreenDialogFeri = new FullscreenDialogFeri();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(TIPE_KAPAL,FERI);
+                    bundle.putString(FORM,TUJUAN);
+                    fullscreenDialogFeri.setArguments(bundle);
+                    fullscreenDialogFeri.showNow(getChildFragmentManager(), TAG_FULLSCREEN_TUJUAN);
+                }
             }
         });
 
@@ -173,8 +179,10 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         this.metjasa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JasaDialogFragment jasaDialogFragment = new JasaDialogFragment();
-                jasaDialogFragment.showNow(getChildFragmentManager(),TAG_TIPE_JASA);
+                if(getChildFragmentManager().findFragmentByTag(TAG_TIPE_JASA) == null){
+                    JasaDialogFragment jasaDialogFragment = new JasaDialogFragment();
+                    jasaDialogFragment.showNow(getChildFragmentManager(),TAG_TIPE_JASA);
+                }
             }
         });
 
@@ -182,8 +190,10 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 if(doValidateOpenGolongan()){
-                    FullscreenGolonganFragment fullscreenGolonganFragment = new FullscreenGolonganFragment();
-                    fullscreenGolonganFragment.showNow(getChildFragmentManager(),TAG_GOLONGAN);
+                    if(getChildFragmentManager().findFragmentByTag(TAG_GOLONGAN) == null){
+                        FullscreenGolonganFragment fullscreenGolonganFragment = new FullscreenGolonganFragment();
+                        fullscreenGolonganFragment.showNow(getChildFragmentManager(),TAG_GOLONGAN);
+                    }
                 }
             }
         });
@@ -191,19 +201,23 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         this.metjumlahpenumpang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetJumlahPenumpang bottomSheetJumlahPenumpang = new BottomSheetJumlahPenumpang();
-                Bundle bundle = new Bundle();
-                bundle.putString(BottomSheetJumlahPenumpang.FORM,BottomSheetJumlahPenumpang.FERI);
-                bottomSheetJumlahPenumpang.setArguments(bundle);
-                bottomSheetJumlahPenumpang.showNow(getChildFragmentManager(),"TAG");
+                if(getChildFragmentManager().findFragmentByTag(TAG_JUMLAH_PENUMPANG) == null){
+                    BottomSheetJumlahPenumpang bottomSheetJumlahPenumpang = new BottomSheetJumlahPenumpang();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BottomSheetJumlahPenumpang.FORM,BottomSheetJumlahPenumpang.FERI);
+                    bottomSheetJumlahPenumpang.setArguments(bundle);
+                    bottomSheetJumlahPenumpang.showNow(getChildFragmentManager(),TAG_JUMLAH_PENUMPANG);
+                }
             }
         });
 
         this.metnomorkendaraan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NomorKendaraanFragment nomorKendaraanFragment = new NomorKendaraanFragment();
-                nomorKendaraanFragment.show(getChildFragmentManager(),TAG_NOMOR_KENDARAAN);
+                if(getChildFragmentManager().findFragmentByTag(TAG_NOMOR_KENDARAAN) == null){
+                    NomorKendaraanFragment nomorKendaraanFragment = new NomorKendaraanFragment();
+                    nomorKendaraanFragment.show(getChildFragmentManager(),TAG_NOMOR_KENDARAAN);
+                }
             }
         });
 
@@ -273,6 +287,12 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         int validastion = 1;
 
         PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+
+        if(pemesananFeriData.getAsal().matches(pemesananFeriData.getTujuan())){
+            validastion -=1;
+            this.metasal.setError("Tidak boleh sama dengan tujuan");
+            this.mettujuan.setError("Tidak boleh sama dengan asal");
+        }
 
         if(pemesananFeriData.getAsal().matches("")){
             validastion -= 1;

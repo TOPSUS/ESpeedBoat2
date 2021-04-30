@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
+import dev.shreyaspatil.MaterialDialog.interfaces.OnDismissListener;
 import dmax.dialog.SpotsDialog;
 import id.alin.espeedboat.MyAdapter.PenumpangDetailAdapter;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
@@ -94,6 +95,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private static final String IMAGE_PEMBAYARAN = "IMAGE_PEMBAYARAN";
     private static final String IMAGE_PEMBAYARAN_FILE_NAME = "IMAGE_PEMBAYARAN_FILE_NAME.jpg";
     private Dialog loadingdialog;
+    private MaterialDialog mDialog;
 
     //ATRIBUTE KAMERA UNTUK NGAMBIL BUKTI PEMBAYARAN*/
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
@@ -206,10 +208,10 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         btnExtend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(layoutPembayaran.getVisibility() == View.GONE){
+                if (layoutPembayaran.getVisibility() == View.GONE) {
                     layoutPembayaran.setVisibility(View.VISIBLE);
                     btnExtend.setBackgroundResource(R.drawable.ic_arrowup);
-                }else if(layoutPembayaran.getVisibility() == View.VISIBLE){
+                } else if (layoutPembayaran.getVisibility() == View.VISIBLE) {
                     layoutPembayaran.setVisibility(View.GONE);
                     btnExtend.setBackgroundResource(R.drawable.ic_arrow_down);
                 }
@@ -253,10 +255,10 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         kursIndonesia.setDecimalFormatSymbols(formatRp);
         String total_biaya_rupiah = "IDR " + kursIndonesia.format(body.getHarga());
 
-        if(body.getGolongan().equals("NOPE")){
+        if (body.getGolongan().equals("NOPE")) {
             tvKendaraan.setVisibility(View.GONE);
             layoutKendaraan.setVisibility(View.GONE);
-        }else{
+        } else {
             String harga_golongan = "IDR " + kursIndonesia.format(body.getHarga_golongan());
             tvGolongan.setText(body.getGolongan());
             tvNopol.setText("Nomor Polisi: " + body.getNomor_polisi());
@@ -312,12 +314,12 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         tvMetode.setText(body.getMetode_pembayaran());
         tvPenjelasanMetode.setText("Lakukan pembayaran dengan transfer ke nomor rekening berikut");
         tvRekening.setText("Nomor Rekening: " + body.getRekening());
-        downloadUrl = downloadUrl+body.getBukti();
+        downloadUrl = downloadUrl + body.getBukti();
         namaBukti = body.getBukti();
 
 
-
-        timeLeft = body.getSisa_waktu();;
+        timeLeft = body.getSisa_waktu();
+        ;
         countDown();
 
         StringBuilder url = new StringBuilder(ApiClient.BASE_LOGO_METODE_PEMBAYARAN);
@@ -470,7 +472,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         call.enqueue(new Callback<ServerResponseModels>() {
             @Override
             public void onResponse(Call<ServerResponseModels> call, Response<ServerResponseModels> response) {
-                if(response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")){
+                if (response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")) {
                     setStateTransparentLoading(false);
                 }
             }
@@ -490,26 +492,26 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
 
     //DOWNLOAD BUKTI PEMBAYARAN
     private void postBuktiPembayaranFromApi() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 //if denied, grant it
                 String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
                 //popup
                 requestPermissions(permissions, PERMISSION_STORAGE_CODE);
-            }else{
+            } else {
                 startDownload();
             }
-        }else{
+        } else {
 
         }
         Toast.makeText(getApplicationContext(), "Downloading", Toast.LENGTH_SHORT).show();
     }
 
-    private void startDownload(){
+    private void startDownload() {
         //download req from url
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
-            
+
         //ijin koneksi wifi dan data
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
 //        request.setTitle("Download");
@@ -517,20 +519,20 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
 
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, System.currentTimeMillis()+namaBukti); //get datetime untuk nama file nantinya
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, System.currentTimeMillis() + namaBukti); //get datetime untuk nama file nantinya
 
         //download service
-        DownloadManager manager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case PERMISSION_STORAGE_CODE:{
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        switch (requestCode) {
+            case PERMISSION_STORAGE_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startDownload();
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -621,7 +623,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         }
     }
 
-    private void postPembelianStatus(String status){
+    private void postPembelianStatus(String status) {
         Log.d("testes", String.valueOf(id));
         String authorization = MainActivity.mainActivityViewModel.getProfileLiveData().getValue().getToken();
         setStateTransparentLoading(true);
@@ -651,58 +653,54 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private void showBottomDialogUploadBukti(boolean status) {
         /*APABILA TRUE MAKA BUKA DIALOG*/
         if (status) {
-            bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
-            bottomsheetview = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_sheet_ambil_bukti_pembayaran, findViewById(R.id.bottom_sheet_ambil_bukti_pembayaran));
-            bottomSheetDialog.setContentView(bottomsheetview);
+            if (bottomSheetDialog == null) {
+                bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
+                bottomsheetview = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_sheet_ambil_bukti_pembayaran, findViewById(R.id.bottom_sheet_ambil_bukti_pembayaran));
+                bottomSheetDialog.setContentView(bottomsheetview);
 
-            //MENGATUR BTN CAMERA LIESTENER
-            Button btn_camere = bottomsheetview.findViewById(R.id.btnMiniFragmentRegisterActivityTambahgambar);
-            btn_camere.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openCamera();
-                }
-            });
-
-            //MENGATUR BTN STORAGE LIESTENER
-            Button btn_storage = bottomsheetview.findViewById(R.id.storage);
-            btn_storage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pickFile();
-                }
-            });
-
-            //MENGATUR BTN KIRIM LIESTENER
-            Button btn_kirim = bottomsheetview.findViewById(R.id.buttonkirim);
-            btn_kirim.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (file_image_bukti != null) {
-                        ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
-
-                        postBuktiPembayaranToApi(file_image_bukti, profileData.getToken(), profileData.getUser_id());
-
-                    } else {
-                        Toast.makeText(MyUnpaidDetailTransactionActivity.this, "Pilih bukti terlebih dahulu", Toast.LENGTH_SHORT).show();
+                //MENGATUR BTN CAMERA LIESTENER
+                Button btn_camere = bottomsheetview.findViewById(R.id.btnMiniFragmentRegisterActivityTambahgambar);
+                btn_camere.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openCamera();
                     }
-                }
-            });
+                });
 
-            bottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    file_image_bukti = null;
-                }
-            });
+                //MENGATUR BTN STORAGE LIESTENER
+                Button btn_storage = bottomsheetview.findViewById(R.id.storage);
+                btn_storage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pickFile();
+                    }
+                });
 
-            bottomSheetDialog.show();
-        } else {
-            if (this.bottomSheetDialog != null) {
-                if (this.bottomSheetDialog.isShowing()) {
-                    this.bottomSheetDialog.dismiss();
-                    this.bottomSheetDialog = null;
-                }
+                //MENGATUR BTN KIRIM LIESTENER
+                Button btn_kirim = bottomsheetview.findViewById(R.id.buttonkirim);
+                btn_kirim.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (file_image_bukti != null) {
+                            ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
+
+                            postBuktiPembayaranToApi(file_image_bukti, profileData.getToken(), profileData.getUser_id());
+
+                        } else {
+                            Toast.makeText(MyUnpaidDetailTransactionActivity.this, "Pilih bukti terlebih dahulu", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                bottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        file_image_bukti = null;
+                        bottomSheetDialog = null;
+                    }
+                });
+
+                bottomSheetDialog.show();
             }
         }
     }
@@ -827,28 +825,36 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private void showModalTanyaUntukPembatalan() {
 
         // MATERIAL DIALOG MODAL DIALOG
-        MaterialDialog mDialog = new MaterialDialog.Builder(this)
-                .setTitle("BATALKAN PEMBELIAN ?")
-                .setMessage("Aksi ini tidak akan dapat di kembalikan")
-                .setCancelable(false)
-                .setAnimation(R.raw.animation_boat_2)
-                .setPositiveButton("BATALKAN", new MaterialDialog.OnClickListener() {
-                    @Override
-                    public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
-                        String token = MainActivity.mainActivityViewModel.getProfileLiveData().getValue().getToken();
-                        postBatalkanPembelianAPI(token);
-                        dialogInterface.dismiss();
-                    }
-                })
-                .setNegativeButton("KEMBALI", new AbstractDialog.OnClickListener() {
-                    @Override
-                    public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .build();
+        if(this.mDialog == null) {
+            mDialog = new MaterialDialog.Builder(this)
+                    .setTitle("BATALKAN PEMBELIAN ?")
+                    .setMessage("Aksi ini tidak akan dapat di kembalikan")
+                    .setCancelable(false)
+                    .setAnimation(R.raw.animation_boat_2)
+                    .setPositiveButton("BATALKAN", new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                            String token = MainActivity.mainActivityViewModel.getProfileLiveData().getValue().getToken();
+                            postBatalkanPembelianAPI(token);
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .setNegativeButton("KEMBALI", new AbstractDialog.OnClickListener() {
+                        @Override
+                        public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .build();
 
-        // Show Dialog
-        mDialog.show();
+            mDialog.setOnDismissListener(new OnDismissListener() {
+                @Override
+                public void onDismiss(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface) {
+                    mDialog = null;
+                }
+            });
+            // Show Dialog
+            mDialog.show();
+        }
     }
 }

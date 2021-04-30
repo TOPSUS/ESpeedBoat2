@@ -130,7 +130,6 @@ public class MyFireBaseCloudMessaging extends FirebaseMessagingService {
 
                 // GET ALL NOTIFICATION FROM DATABASE
 
-
                 // MENAMBAHKAN DATA KE DALAM VIEW MODEL KALAU SUDAH ACTIVE
                 if(NotificationFragment.notificationViewModel != null){
                     NotificationFragment.notificationViewModel.setNotificationData(
