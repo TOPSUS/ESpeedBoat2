@@ -95,7 +95,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="marquee"
-                        android:text="Pelabuhan Padang Bai"
                         android:textAlignment="center"
                         android:textColor="@color/textColor" />
 
@@ -103,7 +102,6 @@
                         android:id="@+id/tvItemKberangkatan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Keberangkatan"
                         android:textAlignment="center"
                         android:textSize="12sp" />
 
@@ -119,7 +117,6 @@
                         android:id="@+id/tvItemJAdwalTujuan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Pelabuhan Padang Bai"
                         android:textAlignment="center"
                         android:textColor="@color/textColor" />
 
@@ -127,7 +124,6 @@
                         android:id="@+id/tvItemJadwalSampai"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Keberangkatan"
                         android:textAlignment="center"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -181,7 +177,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kapasitas Boat :"
+                    android:text="Kapasitas :"
                     android:background="@color/Blue_secondary"
                     android:textColor="@color/black"
                     android:textStyle="bold"

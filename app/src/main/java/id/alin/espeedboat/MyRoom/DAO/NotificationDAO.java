@@ -19,7 +19,7 @@ public interface NotificationDAO {
     NotificationEntity getNotificationEntityById(long id);
 
     // MENGAMBIL SEMUA DATA NOTIFIKASI YANG BARU DAN BELUM DIHAPUS
-    @Query("SELECT * FROM NotificationEntity WHERE status = 0 ORDER BY id DESC")
+    @Query("SELECT * FROM NotificationEntity ORDER BY id DESC")
     List<NotificationEntity> getAllNewNotificationEntity();
 
     // UPDATE DATA NOTIFIKASI

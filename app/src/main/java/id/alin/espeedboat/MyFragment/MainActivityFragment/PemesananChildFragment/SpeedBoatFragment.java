@@ -42,6 +42,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
     /*FRAGMENT TAGS*/
     public static final String FRAGMENT_FULLSCREEN_ASAL = "FRAGMENT_FULLSCREEN_ASAL";
     public static final String FRAGMENT_FULLSCREEN_TUJUAN = "FRAGMENT_FULLSCREEN_TUJUAN";
+    public static final String FRAGMENT_JUMLAH_PENUMPANG = "FRAGMENT_JUMLAH_PENUMPANG";
 
     // STATIC PARAMS UNTUK GET KAPAL
     public static final String TIPE_KAPAL = "TIPE_KAPAL";
@@ -51,6 +52,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
         /*HARUS KOSONG*/
     }
 
+    // INSTANCE UNTUK FRAGMENT SPEEDBOAT
     public static SpeedBoatFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -63,7 +65,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_speed_boat,container,false);
+        return inflater.inflate(R.layout.fragment_speed_boat, container, false);
     }
 
     @Override
@@ -94,16 +96,18 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
     }
 
     // MELAKUKAN INIT WIDGET HALAMAN*/
-    private void initWidget(){
+    private void initWidget() {
         this.metasal = getView().findViewById(R.id.metPemesananJadwalFragmentDari);
         this.metasal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FullscreenDialogAsal fullscreenDialogAsal = FullscreenDialogAsal.createNewInstance();
-                Bundle bundle = new Bundle();
-                bundle.putString(TIPE_KAPAL,SPEEDBOAT);
-                fullscreenDialogAsal.setArguments(bundle);
-                fullscreenDialogAsal.showNow(getChildFragmentManager(),FRAGMENT_FULLSCREEN_ASAL);
+                if (getChildFragmentManager().findFragmentByTag(FRAGMENT_FULLSCREEN_ASAL) == null) {
+                    FullscreenDialogAsal fullscreenDialogAsal = FullscreenDialogAsal.createNewInstance();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(TIPE_KAPAL, SPEEDBOAT);
+                    fullscreenDialogAsal.setArguments(bundle);
+                    fullscreenDialogAsal.showNow(getChildFragmentManager(), FRAGMENT_FULLSCREEN_ASAL);
+                }
             }
         });
 
@@ -111,11 +115,13 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
         this.mettujuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FullscreenDialogTujuan fullscreenDialogTujuan = FullscreenDialogTujuan.createNewInstance();
-                Bundle bundle = new Bundle();
-                bundle.putString(TIPE_KAPAL,SPEEDBOAT);
-                fullscreenDialogTujuan.setArguments(bundle);
-                fullscreenDialogTujuan.showNow(getChildFragmentManager(),FRAGMENT_FULLSCREEN_TUJUAN);
+                if (getChildFragmentManager().findFragmentByTag(FRAGMENT_FULLSCREEN_TUJUAN) == null) {
+                    FullscreenDialogTujuan fullscreenDialogTujuan = FullscreenDialogTujuan.createNewInstance();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(TIPE_KAPAL, SPEEDBOAT);
+                    fullscreenDialogTujuan.setArguments(bundle);
+                    fullscreenDialogTujuan.showNow(getChildFragmentManager(), FRAGMENT_FULLSCREEN_TUJUAN);
+                }
             }
         });
 
@@ -127,9 +133,9 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
                 calendarDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface dialog) {
-                        ((CalendarDialog) dialog).setSelectedDayBackgroundColor( Color.parseColor("#4287f5"));
+                        ((CalendarDialog) dialog).setSelectedDayBackgroundColor(Color.parseColor("#4287f5"));
                         ((CalendarDialog) dialog).setSelectionType(SelectionType.SINGLE);
-                        ((CalendarDialog) dialog).setSelectionBarMonthTextColor( Color.parseColor("#4287f5"));
+                        ((CalendarDialog) dialog).setSelectionBarMonthTextColor(Color.parseColor("#4287f5"));
                         ((CalendarDialog) dialog).setWeekDayTitleTextColor(Color.parseColor("#4287f5"));
                         ((CalendarDialog) dialog).setWeekendDayTextColor(Color.parseColor("#d9512b"));
                     }
@@ -137,7 +143,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
                 calendarDialog.setOnDaysSelectionListener(new OnDaysSelectionListener() {
                     @Override
                     public void onDaysSelected(List<Day> selectedDays) {
-                        if(selectedDays.size() > 0){
+                        if (selectedDays.size() > 0) {
                             StringBuilder date = new StringBuilder();
                             date.append(selectedDays.get(0).getCalendar().get(Calendar.DAY_OF_MONTH));
                             date.append(" ");
@@ -152,7 +158,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
                             StringBuilder tanggal_variable = new StringBuilder();
                             tanggal_variable.append(selectedDays.get(0).getCalendar().get(Calendar.YEAR));
                             tanggal_variable.append("-");
-                            tanggal_variable.append(selectedDays.get(0).getCalendar().get(Calendar.MONTH)+1);
+                            tanggal_variable.append(selectedDays.get(0).getCalendar().get(Calendar.MONTH) + 1);
                             tanggal_variable.append("-");
                             tanggal_variable.append(selectedDays.get(0).getCalendar().get(Calendar.DAY_OF_MONTH));
 
@@ -172,11 +178,13 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
         this.metjumlahpenumpang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetJumlahPenumpang bottomSheetJumlahPenumpang = new BottomSheetJumlahPenumpang();
-                Bundle bundle = new Bundle();
-                bundle.putString(BottomSheetJumlahPenumpang.FORM,BottomSheetJumlahPenumpang.SPEEDBOAT);
-                bottomSheetJumlahPenumpang.setArguments(bundle);
-                bottomSheetJumlahPenumpang.showNow(getChildFragmentManager(),"TAG");
+                if (getChildFragmentManager().findFragmentByTag(FRAGMENT_JUMLAH_PENUMPANG) == null) {
+                    BottomSheetJumlahPenumpang bottomSheetJumlahPenumpang = new BottomSheetJumlahPenumpang();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BottomSheetJumlahPenumpang.FORM, BottomSheetJumlahPenumpang.SPEEDBOAT);
+                    bottomSheetJumlahPenumpang.setArguments(bundle);
+                    bottomSheetJumlahPenumpang.showNow(getChildFragmentManager(), FRAGMENT_JUMLAH_PENUMPANG);
+                }
             }
         });
 
@@ -184,10 +192,10 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
         this.btncari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(doValidateData()){
+                if (doValidateData()) {
                     Intent intent = new Intent(getContext(), PemesananJadwalSpeedboatActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.putExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL,PemesananJadwalSpeedboatActivity.SPEEDBOAT);
+                    intent.putExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL, PemesananJadwalSpeedboatActivity.SPEEDBOAT);
                     startActivity(intent);
                 }
             }
@@ -195,33 +203,33 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
     }
 
     // VALIDASI
-    private boolean doValidateData(){
+    private boolean doValidateData() {
         int validation = 1;
 
         PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
-        if(pemesananSpeedboatData.getAsal().matches("")){
+        if (pemesananSpeedboatData.getAsal().matches("")) {
             validation -= 1;
             metasal.setError("Mohon tentukan pelabuhan asal");
         }
 
-        if(pemesananSpeedboatData.getTujuan().matches("")){
-            validation-=1;
+        if (pemesananSpeedboatData.getTujuan().matches("")) {
+            validation -= 1;
             mettujuan.setError("Mohon tentukan pelabuhan tujuan");
         }
 
-        if(!pemesananSpeedboatData.getAsal().matches("") && !pemesananSpeedboatData.getTujuan().matches("")){
-            if(pemesananSpeedboatData.getTujuan().matches(pemesananSpeedboatData.getAsal())){
-                validation-=1;
+        if (!pemesananSpeedboatData.getAsal().matches("") && !pemesananSpeedboatData.getTujuan().matches("")) {
+            if (pemesananSpeedboatData.getTujuan().matches(pemesananSpeedboatData.getAsal())) {
+                validation -= 1;
                 metasal.setError("Tidak boleh sama dengan tujuan");
                 mettujuan.setError("Tidak boleh sama dengan asal");
             }
         }
 
-        if(pemesananSpeedboatData.getTanggal_variable().matches("")){
+        if (pemesananSpeedboatData.getTanggal_variable().matches("")) {
             validation -= 1;
             mettanggal.setError("Tanggal harus diisi");
-        }else {
+        } else {
             LocalDate hari_ini = LocalDate.now();
             LocalDate hari_input = LocalDate.parse(pemesananSpeedboatData.getTanggal_variable(), DateTimeFormatter.ofPattern("yyyy-M-d"));
             if (hari_input.isBefore(hari_ini)) {
@@ -230,57 +238,46 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
             }
         }
 
-        if(pemesananSpeedboatData.getJumlah_penumpang().matches("")){
+        if (pemesananSpeedboatData.getJumlah_penumpang().matches("")) {
             validation -= 1;
             metjumlahpenumpang.setError("Mohon tentukan jumlah penumpang");
         }
 
-        if(validation == 1){
+        if (validation == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
     }
 
     //METHOD UNTUK MENGUBAH BULAN ANGKA KE NAMA BULAN DALAM BAHASA INDONESIA*/
-    public static String transformToBulanIndonesia(int bulan_angka){
+    public static String transformToBulanIndonesia(int bulan_angka) {
         String bulan;
 
-        if(bulan_angka == 0){
+        if (bulan_angka == 0) {
             bulan = "Januari";
-        }
-        else if(bulan_angka == 1){
+        } else if (bulan_angka == 1) {
             bulan = "Februari";
-        }
-        else if(bulan_angka == 2){
+        } else if (bulan_angka == 2) {
             bulan = "Maret";
-        }
-        else if(bulan_angka == 3){
+        } else if (bulan_angka == 3) {
             bulan = "April";
-        }
-        else if(bulan_angka == 4){
+        } else if (bulan_angka == 4) {
             bulan = "Mei";
-        }
-        else if(bulan_angka == 5){
-            bulan =  "Juni";
-        }
-        else if(bulan_angka == 6){
+        } else if (bulan_angka == 5) {
+            bulan = "Juni";
+        } else if (bulan_angka == 6) {
             bulan = "Juli";
-        }
-        else if(bulan_angka == 7){
+        } else if (bulan_angka == 7) {
             bulan = "Agustus";
-        }
-        else if(bulan_angka == 8){
+        } else if (bulan_angka == 8) {
             bulan = "September";
-        }
-        else if(bulan_angka == 9){
+        } else if (bulan_angka == 9) {
             bulan = "Oktober";
-        }
-        else if(bulan_angka == 10){
+        } else if (bulan_angka == 10) {
             bulan = "November";
-        }
-        else{
+        } else {
             bulan = "Desember";
         }
 

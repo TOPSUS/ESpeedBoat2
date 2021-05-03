@@ -12,20 +12,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
-import id.alin.espeedboat.MainActivity;
+import java.util.List;
+
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
 import id.alin.espeedboat.R;
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
+public class NotificationHistoryAdapter extends RecyclerView.Adapter<NotificationHistoryAdapter.ViewHolder> {
     private Context context;
     public List<NotificationEntity> notificationentities;
     private DatabaeESpeedboat databaeESpeedboat;
@@ -37,7 +36,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private static final short DANGER = 3;
     private static final short SYSTEM_INFORMATION = 4;
 
-    public NotificationAdapter(List<NotificationEntity> notifikasi, Context context) {
+    public NotificationHistoryAdapter(List<NotificationEntity> notifikasi, Context context) {
         this.notificationentities = notifikasi;
         this.context = context;
         this.databaeESpeedboat = DatabaeESpeedboat.createDatabase(context);
@@ -46,7 +45,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_history, parent, false);
 
         return new ViewHolder(view);
     }
@@ -57,18 +56,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.title_notification.setText(this.notificationentities.get(position).getTitle());
         holder.messange_notification.setText(this.notificationentities.get(position).getMessage());
         holder.time_notification.setText(this.notificationentities.get(position).getCreated_at());
-        holder.FrameLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.expandableLayout.toggle();
-            }
-        });
 
-        holder.btnArsip.setOnClickListener(new View.OnClickListener() {
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NotificationEntity notificationEntity = notificationentities.get(position);
-                notificationEntity.setStatus((short) 1);
+                notificationEntity.setStatus((short) 2);
                 databaeESpeedboat.notificationDAO().updateNotification(notificationEntity);
 
                 if(NotificationFragment.notificationViewModel != null){
@@ -80,22 +73,45 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
         });
 
+        holder.btnRestore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationEntity notificationEntity = notificationentities.get(position);
+                notificationEntity.setStatus((short) 0);
+                databaeESpeedboat.notificationDAO().updateNotification(notificationEntity);
+
+                if(NotificationFragment.notificationViewModel != null){
+                    Log.d("notifikasi_test","masuk");
+                    NotificationFragment.notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNewNotificationEntity());;
+                }
+
+                holder.expandableLayout.collapse();
+            }
+        });
+
+        holder.framelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.expandableLayout.toggle();
+            }
+        });
+
         // SET ICON BERDASARKAN STATUS
-        if (this.notificationentities.get(position).getType() == SUCCESS) {
+        if(this.notificationentities.get(position).getType() == SUCCESS){
             holder.imageView.setImageDrawable(context.getDrawable(R.drawable.checked));
-            holder.FrameLayout.setBackgroundColor(Color.parseColor("#e0facf"));
-        } else if (this.notificationentities.get(position).getType() == WARNING) {
+            holder.framelayout.setBackgroundColor(Color.parseColor("#e0facf"));
+        }else if(this.notificationentities.get(position).getType() == WARNING){
             holder.imageView.setImageDrawable(context.getDrawable(R.drawable.warning));
-            holder.FrameLayout.setBackgroundColor(Color.parseColor("#f7efd0"));
-        } else if (this.notificationentities.get(position).getType() == DANGER) {
+            holder.framelayout.setBackgroundColor(Color.parseColor("#f7efd0"));
+        }else if(this.notificationentities.get(position).getType() == DANGER){
             holder.imageView.setImageDrawable(context.getDrawable(R.drawable.warn));
-            holder.FrameLayout.setBackgroundColor(Color.parseColor("#ffd6d4"));
-        } else if (this.notificationentities.get(position).getType() == SYSTEM_INFORMATION) {
+            holder.framelayout.setBackgroundColor(Color.parseColor("#ffd6d4"));
+        }else if(this.notificationentities.get(position).getType() == SYSTEM_INFORMATION){
             holder.imageView.setImageDrawable(context.getDrawable(R.drawable.exchange));
-            holder.FrameLayout.setBackgroundColor(Color.parseColor("#e6f4f7"));
-        } else {
+            holder.framelayout.setBackgroundColor(Color.parseColor("#e6f4f7"));
+        }else{
             holder.imageView.setImageDrawable(context.getDrawable(R.drawable.ic_notification));
-            holder.FrameLayout.setBackgroundColor(Color.WHITE);
+            holder.framelayout.setBackgroundColor(Color.WHITE);
         }
 
     }
@@ -111,12 +127,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        Button btnDelete,btnRestore;
         ImageView imageView;
         TextView title_notification, messange_notification, time_notification;
-        FrameLayout FrameLayout;
+        FrameLayout framelayout;
         ExpandableLayout expandableLayout;
-        Button btnArsip;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,8 +140,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             title_notification = itemView.findViewById(R.id.namaNotifikasi);
             messange_notification = itemView.findViewById(R.id.messagenotifikasi);
             time_notification = itemView.findViewById(R.id.waktuNotifikasi);
-            FrameLayout = itemView.findViewById(R.id.notificationroot);
-            btnArsip = itemView.findViewById(R.id.ButtonArsip);
+            framelayout = itemView.findViewById(R.id.notificationroot);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
+            btnRestore = itemView.findViewById(R.id.btnRestore);
         }
     }
 

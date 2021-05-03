@@ -143,12 +143,12 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                     intent.putExtra("id_trans", response.body().getPembelian().getId());
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    MainActivity.mainActivityViewModel.setPemesananFeriData(new PemesananFeriData());
                     finishAffinity();
-                    Toast.makeText(MetodePembayaranActivity.this, "OTW", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(MetodePembayaranActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    setStateReady();
                 }
-                setStateReady();
             }
 
             @Override
@@ -186,11 +186,12 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                     intent.putExtra("id_trans", response.body().getPembelian().getId());
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    MainActivity.mainActivityViewModel.setPemesananFeriData(new PemesananFeriData());
                     finishAffinity();
                 }else{
                     Toast.makeText(MetodePembayaranActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    setStateReady();
                 }
-                setStateReady();
             }
 
             @Override
