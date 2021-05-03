@@ -472,6 +472,8 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             public void onResponse(Call<ServerResponseModels> call, Response<ServerResponseModels> response) {
                 if(response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")){
                     setStateTransparentLoading(false);
+                    setStateLoading();
+                    postDetailPesananFromApi();
                 }
             }
 
@@ -509,7 +511,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
     private void startDownload(){
         //download req from url
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
-            
+
         //ijin koneksi wifi dan data
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
 //        request.setTitle("Download");
