@@ -1,6 +1,8 @@
 package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -45,6 +47,7 @@ import id.alin.espeedboat.MyRetrofit.Services.UserServices;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.BeritaEspeedEntity;
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
+import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
 import retrofit2.Call;
@@ -85,6 +88,8 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
     //*ESPEEDBOAT DATABASE*/
     private DatabaeESpeedboat databaeESpeedboat;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     public HomeFragment() {
         // FRAGMENT HARUS TETAP KOSONG CONTRUCTORNYA !!!!!!!!
@@ -157,6 +162,25 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
                         data.setJeniskelamin(newData.getJeniskelamin());
 
                         MainActivity.mainActivityViewModel.setProfileData(data);
+
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                sharedPreferences = getContext().getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
+                                editor = sharedPreferences.edit();
+
+                                editor.putString(Config.USER_NAMA,data.getName());
+                                editor.putString(Config.USER_ALAMAT,data.getAlamat());
+                                editor.putString(Config.USER_CHAT_ID,data.getChat_id());
+                                editor.putString(Config.USER_PIN,data.getPin());
+                                editor.putString(Config.USER_EMAIL,data.getEmail());
+                                editor.putString(Config.USER_FOTO,data.getFoto());
+                                editor.putString(Config.USER_NOHP,data.getNohp());
+                                editor.putString(Config.USER_JENIS_KELAMIN,data.getJeniskelamin());
+                                editor.apply();
+
+                            }
+                        });
 
                         Log.d("RETROFIT", "berhasil");
                     } else {

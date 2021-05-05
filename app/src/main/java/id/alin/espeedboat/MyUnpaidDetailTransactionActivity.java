@@ -162,19 +162,6 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         btnDownloadBukti = (Button) findViewById(R.id.btnDownloadBukti);
         this.btndownloadticket = findViewById(R.id.btnDownloadTiket);
 
-        this.btndownloadticket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(PdfViewerActivity.Companion.launchPdfFromUrl(
-                        MyUnpaidDetailTransactionActivity.this,
-                        "https://www.espeedboat.xyz/storage/test_pdf/ticket_pdf.pdf",
-                        "E-Ticket",
-                        "",
-                        true
-                ));
-            }
-        });
-
         this.btnDownloadBukti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,6 +184,15 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         tvTeleponPemesan = (TextView) findViewById(R.id.nomorhppemesan);
 
         postDetailPesananFromApi();
+
+
+        this.btndownloadticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MyUnpaidDetailTransactionActivity.this, "TICKET TIDAK DITEMUKAN", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,6 +324,24 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         Glide.with(MyUnpaidDetailTransactionActivity.this).load(url.toString())
                 .placeholder(R.drawable.wallet)
                 .into(MyUnpaidDetailTransactionActivity.this.ivMetode);
+
+        // SET LISTENER DARI TOMBOL DOWNLOAD TICKET
+        if(this.btndownloadticket != null){
+            this.btndownloadticket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String ticket_url = ApiClient.BASE_FILE_TICKET+body.getTiket();
+
+                    startActivity(PdfViewerActivity.Companion.launchPdfFromUrl(
+                            MyUnpaidDetailTransactionActivity.this,
+                            ticket_url,
+                            "E-Ticket",
+                            "",
+                            true
+                    ));
+                }
+            });
+        }
 
         //SWITCH LAYOUT BY STATUS
         if (body.getStatus_transaksi().equals("menunggu pembayaran")) {
