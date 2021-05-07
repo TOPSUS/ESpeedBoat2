@@ -28,13 +28,27 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/home_profile_bg"
-                    android:padding="10dp">
+                    android:background="@drawable/profile_background"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:contentDescription="nice"
+                        android:src="@drawable/balok_kanan"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:ignore="HardcodedText" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/circleImageView"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
+                        android:layout_margin="10dp"
                         android:src="@drawable/profile_scoobydo"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +60,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/shimmer_bg"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
                         android:maxLines="1"
                         android:text="I Putu Alin WInata Gotama"
                         app:layout_constraintStart_toEndOf="@+id/circleImageView"
@@ -69,6 +84,8 @@
                         style="@style/homeprofilebutton"
                         android:layout_width="120dp"
                         android:layout_height="35dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/homeprofilebutton"
                         android:drawableStart="@drawable/wallet"
@@ -79,6 +96,7 @@
                         android:paddingEnd="10dp"
                         android:text="Points"
                         android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/circleImageView"
                         tools:ignore="HardcodedText,RtlSymmetry" />
