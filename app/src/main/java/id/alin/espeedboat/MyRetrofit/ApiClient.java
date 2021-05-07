@@ -20,6 +20,7 @@ public class ApiClient {
     public static String BASE_IMAGE_PELABUHAN = "https://espeedboat.xyz/storage/image_pelabuhan/";
     public static String BASE_LOGO_METODE_PEMBAYARAN = "https://www.espeedboat.xyz/storage/image_metode_pembayaran/";
     public static String BASE_FILE_BUKTI_PEMBAYARAN = "https://www.espeedboat.xyz/storage/bukti_pembayaran/";
+    public static String BASE_FILE_TICKET = "https://www.espeedboat.xyz/storage/test_pdf/";
 
     public static Retrofit getRetrofit(){
 

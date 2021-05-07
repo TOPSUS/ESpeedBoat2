@@ -95,8 +95,8 @@ public class NotificationFragment extends Fragment implements LifecycleOwner {
 
         // MEMBUAT SECTIONPAGER ADAPTER YANG AKAN DIMASUKKAN KE DALAM VIEWPAGER
         SectionpagerAdapter sectionpagerAdapter = new SectionpagerAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        sectionpagerAdapter.addFragments(new NewNotificationFragment(), "NEW");
-        sectionpagerAdapter.addFragments(new HistoryNotificationFragment(), "HISTORY");
+        sectionpagerAdapter.addFragments(new NewNotificationFragment(), "BARU");
+        sectionpagerAdapter.addFragments(new HistoryNotificationFragment(), "ARSIP");
 
         // MEMASUKKAN ADAPTER KE DALAM VIEWPAGER
         this.viewPager.setAdapter(sectionpagerAdapter);

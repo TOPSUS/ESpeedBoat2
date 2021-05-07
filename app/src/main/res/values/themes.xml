@@ -70,4 +70,13 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
+
+    <!-- PDF VIEWER   -->
+    <style name="Theme.PdfView.SelectedTheme" parent="@style/Theme.PdfView.Light">
+        <item name="pdfView_backIcon">@drawable/ic_arrow_back</item>
+        <item name="pdfView_actionBarTint">@color/Blue_primary</item>
+        <item name="colorPrimary">@color/Blue_primary</item>
+        <item name="colorPrimaryVariant">@color/Blue_primary</item>
+        <item name="colorAccent">@color/Blue_primary</item>
+    </style>
 </resources>
