@@ -11,22 +11,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import id.alin.espeedboat.MyPointRewardActivity;
+import id.alin.espeedboat.MyRoom.Entity.PembelianEntitiy;
+import id.alin.espeedboat.MyRoom.Entity.PoinEntity;
 import id.alin.espeedboat.R;
 
 public class MyPointAdapter extends RecyclerView.Adapter<MyPointAdapter.ViewHolder> {
 
     private Context context;
-    ArrayList<String> speedboat, poin;
+    List<PoinEntity> poinEntities;
 
-    public MyPointAdapter(ArrayList<String> speedboat, ArrayList<String> poin, Context context) {
-        this.speedboat = speedboat;
-        this.poin = poin;
+    public MyPointAdapter(List<PoinEntity> poinEntities, Context context) {
+        this.poinEntities = poinEntities;
         this.context = context;
     }
 
@@ -42,12 +44,14 @@ public class MyPointAdapter extends RecyclerView.Adapter<MyPointAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.textView.setText(speedboat.get(position));
-        holder.textView1.setText(poin.get(position) + " Poin");
+        holder.textView.setText(poinEntities.get(position).getNama_kapal());
+        holder.textView1.setText(String.valueOf(poinEntities.get(position).getTotal_poin())+" Poin");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MyPointRewardActivity.class);
+                intent.putExtra("id_trans", poinEntities.get(position).getId_kapal());
+                intent.putExtra("position", position);
                 context.startActivity(intent);
             }
         });
@@ -55,7 +59,7 @@ public class MyPointAdapter extends RecyclerView.Adapter<MyPointAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return speedboat.size();
+        return poinEntities.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

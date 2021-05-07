@@ -325,7 +325,7 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
         StringBuilder url = new StringBuilder(ApiClient.BASE_LOGO_METODE_PEMBAYARAN);
         url.append(body.getLogo_metode());
 
-        Glide.with(MyUnpaidDetailTransactionActivity.this).load(url.toString())
+        Glide.with(getApplicationContext()).load(url.toString())
                 .placeholder(R.drawable.wallet)
                 .into(MyUnpaidDetailTransactionActivity.this.ivMetode);
 

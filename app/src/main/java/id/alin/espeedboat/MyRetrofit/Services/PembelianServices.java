@@ -5,6 +5,8 @@ import java.util.Map;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.DetailPembelian.ServerResponseDetailPembelian;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponseJadwalData;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pembelian.ServerResponsePembelian;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Poin.ServerResponsePoin;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Reward.ServerResponseReward;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ServerResponseModels;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -62,5 +64,19 @@ public interface PembelianServices {
             @Field("id") long id,
             @Field("rating") int rating,
             @Field("review") String review
+    );
+
+    @FormUrlEncoded
+    @POST("/api/getPoin")
+    Call<ServerResponsePoin> postPoin(
+            @Header("Authorization") String Authorization,
+            @Field("id") long id
+    );
+
+    @FormUrlEncoded
+    @POST("/api/getReward")
+    Call<ServerResponseReward> postReward(
+            @Header("Authorization") String Authorization,
+            @Field("id") long id
     );
 }

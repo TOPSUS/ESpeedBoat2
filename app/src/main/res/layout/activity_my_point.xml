@@ -1,75 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyPointActivity">
+    android:background="#F1F1F1"
+    tools:context=".MyUnpaidTransactionActivity"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!--HEADER-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/BarLayoutMainActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#F1F1F1">
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.ESpeedBoat">
 
-        <!--HEADER-->
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/BarLayoutMainActivity"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.ESpeedBoat">
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.ESpeedBoat">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/Theme.ESpeedBoat">
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry">
 
-                    <LinearLayout
+                    <ImageButton
+                        android:id="@+id/backButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:ignore="RtlSymmetry">
-
-                        <ImageButton
-                            android:id="@+id/backButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_back"
-                            android:backgroundTint="@color/Blue_primary" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="10dp"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Poin Saya"
-                            android:textSize="18dp"
-                            android:layout_gravity="center_vertical"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
+                        android:src="@drawable/ic_back"
+                        android:backgroundTint="@color/Blue_primary" />
                 </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMyPoint"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    >
+                    <TextView
+                        android:id="@+id/tvHeaderTransaksi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Poin Saya"
+                        android:textSize="18dp"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:id="@+id/recyclerViewMyPoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/BarLayoutMainActivity"
+        android:nestedScrollingEnabled="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:ignore="InvalidId">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!--ANIMATION MOHON TUNGGU-->
+    <LinearLayout
+        android:id="@+id/nodatalayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/sad_folder"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="InvalidId"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:text="Tidak ada transaksi"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:textColor="@color/textColorSecondary"
+            tools:ignore="HardcodedText" />
+
     </LinearLayout>
 
-</LinearLayout>
+    <!--ANIMATION MOHON TUNGGU-->
+    <LinearLayout
+        android:id="@+id/loadinglayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:lottie_autoPlay="true"
+            app:lottie_repeatCount="-1"
+            app:lottie_repeatMode="reverse"
+            app:lottie_rawRes="@raw/loading"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mohon Tunggu"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:textColor="@color/textColorSecondary"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+</RelativeLayout>
