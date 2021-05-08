@@ -137,8 +137,8 @@ public class MyPointRedeemAdapter extends RecyclerView.Adapter<MyPointRedeemAdap
                                                 public void onClick(DialogInterface dialogInterface, int which) {
                                                     dialogInterface.dismiss();
                                                     Intent intent = new Intent(context, MyPointRewardActivity.class);
-                                                    ((Activity)context).finish();
                                                     context.startActivity(intent);
+                                                    ((Activity)context).finish();
                                                 }
                                             })
                                             .setNegativeButton("Close", new AbstractDialog.OnClickListener() {
