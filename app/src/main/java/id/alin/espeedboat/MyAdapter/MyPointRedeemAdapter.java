@@ -1,7 +1,10 @@
 package id.alin.espeedboat.MyAdapter;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +22,22 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import dev.shreyaspatil.MaterialDialog.AbstractDialog;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
+import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
+import id.alin.espeedboat.GantiPasswordActivity;
+import id.alin.espeedboat.LoginActivity;
+import id.alin.espeedboat.MyPointRewardActivity;
+import id.alin.espeedboat.MyProfile.MyProfileActivity;
+import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ServerResponseModels;
+import id.alin.espeedboat.MyRetrofit.Services.PembelianServices;
 import id.alin.espeedboat.MyRoom.Entity.RewardEntity;
+import id.alin.espeedboat.MyUnpaidDetailTransactionActivity;
 import id.alin.espeedboat.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyPointRedeemAdapter extends RecyclerView.Adapter<MyPointRedeemAdapter.ViewHolder> {
 
@@ -58,6 +75,11 @@ public class MyPointRedeemAdapter extends RecyclerView.Adapter<MyPointRedeemAdap
                 if(total_poin < rewardEntityList.get(position).getMinimal_point()){
                     Toast.makeText(context, "Poin Tidak Cukup!", Toast.LENGTH_SHORT).show();
                 }else{
+                    ProgressDialog dialogLoading;
+                    dialogLoading = new ProgressDialog(context);
+                    dialogLoading.setCancelable(false);
+
+
                     Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.dialog_tukar_poin);
                     int width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -87,8 +109,58 @@ public class MyPointRedeemAdapter extends RecyclerView.Adapter<MyPointRedeemAdap
                     btnTukar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(context, "Ini Fungsi Tukar", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                            dialogLoading.setMessage("Processing");
+                            dialogLoading.show();
+                            // PANGGIL SERVICE RETROFIT
+                            PembelianServices pembelianServices = ApiClient.getRetrofit().create(PembelianServices.class);
+                            Call<ServerResponseModels> call = pembelianServices.tukarPoint(
+                                    sharedPreferences.getString("USER_TOKEN", null),
+                                    rewardEntityList.get(position).getId(),
+                                    etNama.getText().toString(),
+                                    etNohp.getText().toString(),
+                                    etAlamat.getText().toString()
+                            );
+
+                            call.enqueue(new Callback<ServerResponseModels>() {
+                                @Override
+                                public void onResponse(Call<ServerResponseModels> call, Response<ServerResponseModels> response) {
+                                    dialogLoading.dismiss();
+
+                                    MaterialDialog mDialog = new MaterialDialog.Builder((Activity) context)
+                                            .setTitle("Penukaran Poin")
+                                            .setMessage("Penukaran Poin Berhasil")
+                                            .setCancelable(false)
+                                            .setAnimation(R.raw.animation_boat_2)
+                                            .setPositiveButton("Ok", new MaterialDialog.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int which) {
+                                                    dialogInterface.dismiss();
+                                                    Intent intent = new Intent(context, MyPointRewardActivity.class);
+                                                    ((Activity)context).finish();
+                                                    context.startActivity(intent);
+                                                }
+                                            })
+                                            .setNegativeButton("Close", new AbstractDialog.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int which) {
+                                                    dialogInterface.dismiss();
+                                                }
+                                            })
+                                            .build();
+
+                                    // Show Dialog
+                                    mDialog.show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<ServerResponseModels> call, Throwable t) {
+                                    dialogLoading.dismiss();
+                                    Toast.makeText(context, "Gagal", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            dialog.dismiss();
+                            dialogLoading.dismiss();
                         }
                     });
                 }

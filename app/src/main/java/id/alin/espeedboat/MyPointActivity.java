@@ -36,8 +36,8 @@ public class MyPointActivity extends AppCompatActivity {
     private void init(){
         loading = (LinearLayout) findViewById(R.id.loadinglayout);
         nodata = (LinearLayout) findViewById(R.id.nodatalayout);
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewMyPoint);
         backBtn = (ImageButton) findViewById(R.id.backButton);
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewMyPoint);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

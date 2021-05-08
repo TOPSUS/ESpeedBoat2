@@ -7,6 +7,7 @@ import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponse
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Pembelian.ServerResponsePembelian;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Poin.ServerResponsePoin;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Reward.ServerResponseReward;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Reward.ServerResponseRiwayatReward;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ServerResponseModels;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -76,6 +77,30 @@ public interface PembelianServices {
     @FormUrlEncoded
     @POST("/api/getReward")
     Call<ServerResponseReward> postReward(
+            @Header("Authorization") String Authorization,
+            @Field("id") long id
+    );
+
+    @FormUrlEncoded
+    @POST("/api/tukarReward")
+    Call<ServerResponseModels> tukarPoint(
+            @Header("Authorization") String Authorization,
+            @Field("id") long id,
+            @Field("nama") String nama,
+            @Field("telepon") String telepon,
+            @Field("alamat") String alamat
+    );
+
+    @FormUrlEncoded
+    @POST("/api/getRiwayatReward")
+    Call<ServerResponseRiwayatReward> riwayatReward(
+            @Header("Authorization") String Authorization,
+            @Field("id") long id
+    );
+
+    @FormUrlEncoded
+    @POST("/api/terimaReward")
+    Call<ServerResponseModels> terimaReward(
             @Header("Authorization") String Authorization,
             @Field("id") long id
     );

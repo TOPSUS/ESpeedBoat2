@@ -59,31 +59,6 @@ public class MyPointRewardActivity extends AppCompatActivity {
         tvPoin = (TextView) findViewById(R.id.tvtotalSpeedboatPoinRedeem);
         sharedPreferences = getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerViewMyPointRedeem);
-
-        speedboat = new ArrayList<>();
-        speedboat.add("Piring Cantik");
-        speedboat.add("Gelas Cantik");
-        speedboat.add("Gelas Cantik");
-        speedboat.add("Gelas Cantik");
-        speedboat.add("Gelas Cantik");
-        speedboat.add("Piring Cantik");
-        speedboat.add("Gelas Cantik");
-        speedboat.add("Gelas Cantik");
-        speedboat.add("Gelas Cantik");
-        speedboat.add("Gelas Cantik");
-
-        point =  new ArrayList<>();
-        point.add("50");
-        point.add("100");
-        point.add("69");
-        point.add("33");
-        point.add("2");
-        point.add("50");
-        point.add("100");
-        point.add("69");
-        point.add("33");
-        point.add("2");
-
         getDataRewardFromAPI();
     }
 
