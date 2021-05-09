@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +16,12 @@ import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import dev.shreyaspatil.MaterialDialog.AbstractDialog;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
+import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.HomeFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.FeriFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananJadwalFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
 import id.alin.espeedboat.MySharedPref.Config;
@@ -300,5 +305,30 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(pemesananFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(NotificationFragment).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        /*INIT MODAL*/
+        MaterialDialog mDialog = new MaterialDialog.Builder(this)
+                .setTitle("Konfirmasi Keluar")
+                .setMessage("Keluar dari ESpeedBoat ?")
+                .setCancelable(false)
+                .setAnimation(R.raw.animation_boat_2)
+                .setPositiveButton("OKE", new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        MainActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton("BACK", new AbstractDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .build();
+        // Show Dialog
+        mDialog.show();
     }
 }
