@@ -66,7 +66,7 @@ public class NotificationHistoryAdapter extends RecyclerView.Adapter<Notificatio
 
                 if(NotificationFragment.notificationViewModel != null){
                     Log.d("notifikasi_test","masuk");
-                    NotificationFragment.notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNewNotificationEntity());;
+                    NotificationFragment.notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNotificationEntity());;
                 }
 
                 holder.expandableLayout.collapse();
@@ -82,7 +82,7 @@ public class NotificationHistoryAdapter extends RecyclerView.Adapter<Notificatio
 
                 if(NotificationFragment.notificationViewModel != null){
                     Log.d("notifikasi_test","masuk");
-                    NotificationFragment.notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNewNotificationEntity());;
+                    NotificationFragment.notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNotificationEntity());;
                 }
 
                 holder.expandableLayout.collapse();

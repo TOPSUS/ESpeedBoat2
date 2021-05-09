@@ -68,7 +68,7 @@ public class NewNotificationFragment extends Fragment implements LifecycleOwner 
         NotificationFragment.notificationViewModel.getAllNotification().observe(this, new Observer<List<NotificationEntity>>() {
             @Override
             public void onChanged(List<NotificationEntity> notificationEntities) {
-
+                
                 NewNotificationFragment.this.notificationEntities.clear();
 
                 notificationEntities.forEach(new Consumer<NotificationEntity>() {

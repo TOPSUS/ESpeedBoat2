@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
-import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
@@ -73,7 +72,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                 if(NotificationFragment.notificationViewModel != null){
                     Log.d("notifikasi_test","masuk");
-                    NotificationFragment.notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNewNotificationEntity());;
+                    NotificationFragment.notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNotificationEntity());;
                 }
 
                 holder.expandableLayout.collapse();

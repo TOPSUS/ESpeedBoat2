@@ -23,6 +23,7 @@ import id.alin.espeedboat.MyProfile.MyProfileActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
 import id.alin.espeedboat.MyRetrofit.Services.UserServices;
+import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyUnpaidTransactionActivity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
@@ -224,6 +225,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<ServerResponseProfileData> call, Response<ServerResponseProfileData> response) {
                     clearSharedPreference();
+
+                    // TRUNCATE NOTIFICATION
+                    DatabaeESpeedboat.createDatabase(getContext()).notificationDAO().truncateNotification();
+
                     dialog.dismiss();
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

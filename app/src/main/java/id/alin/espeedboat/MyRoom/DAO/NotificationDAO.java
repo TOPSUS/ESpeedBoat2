@@ -19,10 +19,14 @@ public interface NotificationDAO {
     NotificationEntity getNotificationEntityById(long id);
 
     // MENGAMBIL SEMUA DATA NOTIFIKASI YANG BARU DAN BELUM DIHAPUS
-    @Query("SELECT * FROM NotificationEntity ORDER BY id DESC")
-    List<NotificationEntity> getAllNewNotificationEntity();
+    @Query("SELECT * FROM NotificationEntity ORDER BY id_server_notification DESC")
+    List<NotificationEntity> getAllNotificationEntity();
 
     // UPDATE DATA NOTIFIKASI
     @Update
     void updateNotification(NotificationEntity... notificationEntities);
+
+    // TRUNCATE NOTIFICATION
+    @Query("DELETE FROM NotificationEntity")
+    void truncateNotification();
 }

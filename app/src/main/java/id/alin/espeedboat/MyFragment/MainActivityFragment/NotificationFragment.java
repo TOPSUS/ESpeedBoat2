@@ -8,9 +8,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,14 +32,25 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
+import id.alin.espeedboat.InputIdentitasPemesanActivity;
+import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationChildFragment.HistoryNotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationChildFragment.NewNotificationFragment;
+import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Notification.ServerResponseNotificationData;
+import id.alin.espeedboat.MyRetrofit.Services.NotificationServices;
 import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
+import id.alin.espeedboat.MyRoom.Entity.NotificationEntity;
 import id.alin.espeedboat.MySharedPref.Config;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.MyViewModel.NotificationViewModel.NotificationViewModel;
 import id.alin.espeedboat.MyViewModel.NotificationViewModel.NotificationViewModelFactory;
 import id.alin.espeedboat.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NotificationFragment extends Fragment implements LifecycleOwner {
     private ViewPager viewPager;
@@ -52,6 +66,9 @@ public class NotificationFragment extends Fragment implements LifecycleOwner {
 
     // VIEW MODEL
     public static NotificationViewModel notificationViewModel;
+
+    // CLOCK PEMBATAS PEMANGGILAN API NOTIFICATION
+    private long mLastClickTime = 0;
 
     @Nullable
     @Override
@@ -83,7 +100,7 @@ public class NotificationFragment extends Fragment implements LifecycleOwner {
 
         // FILL VIEW MODEL DENGAN DATA DARI ROOM
         databaeESpeedboat = DatabaeESpeedboat.createDatabase(getContext());
-        notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNewNotificationEntity());
+        notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNotificationEntity());
     }
 
     // METHOD UNTUK MELAKUKAN INISIASI WIDGET
@@ -116,7 +133,65 @@ public class NotificationFragment extends Fragment implements LifecycleOwner {
             if (status_auto_launch == 0) {
                 showAskAutoLaunch();
             }
+
+
+            // READ NOTIFIKASI TERBARU DARI SERVER APABILA ADA YANG TERLEWA
+            if (SystemClock.elapsedRealtime() - mLastClickTime > 10000) {
+                mLastClickTime = SystemClock.elapsedRealtime();
+                ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
+                getNotificationFromAPI(profileData.getToken());
+            }
         }
+    }
+
+    // METHO DUNTUK MENDAPATKAN TOKEN DARI API
+    private void getNotificationFromAPI(String token) {
+
+        // PANGGIL SERVICE NOTIFICAITON
+        NotificationServices notificationServices = ApiClient.getRetrofit().create(NotificationServices.class);
+
+        Call<ServerResponseNotificationData> call = notificationServices.getAllNotification(token);
+
+        call.enqueue(new Callback<ServerResponseNotificationData>() {
+            @Override
+            public void onResponse(Call<ServerResponseNotificationData> call, Response<ServerResponseNotificationData> response) {
+                try {
+                if (response.body().getStatus().matches("success") && response.body().getResponse_code().matches("200")) {
+                    if (databaeESpeedboat != null) {
+                        assert response.body() != null;
+                        List<NotificationEntity> notificationEntities_response = response.body().getNotifications();
+
+                        // LOOP UNTUK UPDATE ATAU LANGSUNG INSERT KE DALAM DATABASE
+                        notificationEntities_response.forEach(new Consumer<NotificationEntity>() {
+                            @Override
+                            public void accept(NotificationEntity notificationEntity) {
+                                // APABILA NOTIFICATION SUDAH ADA DI DALAM DATABASE MAKA AKAN DIUPDATE SAJA
+                                if (databaeESpeedboat.notificationDAO().getNotificationEntityById(notificationEntity.getId_server_notification()) != null) {
+                                    NotificationEntity editable_notification = databaeESpeedboat.notificationDAO().getNotificationEntityById(notificationEntity.getId_server_notification());
+                                    editable_notification.setMessage(notificationEntity.getMessage());
+                                    editable_notification.setTitle(notificationEntity.getTitle());
+                                    editable_notification.setType(notificationEntity.getType());
+                                    databaeESpeedboat.notificationDAO().updateNotification(editable_notification);
+                                } else {
+                                    databaeESpeedboat.notificationDAO().insertNotification(notificationEntity);
+                                }
+                            }
+                        });
+
+                        // UPDATE NOTIFICAITON FRAGMENT VIEWMODEL
+                        NotificationFragment.notificationViewModel.setNotificationData(databaeESpeedboat.notificationDAO().getAllNotificationEntity());
+                    }
+                }
+                } catch (Exception ignored) {
+                    Toast.makeText(getContext(), "CANT GET NOTIFICATION FROM SERVER", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseNotificationData> call, Throwable t) {
+
+            }
+        });
     }
 
 // ASK FOR PERMISSION AUTO START PERMISSION ON VIVO DEVICE
@@ -241,17 +316,17 @@ public class NotificationFragment extends Fragment implements LifecycleOwner {
                     @Override
                     public void run() {
                         editor = sharedPreferences.edit();
-                        editor.putInt(Config.Setting.AUTO_LAUNCH,1);
+                        editor.putInt(Config.Setting.AUTO_LAUNCH, 1);
                         editor.apply();
                     }
                 });
             }
         })
-        .setActionTextColor(ContextCompat.getColor(getContext(), R.color.white))
-        .setAnchorView(R.id.botnavbarMainActivity)
-        .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.Blue_primary))
-        .setGestureInsetBottomIgnored(true)
-        .show();
+                .setActionTextColor(ContextCompat.getColor(getContext(), R.color.white))
+                .setAnchorView(R.id.botnavbarMainActivity)
+                .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.Blue_primary))
+                .setGestureInsetBottomIgnored(true)
+                .show();
     }
 
     // UNKNOWN DEVICE SPARKBAR REPORT
@@ -267,16 +342,16 @@ public class NotificationFragment extends Fragment implements LifecycleOwner {
                     @Override
                     public void run() {
                         editor = sharedPreferences.edit();
-                        editor.putInt(Config.Setting.AUTO_LAUNCH,1);
+                        editor.putInt(Config.Setting.AUTO_LAUNCH, 1);
                         editor.apply();
                     }
                 });
             }
         })
-        .setActionTextColor(ContextCompat.getColor(getContext(), R.color.white))
-        .setAnchorView(R.id.botnavbarMainActivity)
-        .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.Blue_primary))
-        .show();
+                .setActionTextColor(ContextCompat.getColor(getContext(), R.color.white))
+                .setAnchorView(R.id.botnavbarMainActivity)
+                .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.Blue_primary))
+                .show();
     }
 }
 
