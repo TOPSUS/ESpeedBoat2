@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,14 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import id.alin.espeedboat.GantiPasswordActivity;
 import id.alin.espeedboat.LoginActivity;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
 import id.alin.espeedboat.MyPointRewardActivity;
 import id.alin.espeedboat.MyProfile.MyProfileActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
@@ -66,6 +70,18 @@ public class MyPointRedeemAdapter extends RecyclerView.Adapter<MyPointRedeemAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        try{
+            StringBuilder url = new StringBuilder(ApiClient.BASE_IMAGE_USER);
+            url.append(rewardEntityList.get(position).getFoto());
+
+            Glide.with(context).load(url.toString())
+                    .placeholder(R.drawable.ic_piring)
+                    .into(holder.imageView);
+
+        }catch (Exception e){
+            Log.d("TAG", e.toString());
+        }
 
         holder.textView.setText(rewardEntityList.get(position).getReward());
         holder.textView1.setText(String.valueOf(rewardEntityList.get(position).getMinimal_point()));

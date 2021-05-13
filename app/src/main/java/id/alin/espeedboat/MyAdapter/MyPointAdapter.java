@@ -17,7 +17,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
 import id.alin.espeedboat.MyPointRewardActivity;
+import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRoom.Entity.PembelianEntitiy;
 import id.alin.espeedboat.MyRoom.Entity.PoinEntity;
 import id.alin.espeedboat.R;
@@ -43,6 +47,18 @@ public class MyPointAdapter extends RecyclerView.Adapter<MyPointAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        try{
+            StringBuilder url = new StringBuilder(ApiClient.BASE_IMAGE_USER);
+            url.append(poinEntities.get(position).getFoto());
+
+            Glide.with(context).load(url.toString())
+                    .placeholder(R.drawable.ic_caspla)
+                    .into(holder.imageView);
+
+        }catch (Exception e){
+            Log.d("TAG", e.toString());
+        }
 
         holder.textView.setText(poinEntities.get(position).getNama_kapal());
         holder.textView1.setText(String.valueOf(poinEntities.get(position).getTotal_poin())+" Poin");

@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class MyPointRewardActivity extends AppCompatActivity {
 
     private long id;
     private int position;
+    ImageButton backBtn;
 
     private LinearLayout loading, nodata;
     private TextView tvNamaKapal, tvPoin;
@@ -49,6 +51,14 @@ public class MyPointRewardActivity extends AppCompatActivity {
             id = getIntent().getLongExtra("id_trans", 3);
             position = getIntent().getIntExtra("position", 0);
         }
+
+        backBtn = (ImageButton) findViewById(R.id.backButton);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         //LL INIT
         loading = (LinearLayout) findViewById(R.id.loadinglayout);

@@ -20,6 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
@@ -57,6 +59,18 @@ public class MyPointHistoryAdapter extends RecyclerView.Adapter<MyPointHistoryAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        try{
+            StringBuilder url = new StringBuilder(ApiClient.BASE_IMAGE_USER);
+            url.append(riwayat.get(position).getFoto());
+
+            Glide.with(context).load(url.toString())
+                    .placeholder(R.drawable.ic_piring)
+                    .into(holder.imageView);
+
+        }catch (Exception e){
+            Log.d("TAG", e.toString());
+        }
+
         //FORMAT TANGGAL
         String tanggal[] = riwayat.get(position).getCreated_at().split("-", 3);
         String day = tanggal[2];
