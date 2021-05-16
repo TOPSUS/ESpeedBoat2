@@ -14,7 +14,6 @@
         android:id="@+id/BarLayoutMainActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
         android:paddingTop="5dp"
         android:theme="@style/Theme.ESpeedBoat">
 
@@ -22,7 +21,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/Blue_primary"
             app:popupTheme="@style/Theme.ESpeedBoat">
 
             <LinearLayout
@@ -30,28 +29,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 tools:ignore="RtlSymmetry">
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvSpeedboatActivity"
+
+                <TextView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.8"
-                    app:cardCornerRadius="10dp"
-                    >
+                    android:text="ESPEEDBOAT"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold|italic"
+                    tools:ignore="HardcodedText" />
 
-                <SearchView
-                    android:id="@+id/svMainActivity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:elevation="20dp"
-                    />
-                </androidx.cardview.widget.CardView>
-
-                <ImageView
+                <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
                     android:layout_gravity="end"
+                    android:backgroundTint="@color/Blue_primary"
                     android:src="@drawable/threedot"
                     />
 

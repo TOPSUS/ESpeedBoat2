@@ -12,12 +12,12 @@ import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
 @Dao
 public interface BeritaEspeedDAO {
     @Insert
-    Long insertBeritaEspeed(BeritaPelabuhanEntity entity);
+    Long insertBeritaEspeed(BeritaEspeedEntity entity);
 
     @Query("SELECT * FROM BeritaEspeedEntity")
     List<BeritaEspeedEntity> getAllBeritaEspeed();
 
-    @Query("DELETE FROM BeritaPelabuhanEntity")
+    @Query("DELETE FROM BeritaEspeedEntity")
     void truncateBeritaEspeed();
 }
 

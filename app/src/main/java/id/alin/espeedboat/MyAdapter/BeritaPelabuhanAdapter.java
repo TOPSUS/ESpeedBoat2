@@ -1,6 +1,7 @@
 package id.alin.espeedboat.MyAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +18,7 @@ import java.util.List;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
 import id.alin.espeedboat.R;
+import id.alin.espeedboat.WebviewActivity;
 
 public class BeritaPelabuhanAdapter extends RecyclerView.Adapter<BeritaPelabuhanAdapter.MyViewHolder>{
     public List<BeritaPelabuhanEntity> beritaPelabuhanEntities;
@@ -39,7 +42,15 @@ public class BeritaPelabuhanAdapter extends RecyclerView.Adapter<BeritaPelabuhan
         holder.title.setText(this.beritaPelabuhanEntities.get(position).judul);
         holder.detail.setText(this.beritaPelabuhanEntities.get(position).berita);
         holder.tanggal.setText(this.beritaPelabuhanEntities.get(position).tanggal);
-
+        holder.beritaroot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, WebviewActivity.class);
+                String link = ApiClient.BASE_BERITA_PELABUHAN+ beritaPelabuhanEntities.get(position).id;
+                intent.putExtra(WebviewActivity.LINK,link);
+                context.startActivity(intent);
+            }
+        });
         try{
                 StringBuilder url = new StringBuilder();
                 url.append(ApiClient.BASE_IMAGE_BERITA_PELABUHAN);
@@ -50,7 +61,6 @@ public class BeritaPelabuhanAdapter extends RecyclerView.Adapter<BeritaPelabuhan
         }catch (NullPointerException e){
             Glide.with(this.context).load(R.drawable.berita).into(holder.ivBerita);
         }
-
     }
 
     @Override
@@ -63,13 +73,14 @@ public class BeritaPelabuhanAdapter extends RecyclerView.Adapter<BeritaPelabuhan
         public TextView detail;
         public TextView tanggal;
         public ImageView ivBerita;
+        public CardView beritaroot;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             this.title = itemView.findViewById(R.id.tvItemBeritaPelabuhanTitle);
             this.detail = itemView.findViewById(R.id.tvItemBeritaPelabuhanDetail);
             this.tanggal = itemView.findViewById(R.id.tvItemBeritaPelabuhanTanggal);
-
+            this.beritaroot = itemView.findViewById(R.id.beritaroot);
             this.ivBerita = itemView.findViewById(R.id.ivItemBeritaPelabuhan);
         }
     }

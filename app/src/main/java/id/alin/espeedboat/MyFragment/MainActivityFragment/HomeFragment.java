@@ -40,6 +40,7 @@ import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyAdapter.BeritaEspeedAdapter;
 import id.alin.espeedboat.MyAdapter.BeritaPelabuhanAdapter;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
+import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.BeritaEspeed.ServerResponseBeritaEspeed;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.BeritaPelabuhan.ServerResponseBeritaPelabuhan;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.ProfileData.ServerResponseProfileData;
 import id.alin.espeedboat.MyRetrofit.Services.BeritaPelabuhanServices;
@@ -268,7 +269,6 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
                                 @Override
                                 public void accept(BeritaPelabuhanEntity entity) {
                                     HomeFragment.this.databaeESpeedboat.beritaPelabuhanDAO().insertBeritaPelabuhan(entity);
-                                    Log.d("DONE INSERT DATA","DONE INSERT");
                                 }
                             });
                         }
@@ -291,19 +291,46 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         /*AKTIFKAT SHIMMER*/
         showShimmerEspeedNews(true);
 
-        /*SET SEMUA VIEW DI DALAMNYA JADI KOSONG*/
-        tvespeednewstitle.setText("");
-        tvespeednewsdetail.setText("");
-        tvespeednewstitle.setBackgroundColor(Color.parseColor(HomeFragment.SHAMMER_BACKGROUND));
-        tvespeednewsdetail.setBackgroundColor(Color.parseColor(HomeFragment.SHAMMER_BACKGROUND));
+        ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
-        /*DISINI NANTI AKAN MEMANGGIL API DENGAN RETROFIT*/
-        new Handler().postDelayed(new Runnable() {
+        BeritaPelabuhanServices beritaPelabuhanServices = ApiClient.getRetrofit().create(BeritaPelabuhanServices.class);
+
+        Call<ServerResponseBeritaEspeed> call = beritaPelabuhanServices.readAllBeritaKapal(
+                profileData.getToken()
+        );
+
+        call.enqueue(new Callback<ServerResponseBeritaEspeed>() {
             @Override
-            public void run() {
+            public void onResponse(Call<ServerResponseBeritaEspeed> call, Response<ServerResponseBeritaEspeed> response) {
+                HomeFragment.this.beritaEspeedEntities.clear();
+                HomeFragment.this.beritaEspeedEntities = response.body().getBerita_espeed();
+                HomeFragment.this.beritaEspeedAdapter.beritaEspeedEntities = response.body().getBerita_espeed();
+                HomeFragment.this.beritaEspeedAdapter.notifyDataSetChanged();
+
+                /*NONAKTIFKAN SHIMMER DAN REFRESH*/
+                showShimmerEspeedNews(false);
+
+                HomeFragment.this.databaeESpeedboat.beritaEspeedDAO().truncateBeritaEspeed();
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        HomeFragment.this.beritaEspeedEntities.forEach(new Consumer<BeritaEspeedEntity>() {
+                            @Override
+                            public void accept(BeritaEspeedEntity beritaEspeedEntity) {
+                                HomeFragment.this.databaeESpeedboat.beritaEspeedDAO().insertBeritaEspeed(beritaEspeedEntity);
+                            }
+                        });
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseBeritaEspeed> call, Throwable t) {
+                /*NONAKTIFKAN SHIMMER DAN REFRESH*/
                 showShimmerEspeedNews(false);
             }
-        }, 10000);
+        });
     }
 
     // INISIASI DATABASE SQLITE
@@ -468,15 +495,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         indicator.setSelectedDotColor(Color.BLUE);
         indicator.attachToRecyclerView(this.rvespeednews);
 
-        /*NONAKTIFKAN SHIMMER DAN REFRESH*/
-        showShimmerEspeedNews(false);
-        swipeRefreshLayout.setRefreshing(false);
-
-        /*SET SEMUA VIEW INVISIBLE*/
-        tvespeednewstitle.setText("ESpeed News");
-        tvespeednewsdetail.setText("Berita aktual mengenai transportasi laut, ticket, dan berita terkini mengenai teknologi epseed");
-        tvespeednewstitle.setBackground(null);
-        tvespeednewsdetail.setBackground(null);
+        getEspeedNewsFromApi();
     }
 
     // SHOW SHIMMER PROFILE "EFFECT LOADING"

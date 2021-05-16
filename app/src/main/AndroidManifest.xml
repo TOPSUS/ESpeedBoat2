@@ -24,43 +24,88 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ESpeedBoat">
-        <activity android:name=".ReviewKapalDetailActivity" android:launchMode="singleTop"/>
-        <activity android:name=".ReviewKapalActivity" android:launchMode="singleTop"/>
-        <activity android:name=".TestPdfActivity" android:launchMode="singleTop"/>
-        <activity android:name=".MyUnpaidDetailTransactionActivity" android:launchMode="singleTop"/>
+        <activity
+            android:name=".WebviewActivity"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".ReviewKapalDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ReviewKapalActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".TestPdfActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MyUnpaidDetailTransactionActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".MetodePembayaranActivity"
-            android:taskAffinity=".pemesanan" android:launchMode="singleTop"/>
-        <activity android:name=".MyUnpaidTransactionActivity" android:launchMode="singleTop"/>
-        <activity android:name=".MyPointHistoryActivity" android:launchMode="singleTop"/>
-        <activity android:name=".MyPointRewardActivity" android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:taskAffinity=".pemesanan" />
+        <activity
+            android:name=".MyUnpaidTransactionActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MyPointHistoryActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MyPointRewardActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".InputIdentitasPemesanActivity"
-            android:taskAffinity=".pemesanan" android:launchMode="singleTop"/>
-        <activity android:name=".GantiPasswordActivity" android:launchMode="singleTop"/>
-        <activity android:name=".LupaPasswordVerifikasiEmailActivity" android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:taskAffinity=".pemesanan" />
+        <activity
+            android:name=".GantiPasswordActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".LupaPasswordVerifikasiEmailActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".PemesananJadwalSpeedboatActivity"
-            android:taskAffinity=".pemesanan" android:launchMode="singleTop"/>
-        <activity android:name=".MyProfile.EditPinActivity" android:launchMode="singleTop"/>
-        <activity android:name=".MyProfile.AddPinActivity" android:launchMode="singleTop"/>
-        <activity android:name=".MyProfile.EditPasswordActivity" android:launchMode="singleTop"/>
-        <activity android:name=".MyProfile.EditProfileActivity" android:launchMode="singleTop"/>
-        <activity android:name=".LoginActivity" android:launchMode="singleTop"/>
-        <activity android:name=".MyProfile.MyProfileActivity" android:launchMode="singleTop"/>
-        <activity android:name=".ForgotPasswordActivity" android:launchMode="singleTop"/>
-        <activity android:name=".MyPointActivity" android:launchMode="singleTop"/>
-        <activity android:name=".SplashScreenActivity" android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:taskAffinity=".pemesanan" />
+        <activity
+            android:name=".MyProfile.EditPinActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MyProfile.AddPinActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MyProfile.EditPasswordActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MyProfile.EditProfileActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".LoginActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MyProfile.MyProfileActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MyPointActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" android:launchMode="singleTop"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing" android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustNothing" />
 
         <service
             android:name=".MyFireBase.MyFireBaseCloudMessaging"
@@ -70,4 +115,5 @@
             </intent-filter>
         </service>
     </application>
+
 </manifest>

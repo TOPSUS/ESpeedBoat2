@@ -30,8 +30,6 @@ import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityViewMode
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 
 public class MainActivity extends AppCompatActivity {
-    /*SEARCHVIEW*/
-    private SearchView searchview;
 
     /*BOTTOM NAVIGATION NAV*/
     private BottomNavigationView bottomNavigationView;
@@ -103,22 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
     /*INIT WIDGET HALAMAN MAIN ACTIVITY (SEARCH VIEW DAN BOTNAV)*/
     private void initWidget(){
-
-        /*SEARCH VIEW*/
-        searchview = findViewById(R.id.svMainActivity);
-        searchview.setQueryHint("Pencarian");
-        searchview.setIconified(false);
-        searchview.clearFocus();
-
-        searchview.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                searchview.setQueryHint("Pilih Speedboat");
-                searchview.setIconified(false);
-                searchview.clearFocus();
-                return true;
-            }
-        });
 
         /*INIT BOTTOM NAV*/
         bottomNavigationView = findViewById(R.id.botnavbarMainActivity);

@@ -22,6 +22,9 @@ public class ApiClient {
     public static String BASE_FILE_BUKTI_PEMBAYARAN = "https://www.espeedboat.xyz/storage/bukti_pembayaran/";
     public static String BASE_FILE_TICKET = "https://www.espeedboat.xyz/storage/test_pdf/";
 
+    public static String BASE_BERITA_PELABUHAN = "https://admin.espeedboat.xyz/berita/public/pelabuhan/";
+    public static String BASE_BERITA_KAPAL = "https://admin.espeedboat.xyz/berita/public/kapal/";
+
     public static Retrofit getRetrofit(){
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
