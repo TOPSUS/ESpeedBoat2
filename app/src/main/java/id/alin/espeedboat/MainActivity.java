@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton threedot;
     private DialogPlus dialogPlus;
 
-    private static final String IKUTI_KAMI_LINK = "https://espeedboat.xyz/";
+    private static final String IKUTI_KAMI_LINK = "https://it.unud.ac.id/";
 
     /*THE FOUR FRAGMENT*/
     private HomeFragment homeFragment;
