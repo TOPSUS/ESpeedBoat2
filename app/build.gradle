@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.zcw:togglebutton-library:1.0.0'
     implementation 'com.github.afreakyelf:Pdf-Viewer:1.0.7'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
+    implementation 'org.jsoup:jsoup:1.10.3'
 
     /*FIRE BASE*/
     implementation platform('com.google.firebase:firebase-bom:27.0.0')

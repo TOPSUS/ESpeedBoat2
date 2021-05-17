@@ -2,6 +2,7 @@ package id.alin.espeedboat.MyFragment.MainActivityFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyAdapter.BeritaEspeedAdapter;
 import id.alin.espeedboat.MyAdapter.BeritaPelabuhanAdapter;
+import id.alin.espeedboat.MyPointActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.BeritaEspeed.ServerResponseBeritaEspeed;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.BeritaPelabuhan.ServerResponseBeritaPelabuhan;
@@ -49,6 +51,7 @@ import id.alin.espeedboat.MyRoom.Database.DatabaeESpeedboat;
 import id.alin.espeedboat.MyRoom.Entity.BeritaEspeedEntity;
 import id.alin.espeedboat.MyRoom.Entity.BeritaPelabuhanEntity;
 import id.alin.espeedboat.MySharedPref.Config;
+import id.alin.espeedboat.MyUnpaidTransactionActivity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
 import retrofit2.Call;
@@ -351,6 +354,27 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             }
         });
 
+        this.btnpayments = getView().findViewById(R.id.btnFragmentHome);
+        this.btnpayments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MyUnpaidTransactionActivity.class);
+                intent.putExtra("status","menunggu pembayaran");
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+        this.btnpointss = getView().findViewById(R.id.appCompatButton);
+        this.btnpointss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MyPointActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
         /*INIT TV NAMA*/
         if (this.tvname == null) {
             this.tvname = view.findViewById(R.id.tvFragmentHomeNama);
@@ -561,6 +585,11 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         if (value) {
             shimmerespeednews.showShimmer(true);
             shimmerespeednews.startShimmer();
+
+            tvespeednewstitle.setText("");
+            tvespeednewsdetail.setText("");
+            tvespeednewstitle.setBackgroundColor(Color.parseColor(HomeFragment.SHAMMER_BACKGROUND));
+            tvespeednewsdetail.setBackgroundColor(Color.parseColor(HomeFragment.SHAMMER_BACKGROUND));
         } else {
             shimmerespeednews.showShimmer(false);
             shimmerespeednews.stopShimmer();

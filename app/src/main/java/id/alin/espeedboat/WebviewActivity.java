@@ -2,8 +2,11 @@ package id.alin.espeedboat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
@@ -19,6 +22,7 @@ public class WebviewActivity extends AppCompatActivity {
 
     public static final String LINK = "LINK";
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,10 @@ public class WebviewActivity extends AppCompatActivity {
         initWidget();
 
         WebView myWebView = findViewById(R.id.webview);
+
+        myWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        myWebView.getSettings().setJavaScriptEnabled(true);
+
         myWebView.setWebViewClient(new WebViewClient() {
 
             public void onPageFinished(WebView view, String url) {

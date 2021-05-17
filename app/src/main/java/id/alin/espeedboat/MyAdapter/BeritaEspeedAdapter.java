@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import org.jsoup.Jsoup;
+
 import java.util.List;
 
 import id.alin.espeedboat.MyRetrofit.ApiClient;
@@ -45,21 +47,21 @@ public class BeritaEspeedAdapter extends RecyclerView.Adapter<BeritaEspeedAdapte
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvBerita.setText(this.beritaEspeedEntities.get(position).getBerita());
+        String sanitizeHtmlBerita = Jsoup.parse(this.beritaEspeedEntities.get(position).getBerita()).text();
+        holder.tvBerita.setText(sanitizeHtmlBerita);
         holder.tvJudul.setText(this.beritaEspeedEntities.get(position).getJudul());
         holder.cardroot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WebviewActivity.class);
                 String link_berita = ApiClient.BASE_BERITA_KAPAL+beritaEspeedEntities.get(position).id;
-                Log.d("testtest",link_berita);
                 intent.putExtra(WebviewActivity.LINK,link_berita);
                 context.startActivity(intent);
             }
         });
         try{
             if(this.beritaEspeedEntities.get(position) == null){
-                Glide.with(BeritaEspeedAdapter.this.context).load(R.drawable.berita).into(holder.ivBerita);
+                Glide.with(BeritaEspeedAdapter.this.context).load(R.drawable.no_image_pelabuhan).into(holder.ivBerita);
             }
             else{
                 StringBuilder url = new StringBuilder();
@@ -67,14 +69,14 @@ public class BeritaEspeedAdapter extends RecyclerView.Adapter<BeritaEspeedAdapte
                 url.append(this.beritaEspeedEntities.get(position).getFoto());
 
                 RequestOptions requestOptions = new RequestOptions();
-                requestOptions.placeholder(R.drawable.berita);
+                requestOptions.placeholder(R.drawable.no_image_pelabuhan);
 
                 Glide.with(BeritaEspeedAdapter.this.context).load(url.toString())
                         .apply(requestOptions)
                         .into(holder.ivBerita);
             }
         }catch (Exception ignored){
-
+            Glide.with(BeritaEspeedAdapter.this.context).load(R.drawable.no_image_pelabuhan).into(holder.ivBerita);
         }
 
 
