@@ -28,6 +28,7 @@ import id.alin.espeedboat.MyRoom.Entity.MetodePembayaranEntity;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.PenumpangData;
 import id.alin.espeedboat.MyViewModel.InputIdentitasPemesanAcitivyViewModel.ObjectData.TransaksiData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananFeriData;
+import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.PemesananSpeedboatData;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -143,7 +144,7 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                     intent.putExtra("id_trans", response.body().getPembelian().getId());
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    MainActivity.mainActivityViewModel.setPemesananFeriData(new PemesananFeriData());
+                    MainActivity.mainActivityViewModel.setPemesananSpeedboatData(new PemesananSpeedboatData());
                     finishAffinity();
                 }else{
                     Toast.makeText(MetodePembayaranActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
