@@ -60,6 +60,7 @@ dependencies {
     implementation 'com.github.afreakyelf:Pdf-Viewer:1.0.7'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
 
     /*FIRE BASE*/
     implementation platform('com.google.firebase:firebase-bom:27.0.0')

@@ -83,11 +83,10 @@ public class EditProfileActivity extends AppCompatActivity implements LifecycleO
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
-
         /*DISABLE DARK MODE*/
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_profile);
 
         init();
         eventListener();

@@ -11,10 +11,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnClickListener;
+import com.orhanobut.dialogplus.OnDismissListener;
+import com.orhanobut.dialogplus.ViewHolder;
 
 import dev.shreyaspatil.MaterialDialog.AbstractDialog;
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
@@ -24,6 +32,7 @@ import id.alin.espeedboat.MyFragment.MainActivityFragment.NotificationFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.FeriFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananJadwalFragment;
 import id.alin.espeedboat.MyFragment.MainActivityFragment.ProfileFragment;
+import id.alin.espeedboat.MyProfile.EditProfileActivity;
 import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityInstanceFactory;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.MainActivityViewModel;
@@ -33,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
     /*BOTTOM NAVIGATION NAV*/
     private BottomNavigationView bottomNavigationView;
+
+    // TOP THREEDOT ICON AND TOPSOURCE FRAGMENT
+    private ImageButton threedot;
+    private DialogPlus dialogPlus;
+
+    private static final String IKUTI_KAMI_LINK = "https://espeedboat.xyz/";
 
     /*THE FOUR FRAGMENT*/
     private HomeFragment homeFragment;
@@ -125,6 +140,43 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+        // THREEDOT INIT
+        this.threedot = findViewById(R.id.threedot);
+        this.threedot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MainActivity.this.dialogPlus == null){
+                    MainActivity.this.dialogPlus = DialogPlus.newDialog(MainActivity.this)
+                            .setExpanded(false)  // This will enable the expand feature, (similar to android L share dialog)
+                            .setGravity(Gravity.TOP)
+                            .setContentHolder(new ViewHolder(R.layout.topsheet_appdetail_fragment))
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(DialogPlus dialog, View view) {
+                                    if(view.getId() == R.id.closebutton){
+                                        dialog.dismiss();
+                                    }
+                                    else if(view.getId() == R.id.ikutikami){
+                                        Intent intent = new Intent(MainActivity.this, WebviewActivity.class);
+                                        intent.putExtra(WebviewActivity.LINK,IKUTI_KAMI_LINK);
+                                        startActivity(intent);
+                                    }else if(view.getId() == R.id.pengaturan){
+                                        Intent intent = new Intent(MainActivity.this, EditProfileActivity.class);
+                                        startActivity(intent);
+                                }
+                            }})
+                            .setOnDismissListener(new OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogPlus dialog) {
+                                    MainActivity.this.dialogPlus = null;
+                                }
+                            })
+                            .create();
+                    MainActivity.this.dialogPlus.show();
+                }
             }
         });
     }
