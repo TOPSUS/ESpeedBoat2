@@ -331,7 +331,7 @@ public class NotificationFragment extends Fragment implements LifecycleOwner {
 
     // UNKNOWN DEVICE SPARKBAR REPORT
     private void showUnknownDevice() {
-        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.parentlayoutMainActivity), "Untuk mendapatkan real time notidication mohon aktifkan auto launch aplikasi pada pengaturan sistem anda", 3000);
+        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.parentlayoutMainActivity), "Untuk menerima notifikasi secara real time mohon aktifkan auto launch sistem", 3000);
         snackbar.setAction("OKE", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

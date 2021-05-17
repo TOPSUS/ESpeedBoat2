@@ -127,8 +127,8 @@ public class EditPasswordActivity extends AppCompatActivity {
             etNewPass.setError("Masukkan Password Baru");
             return false;
         }
-        if(etNewPass.getText().toString().length() < 8){
-            etNewPass.setError("Password Baru Minimal 8 Digit");
+        if(etNewPass.getText().toString().length() < 4){
+            etNewPass.setError("Password Baru Minimal 4 Digit");
             return false;
         }
         if(!(etNewPass.getText().toString().equals(etConfirmPass.getText().toString()))){

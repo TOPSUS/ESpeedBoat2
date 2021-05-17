@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.zcw.togglebutton.ToggleButton;
 
@@ -50,7 +51,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
 
     /*WIDGET*/
     private TextView tvasaltujuan, tvdetailjadwal, tvnamapemesan, tvemailpemesan, tvnomorpemesan,
-            tvtotalbiaya, tvnamapengendara, tvgolongan, tvhargagolongan, tvketerangangolongan;
+            tvtotalbiaya, tvgolongan, tvhargagolongan, tvketerangangolongan;
     private Button btnlanjutkan;
     private ImageButton backbutton;
     private LinearLayout loading, layout_feri, layout_penumpang;
@@ -204,6 +205,8 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
             public void onClick(View v) {
                 if (doValidate()) {
                     showModalPersetujuanPemesanan();
+                }else{
+                    Toast.makeText(InputIdentitasPemesanActivity.this, "MOHON INPUTKAN SEMUA DATA PENUMPANG", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -421,6 +424,8 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
             public void onClick(View v) {
                 if (doValidate()) {
                     showModalPersetujuanPemesanan();
+                }else{
+                    Toast.makeText(InputIdentitasPemesanActivity.this, "MOHON INPUTKAN SEMUA DATA PENUMPANG", Toast.LENGTH_SHORT).show();
                 }
             }
         });
