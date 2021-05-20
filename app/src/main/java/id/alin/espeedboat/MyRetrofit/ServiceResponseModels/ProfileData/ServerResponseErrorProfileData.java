@@ -41,6 +41,10 @@ public class ServerResponseErrorProfileData {
     @Expose
     private List<String> c_password;
 
+    @SerializedName("imageprofile")
+    @Expose
+    private List<String> imageprofile;
+
     public List<String> getNama() {
         return nama;
     }
@@ -105,6 +109,14 @@ public class ServerResponseErrorProfileData {
         this.c_password = c_password;
     }
 
+    public List<String> getImageprofile() {
+        return imageprofile;
+    }
+
+    public void setImageprofile(List<String> imageprofile) {
+        this.imageprofile = imageprofile;
+    }
+
     public String parseErrorAll(){
         StringBuilder error = new StringBuilder();
 
@@ -145,6 +157,11 @@ public class ServerResponseErrorProfileData {
 
         if(this.password != null){
             error.append(this.password.get(0));
+            error.append("\n");
+        }
+
+        if(this.imageprofile != null){
+            error.append(this.imageprofile.get(0));
             error.append("\n");
         }
 
