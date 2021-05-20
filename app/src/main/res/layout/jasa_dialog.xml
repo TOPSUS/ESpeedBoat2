@@ -32,30 +32,39 @@
 
             <Button
                 android:id="@+id/penumpang"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:autoSizeTextType="uniform"
+                android:ellipsize="none"
                 android:text="penumpang"
-                android:textSize="15sp"
                 android:layout_margin="10dp"
-                android:minLines="1"
-                android:maxLines="1"
                 android:backgroundTint="@color/espeedorange"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="5sp"
+                android:autoSizeMaxTextSize="20sp"
+                android:autoSizeStepGranularity="2sp"
+                app:autoSizeMinTextSize="5sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeStepGranularity="2sp"
                 tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/kendaraan"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeTextType="uniform"
                 android:layout_weight="1"
+                android:ellipsize="none"
                 android:text="kendaraan"
                 android:layout_margin="10dp"
-                android:minLines="1"
-                android:maxLines="1"
                 android:backgroundTint="@color/espeedorange"
-                tools:ignore="HardcodedText" />
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="5sp"
+                android:autoSizeMaxTextSize="20sp"
+                android:autoSizeStepGranularity="2sp"
+                app:autoSizeMinTextSize="5sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeStepGranularity="2sp"
+                tools:ignore="HardcodedText"/>
 
         </LinearLayout>
 

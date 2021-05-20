@@ -3,6 +3,7 @@ package id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragmen
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
@@ -203,6 +205,7 @@ public class SpeedBoatFragment extends Fragment implements LifecycleOwner {
     }
 
     // VALIDASI
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean doValidateData() {
         int validation = 1;
 
