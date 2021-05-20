@@ -42,10 +42,8 @@
                 android:autoSizeTextType="uniform"
                 android:autoSizeMinTextSize="5sp"
                 android:autoSizeMaxTextSize="20sp"
-                android:autoSizeStepGranularity="2sp"
                 app:autoSizeMinTextSize="5sp"
                 app:autoSizeMaxTextSize="20sp"
-                app:autoSizeStepGranularity="2sp"
                 tools:ignore="HardcodedText" />
 
             <Button
@@ -60,10 +58,8 @@
                 android:autoSizeTextType="uniform"
                 android:autoSizeMinTextSize="5sp"
                 android:autoSizeMaxTextSize="20sp"
-                android:autoSizeStepGranularity="2sp"
                 app:autoSizeMinTextSize="5sp"
                 app:autoSizeMaxTextSize="20sp"
-                app:autoSizeStepGranularity="2sp"
                 tools:ignore="HardcodedText"/>
 
         </LinearLayout>
