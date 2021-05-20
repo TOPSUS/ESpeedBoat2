@@ -37,9 +37,11 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.alin.espeedboat.LoginActivity;
 import id.alin.espeedboat.MainActivity;
 import id.alin.espeedboat.MyAdapter.BeritaEspeedAdapter;
 import id.alin.espeedboat.MyAdapter.BeritaPelabuhanAdapter;
+import id.alin.espeedboat.MyHelper.LogoutDataCleaner;
 import id.alin.espeedboat.MyPointActivity;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.BeritaEspeed.ServerResponseBeritaEspeed;
@@ -173,22 +175,30 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
                                 sharedPreferences = getContext().getSharedPreferences(Config.ESPEED_STORAGE, Context.MODE_PRIVATE);
                                 editor = sharedPreferences.edit();
 
-                                editor.putString(Config.USER_NAMA,data.getName());
-                                editor.putString(Config.USER_ALAMAT,data.getAlamat());
-                                editor.putString(Config.USER_CHAT_ID,data.getChat_id());
-                                editor.putString(Config.USER_PIN,data.getPin());
-                                editor.putString(Config.USER_EMAIL,data.getEmail());
-                                editor.putString(Config.USER_FOTO,data.getFoto());
-                                editor.putString(Config.USER_NOHP,data.getNohp());
-                                editor.putString(Config.USER_JENIS_KELAMIN,data.getJeniskelamin());
+                                editor.putString(Config.USER_NAMA, data.getName());
+                                editor.putString(Config.USER_ALAMAT, data.getAlamat());
+                                editor.putString(Config.USER_CHAT_ID, data.getChat_id());
+                                editor.putString(Config.USER_PIN, data.getPin());
+                                editor.putString(Config.USER_EMAIL, data.getEmail());
+                                editor.putString(Config.USER_FOTO, data.getFoto());
+                                editor.putString(Config.USER_NOHP, data.getNohp());
+                                editor.putString(Config.USER_JENIS_KELAMIN, data.getJeniskelamin());
                                 editor.apply();
 
                             }
                         });
 
                         Log.d("RETROFIT", "berhasil");
-                    } else {
+                    } else if (response.body().getResponse_code().equals("401") && response.body().getStatus().equals("failure")) {
 
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        LogoutDataCleaner logoutDataCleaner = new LogoutDataCleaner(getContext());
+                        logoutDataCleaner.clearSharedPreferences();
+                        startActivity(intent);
+                        getActivity().finish();
+
+                    } else {
                         MainActivity.mainActivityViewModel.setProfileData(data);
                         StringBuilder responseServer = new StringBuilder();
 
@@ -201,7 +211,6 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
                                 .show();
 
                         MainActivity.mainActivityViewModel.setProfileData(data);
-
                     }
 
                 }
@@ -276,6 +285,13 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
                             });
                         }
                     });
+                } else if (response.body().getStatus().matches("failure") && response.body().getResponse_code().matches("401")) {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    LogoutDataCleaner logoutDataCleaner = new LogoutDataCleaner(getContext());
+                    logoutDataCleaner.clearSharedPreferences();
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
 
@@ -305,27 +321,36 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
         call.enqueue(new Callback<ServerResponseBeritaEspeed>() {
             @Override
             public void onResponse(Call<ServerResponseBeritaEspeed> call, Response<ServerResponseBeritaEspeed> response) {
-                HomeFragment.this.beritaEspeedEntities.clear();
-                HomeFragment.this.beritaEspeedEntities = response.body().getBerita_espeed();
-                HomeFragment.this.beritaEspeedAdapter.beritaEspeedEntities = response.body().getBerita_espeed();
-                HomeFragment.this.beritaEspeedAdapter.notifyDataSetChanged();
+                if (response.body().getResponse_code().matches("200") && response.body().getStatus().matches("success")) {
+                    HomeFragment.this.beritaEspeedEntities.clear();
+                    HomeFragment.this.beritaEspeedEntities = response.body().getBerita_espeed();
+                    HomeFragment.this.beritaEspeedAdapter.beritaEspeedEntities = response.body().getBerita_espeed();
+                    HomeFragment.this.beritaEspeedAdapter.notifyDataSetChanged();
 
-                /*NONAKTIFKAN SHIMMER DAN REFRESH*/
-                showShimmerEspeedNews(false);
+                    /*NONAKTIFKAN SHIMMER DAN REFRESH*/
+                    showShimmerEspeedNews(false);
 
-                HomeFragment.this.databaeESpeedboat.beritaEspeedDAO().truncateBeritaEspeed();
+                    HomeFragment.this.databaeESpeedboat.beritaEspeedDAO().truncateBeritaEspeed();
 
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        HomeFragment.this.beritaEspeedEntities.forEach(new Consumer<BeritaEspeedEntity>() {
-                            @Override
-                            public void accept(BeritaEspeedEntity beritaEspeedEntity) {
-                                HomeFragment.this.databaeESpeedboat.beritaEspeedDAO().insertBeritaEspeed(beritaEspeedEntity);
-                            }
-                        });
-                    }
-                });
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            HomeFragment.this.beritaEspeedEntities.forEach(new Consumer<BeritaEspeedEntity>() {
+                                @Override
+                                public void accept(BeritaEspeedEntity beritaEspeedEntity) {
+                                    HomeFragment.this.databaeESpeedboat.beritaEspeedDAO().insertBeritaEspeed(beritaEspeedEntity);
+                                }
+                            });
+                        }
+                    });
+                }else if (response.body().getResponse_code().matches("401") && response.body().getStatus().matches("failure")){
+                    Intent intent = new Intent(getContext(),LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    LogoutDataCleaner logoutDataCleaner = new LogoutDataCleaner(getContext());
+                    logoutDataCleaner.clearSharedPreferences();
+                    startActivity(intent);
+                    getActivity().finish();
+                }
             }
 
             @Override
@@ -359,7 +384,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MyUnpaidTransactionActivity.class);
-                intent.putExtra("status","menunggu pembayaran");
+                intent.putExtra("status", "menunggu pembayaran");
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
@@ -494,7 +519,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
 
         this.beritaEspeedEntities = this.databaeESpeedboat.beritaEspeedDAO().getAllBeritaEspeed();
 
-        if(this.beritaEspeedEntities.isEmpty()){
+        if (this.beritaEspeedEntities.isEmpty()) {
             BeritaEspeedEntity beritaEspeedEntity = new BeritaEspeedEntity();
             beritaEspeedEntity.setId(-1);
             beritaEspeedEntity.setId_speedboat(-1);
@@ -508,7 +533,7 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             dummyberitaEspeed.add(beritaEspeedEntity);
 
             this.beritaEspeedAdapter = new BeritaEspeedAdapter(dummyberitaEspeed, getContext());
-        }else{
+        } else {
             this.beritaEspeedAdapter = new BeritaEspeedAdapter(this.beritaEspeedEntities, getContext());
         }
 
