@@ -56,6 +56,7 @@ import id.alin.espeedboat.MySharedPref.Config;
 import id.alin.espeedboat.MyUnpaidTransactionActivity;
 import id.alin.espeedboat.MyViewModel.MainActivityViewModel.ObjectData.ProfileData;
 import id.alin.espeedboat.R;
+import id.alin.espeedboat.WebviewActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,11 +70,14 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
     //*GET SWIPE REFRESH*/
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    // LINK PELAJARI LEBIH LANJUT
+    private static final String LINK_PELAJARI = "https://it.unud.ac.id/";
+
     //*BAGIAN PROFILE*/
     private ShimmerFrameLayout shimmerprofile;
     private CircleImageView ciprofile;
     private TextView tvname, tvemail;
-    private Button btnpointss, btnpayments;
+    private Button btnpointss, btnpayments, btnpelajari;
 
     //*BAGIAN PELABUHAN*/
     private ShimmerFrameLayout shimmerberitapelabuhan;
@@ -400,6 +404,16 @@ public class HomeFragment extends Fragment implements LifecycleOwner {
             }
         });
 
+        this.btnpelajari = getView().findViewById(R.id.pelajarilebihlanjut);
+        this.btnpelajari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), WebviewActivity.class);
+                intent.putExtra(WebviewActivity.LINK,LINK_PELAJARI);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
         /*INIT TV NAMA*/
         if (this.tvname == null) {
             this.tvname = view.findViewById(R.id.tvFragmentHomeNama);

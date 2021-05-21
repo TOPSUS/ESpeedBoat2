@@ -132,9 +132,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/tampilan_layanan">
+                android:background="@drawable/tampilan_layanan_2">
 
                 <Button
+                    android:id="@+id/pelajarilebihlanjut"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
