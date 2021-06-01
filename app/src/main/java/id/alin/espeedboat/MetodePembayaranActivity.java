@@ -257,6 +257,7 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                             TransaksiData transaksiData = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue();
                             ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
                             PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+                            PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
                             List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
 
@@ -267,7 +268,6 @@ public class MetodePembayaranActivity extends AppCompatActivity {
 
                             Gson gson = new Gson();
                             String jsonPenumpang = gson.toJson(penumpangDataList);
-                            Log.d("apeladen_4",jsonPenumpang);
                             String nomor_polisi = pemesananFeriData.getNomor_kendaraan();
                             String id_golongan = String.valueOf(pemesananFeriData.getId_golongan_kendaraan());
 
