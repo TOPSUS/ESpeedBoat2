@@ -17,6 +17,7 @@ public interface PemesananServices {
             @Header("Authorization") String authorization,
             @Field("id_pemesan") String id_pemesan,
             @Field("id_jadwal") String id_jadwal,
+            @Field("tanggal_berangkat") String tanggal_berangkat,
             @Field("id_metode_pembayaran") String id_metode_pembayaran,
             @Field("penumpang") String penumpang,
             @Field("tipe_kapal") String tipe_kapal
@@ -28,6 +29,7 @@ public interface PemesananServices {
             @Header("Authorization") String authorization,
             @Field("id_pemesan") String id_pemesan,
             @Field("id_jadwal") String id_jadwal,
+            @Field("tanggal_berangkat") String tanggal_berangkat,
             @Field("id_metode_pembayaran") String id_metode_pembayaran,
             @Field("penumpang") String penumpang,
             @Field("tipe_kapal") String tipe_kapal,

@@ -82,6 +82,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
         }
 
         if(jadwalEntities.get(position).getIsOrderable()){
+            holder.tvtipekapal.setBackgroundResource(R.color.Blue_primary);
             holder.btnpilih.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -103,8 +104,10 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
                 }
             });
         }else{
+            holder.tvtipekapal.setBackgroundResource(R.color.lightgrey);
             holder.itemView.setAlpha(.5f);
             String peringatan = "JADWAL TELAH LEWAT";
+            holder.btnpilih.setEnabled(false);
             holder.btnpilih.setText(peringatan);
         }
 

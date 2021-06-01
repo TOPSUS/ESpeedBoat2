@@ -120,7 +120,7 @@ public class MetodePembayaranActivity extends AppCompatActivity {
     }
 
     /*METHOD YANG DIGUNAKAN UNTUK MENGIRIMKAN DATA PEMESANAN KE SERVER*/
-    private void postPemesananJadwalSpeedboatAPI(String token, String id_pemesan, String id_jadwal,
+    private void postPemesananJadwalSpeedboatAPI(String token, String id_pemesan, String id_jadwal,String tanggal_berangkat,
                                                  String id_metode_pembayaran, String jsonPenumpang,
                                                  String tipe_kapal) {
         Log.d("jsonpemesanan",jsonPenumpang);
@@ -131,6 +131,7 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                 token,
                 id_pemesan,
                 id_jadwal,
+                tanggal_berangkat,
                 id_metode_pembayaran,
                 jsonPenumpang,
                 tipe_kapal
@@ -161,7 +162,7 @@ public class MetodePembayaranActivity extends AppCompatActivity {
     }
 
     // POST PEMESANAN UNTUK FERI + KENDARAAN
-    private void postPemesananFeriKendaraanAPI(String token, String id_pemesan, String id_jadwal,
+    private void postPemesananFeriKendaraanAPI(String token, String id_pemesan, String id_jadwal,String tanggal_berangkat,
                                                String id_metode_pembayaran, String jsonPenumpang,
                                                String tipe_kapal,String nomor_polisi,String id_golongan){
         Log.d("jsonpemesanan",jsonPenumpang);
@@ -172,6 +173,7 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                 token,
                 id_pemesan,
                 id_jadwal,
+                tanggal_berangkat,
                 id_metode_pembayaran,
                 jsonPenumpang,
                 tipe_kapal,
@@ -243,21 +245,21 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                             TransaksiData transaksiData = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue();
                             ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
                             List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
+                            PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
                             String token = profileData.getToken();
                             String id_pemesan = profileData.getUser_id();
                             String id_jadwal = String.valueOf(transaksiData.getId_jadwal());
                             String id_metode_pembayaran = String.valueOf(transaksiData.getId_metode_pembayaran());
-
+                            String tanggal_berangkat = pemesananSpeedboatData.getTanggal_variable();
                             Gson gson = new Gson();
                             String jsonPenumpang = gson.toJson(penumpangDataList);
 
-                            postPemesananJadwalSpeedboatAPI(token,id_pemesan,id_jadwal,id_metode_pembayaran,jsonPenumpang,PemesananJadwalSpeedboatActivity.SPEEDBOAT);
+                            postPemesananJadwalSpeedboatAPI(token,id_pemesan,id_jadwal,tanggal_berangkat,id_metode_pembayaran,jsonPenumpang,PemesananJadwalSpeedboatActivity.SPEEDBOAT);
                         }else{
                             TransaksiData transaksiData = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getTransaksiLiveData().getValue();
                             ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
                             PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
-                            PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
 
                             List<PenumpangData> penumpangDataList = InputIdentitasPemesanActivity.inputIdentitasPemesanActivityViewModel.getListPenumpangLiveData().getValue();
 
@@ -265,21 +267,19 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                             String id_pemesan = profileData.getUser_id();
                             String id_jadwal = String.valueOf(transaksiData.getId_jadwal());
                             String id_metode_pembayaran = String.valueOf(transaksiData.getId_metode_pembayaran());
-
+                            String tanggal_berangkat = pemesananFeriData.getTanggal_variable();
                             Gson gson = new Gson();
                             String jsonPenumpang = gson.toJson(penumpangDataList);
                             String nomor_polisi = pemesananFeriData.getNomor_kendaraan();
                             String id_golongan = String.valueOf(pemesananFeriData.getId_golongan_kendaraan());
 
                             if(pemesananFeriData.getTipe_jasa().matches(FeriFragment.KENDARAAN)){
-                                postPemesananFeriKendaraanAPI(token,id_pemesan,id_jadwal,id_metode_pembayaran,jsonPenumpang,
+                                postPemesananFeriKendaraanAPI(token,id_pemesan,id_jadwal,tanggal_berangkat,id_metode_pembayaran,jsonPenumpang,
                                                                     tipe_kapal,nomor_polisi,id_golongan);
                             }else{
-                                postPemesananJadwalSpeedboatAPI(token,id_pemesan,id_jadwal,id_metode_pembayaran,jsonPenumpang,PemesananJadwalSpeedboatActivity.FERI);
+                                postPemesananJadwalSpeedboatAPI(token,id_pemesan,id_jadwal,tanggal_berangkat,id_metode_pembayaran,jsonPenumpang,PemesananJadwalSpeedboatActivity.FERI);
                             }
-
                         }
-
                     }
                 })
                 .setNegativeButton("BATAL", new AbstractDialog.OnClickListener() {

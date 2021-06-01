@@ -289,7 +289,7 @@ public class InputIdentitasPemesanActivity extends AppCompatActivity implements 
             total_harga += pemesananFeriData.getHarga();
             Log.d("apakaden", String.valueOf(pemesananFeriData.getHarga()));
             // TAMBAHKAN DENGAN SISA PENUMPANG
-            total_harga += ((pemesananFeriData.getJumlah_penumpang() - 1) * Integer.parseInt(pemesananFeriData.getJadwalEntity().getHarga()));
+//            total_harga += ((pemesananFeriData.getJumlah_penumpang() - 1) * Integer.parseInt(pemesananFeriData.getJadwalEntity().getHarga()));
             transaksiData.setTotal_biaya(total_harga);
             inputIdentitasPemesanActivityViewModel.setTransaksiMutableLiveData(transaksiData);
         } else {
