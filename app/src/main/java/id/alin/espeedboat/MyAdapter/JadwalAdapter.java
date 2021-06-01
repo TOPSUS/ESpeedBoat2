@@ -81,6 +81,33 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
             holder.tvkapasitasboat.setText(kapasitas);
         }
 
+        if(jadwalEntities.get(position).getIsOrderable()){
+            holder.btnpilih.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(tipe_kapal.matches(PemesananJadwalSpeedboatActivity.SPEEDBOAT)){
+                        PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
+                        pemesananSpeedboatData.setJadwalEntity(jadwalEntities.get(position));
+                        MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
+                    }else{
+                        PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+                        pemesananFeriData.setJadwalEntity(jadwalEntities.get(position));
+                        MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
+                    }
+
+                    // MENJALANKAN INTENT DENGAN MENGIRIMKAN TIPE KAPALNYA FERI ATAU SPEEDBOAT
+                    Intent intent = new Intent(context, InputIdentitasPemesanActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL,tipe_kapal);
+                    context.startActivity(intent);
+                }
+            });
+        }else{
+            holder.itemView.setAlpha(.5f);
+            String peringatan = "JADWAL TELAH LEWAT";
+            holder.btnpilih.setText(peringatan);
+        }
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,27 +130,6 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
         String html = "Rp <font color='red'>"+harga_rupiah+"</font>/org";
 
         holder.tvHarga.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
-
-        holder.btnpilih.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(tipe_kapal.matches(PemesananJadwalSpeedboatActivity.SPEEDBOAT)){
-                    PemesananSpeedboatData pemesananSpeedboatData = MainActivity.mainActivityViewModel.getPemesananSpeedboatLiveData().getValue();
-                    pemesananSpeedboatData.setJadwalEntity(jadwalEntities.get(position));
-                    MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
-                }else{
-                    PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
-                    pemesananFeriData.setJadwalEntity(jadwalEntities.get(position));
-                    MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
-                }
-
-                // MENJALANKAN INTENT DENGAN MENGIRIMKAN TIPE KAPALNYA FERI ATAU SPEEDBOAT
-                Intent intent = new Intent(context, InputIdentitasPemesanActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra(PemesananJadwalSpeedboatActivity.TIPE_KAPAL,tipe_kapal);
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -138,9 +144,11 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
         private ExpandableLayout expandableLayout;
         private Button btnpilih;
         private CardView cardView;
+        private View itemView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.itemView = itemView;
             this.tvSpeedBoatName = itemView.findViewById(R.id.tvItemJadwalNamaSpeedBoat);
             this.tvSpeedBoatDesc = itemView.findViewById(R.id.tvItemJadwalDescSpeedBoat);
             this.tvAsal = itemView.findViewById(R.id.tvItemJadwalAsal);

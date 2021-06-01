@@ -11,6 +11,7 @@ public class JadwalEntity {
     private long id_kapal;
     private long id_asal_pelabuhan;
     private long id_tujuan_pelabuhan;
+    private boolean isOrderable;
     private String waktu_sampai;
     private String waktu_berangkat;
     private String harga;
@@ -195,5 +196,13 @@ public class JadwalEntity {
 
     public void setEstimasi_waktu(String estimasi_waktu) {
         this.estimasi_waktu = estimasi_waktu;
+    }
+
+    public boolean getIsOrderable() {
+        return isOrderable;
+    }
+
+    public void setIsOrderable(boolean isOrderable) {
+        this.isOrderable = isOrderable;
     }
 }
