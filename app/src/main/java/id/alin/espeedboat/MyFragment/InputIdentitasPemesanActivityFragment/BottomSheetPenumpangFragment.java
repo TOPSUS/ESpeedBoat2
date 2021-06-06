@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import id.alin.espeedboat.InputIdentitasPemesanActivity;
@@ -29,6 +30,7 @@ public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
     private int index;
     private String nama;
     private String nomor_identitas;
+    private ArrayList<String> cards;
 
     /*STATUS BTN SIMPAN*/
     private boolean btnsimpan_clicked;
@@ -62,6 +64,7 @@ public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
         nama = getArguments().getString(InputIdentitasPemesanActivity.NAMA_PENUMPANG,"");
         nomor_identitas = getArguments().getString(InputIdentitasPemesanActivity.NOMOR_IDENTITAS,"");
         index = getArguments().getInt(InputIdentitasPemesanActivity.INDEX_PENUMPANG);
+        cards = getArguments().getStringArrayList(InputIdentitasPemesanActivity.TIPE_CARD);
 
         close = view.findViewById(R.id.closebutton);
         close.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +77,7 @@ public class BottomSheetPenumpangFragment extends BottomSheetDialogFragment {
         /*MEMBUAT PILIHAN ID_CARD*/
         this.type_id_card = getView().findViewById(R.id.filled_exposed_dropdown);
 
-        String[] type = new String[]{"KTP", "SIM","Kartu Pelajar"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.text_view_dropdown_item, type);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.text_view_dropdown_item, this.cards);
         this.type_id_card.setAdapter(adapter);
 
         this.tvnama = view.findViewById(R.id.namapengguna);

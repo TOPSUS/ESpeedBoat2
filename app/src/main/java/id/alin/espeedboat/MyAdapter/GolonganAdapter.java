@@ -55,6 +55,7 @@ public class GolonganAdapter extends RecyclerView.Adapter<GolonganAdapter.MyView
                 pemesananFeriData.setKeterangan_golongan(golonganEntitiys.get(position).getKeterangan());
                 pemesananFeriData.setHarga(Integer.parseInt(golonganEntitiys.get(position).getHarga()));
                 pemesananFeriData.setNomor_kendaraan("");
+                pemesananFeriData.setJumlah_penumpang(0);
                 MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
 
                 GolonganAdapter.this.fullscreenGolonganFragment.dismiss();

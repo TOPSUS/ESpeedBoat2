@@ -24,6 +24,8 @@ import com.applikeysolutions.cosmocalendar.model.Day;
 import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 
@@ -201,12 +203,14 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         this.metjumlahpenumpang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getChildFragmentManager().findFragmentByTag(TAG_JUMLAH_PENUMPANG) == null){
-                    BottomSheetJumlahPenumpang bottomSheetJumlahPenumpang = new BottomSheetJumlahPenumpang();
-                    Bundle bundle = new Bundle();
-                    bundle.putString(BottomSheetJumlahPenumpang.FORM,BottomSheetJumlahPenumpang.FERI);
-                    bottomSheetJumlahPenumpang.setArguments(bundle);
-                    bottomSheetJumlahPenumpang.showNow(getChildFragmentManager(),TAG_JUMLAH_PENUMPANG);
+                if(doValidateJumlahPenumpang()){
+                    if(getChildFragmentManager().findFragmentByTag(TAG_JUMLAH_PENUMPANG) == null){
+                        BottomSheetJumlahPenumpang bottomSheetJumlahPenumpang = new BottomSheetJumlahPenumpang();
+                        Bundle bundle = new Bundle();
+                        bundle.putString(BottomSheetJumlahPenumpang.FORM,BottomSheetJumlahPenumpang.FERI);
+                        bottomSheetJumlahPenumpang.setArguments(bundle);
+                        bottomSheetJumlahPenumpang.showNow(getChildFragmentManager(),TAG_JUMLAH_PENUMPANG);
+                    }
                 }
             }
         });
@@ -252,6 +256,7 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                 metjumlahpenumpang.setText(
                         (pemesananFeriData.getJumlah_penumpang() == 0) ? "" : String.valueOf(pemesananFeriData.getJumlah_penumpang())
                 );
+
                 mettanggal.setText(pemesananFeriData.getTanggal());
 
                 // MENENTUKAN JASA YANG DIGUNAKAN APA BILA KENDARAAN MAKA BUKA FORM GOLONGAN
@@ -265,7 +270,7 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                     }
                     metjasa.setText(pemesananFeriData.getTipe_jasa());
                 }
-                Log.d("apekaden","perulangan");
+
             }
         });
     }
@@ -307,6 +312,13 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         if(pemesananFeriData.getTanggal().matches("")){
             validastion-=1;
             this.mettanggal.setError("Tentukan tanggal keberangkatan");
+        }else {
+            LocalDate hari_ini = LocalDate.now();
+            LocalDate hari_input = LocalDate.parse(pemesananFeriData.getTanggal_variable(), DateTimeFormatter.ofPattern("yyyy-M-d"));
+            if (hari_input.isBefore(hari_ini)) {
+                validastion -= 1;
+                mettanggal.setError("Tanggal telah lewat");
+            }
         }
 
         if(pemesananFeriData.getTipe_jasa().matches("")){
@@ -330,5 +342,29 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
         }
 
         return validastion == 1;
+    }
+
+    // VALIDASI JUMLAH PENUMPANG SAAT TIPE JASA KENDARAAN
+    private boolean doValidateJumlahPenumpang(){
+        int validate = 1;
+
+        PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
+
+        if(pemesananFeriData.getId_asal() <= 0){
+            validate -=1;
+
+            this.metasal.setError("Mohon Tentukan asal pelabuhan terlebih dahulu");
+        }
+        else if(pemesananFeriData.getTipe_jasa().matches("")){
+            validate -=1;
+
+            this.metjasa.setError("Mohon Tentukan Tipe Jasa Terlebih dahulu");
+        }else if(pemesananFeriData.getTipe_jasa().matches(KENDARAAN) && pemesananFeriData.getId_golongan_kendaraan() <= 0){
+            validate -=1;
+
+            this.metgolongan.setError("Mohon Tentukan tentukan golongan terlebih dahulu");
+        }
+        Toast.makeText(getContext(), String.valueOf(validate), Toast.LENGTH_SHORT).show();
+        return validate == 1;
     }
 }

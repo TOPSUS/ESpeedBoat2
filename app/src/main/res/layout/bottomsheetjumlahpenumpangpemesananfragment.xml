@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbarSize="0dp">
@@ -39,7 +39,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     app:npMinValue="1"
-                    app:npMaxValue="10"
                     app:npDefaultValue="1"
                     android:outlineAmbientShadowColor="@color/black"
                     android:forceHasOverlappingRendering="true"
@@ -61,10 +60,39 @@
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText,RtlHardcoded" />
 
-            <Space
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loadinglayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:gravity="center"
+            android:background="@drawable/register_bottom_sheet"
+            android:orientation="vertical"
+            >
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_rawRes="@raw/loading_water"
+                app:lottie_repeatCount="-1"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_scale="0.3"
+                app:lottie_repeatMode="reverse"/>
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Mencari Batas Jumlah Penumpang"
+                android:textAlignment="center"
+                android:textColor="@color/textColorSecondary"
+                tools:ignore="HardcodedText" />
+
 
         </LinearLayout>
-    </ScrollView>
+
+    </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import id.alin.espeedboat.MyAdapter.JadwalAdapter;
+import id.alin.espeedboat.MyFragment.MainActivityFragment.PemesananChildFragment.FeriFragment;
 import id.alin.espeedboat.MyRetrofit.ApiClient;
 import id.alin.espeedboat.MyRetrofit.ServiceResponseModels.Jadwal.ServerResponseJadwalData;
 import id.alin.espeedboat.MyRetrofit.Services.JadwalServices;
@@ -144,6 +145,7 @@ public class PemesananJadwalSpeedboatActivity extends AppCompatActivity {
                     pemesananSpeedboatData.getTanggal_variable(),
                     String.valueOf(pemesananSpeedboatData.getId_asal()),
                     String.valueOf(pemesananSpeedboatData.getId_tujuan()),
+                    pemesananSpeedboatData.getJumlah_penumpang(),
                     PemesananJadwalSpeedboatActivity.SPEEDBOAT
             );
 
@@ -185,47 +187,94 @@ public class PemesananJadwalSpeedboatActivity extends AppCompatActivity {
             ProfileData profileData = MainActivity.mainActivityViewModel.getProfileLiveData().getValue();
 
             JadwalServices jadwalServices = ApiClient.getRetrofit().create(JadwalServices.class);
-            Call<ServerResponseJadwalData> call = jadwalServices.getJadwal(
-                    profileData.getToken(),
-                    pemesananFeriData.getTanggal_variable(),
-                    String.valueOf(pemesananFeriData.getId_asal()),
-                    String.valueOf(pemesananFeriData.getId_tujuan()),
-                    PemesananJadwalSpeedboatActivity.FERI
-            );
+            if(pemesananFeriData.getTipe_jasa().matches(FeriFragment.KENDARAAN) && pemesananFeriData.getId_golongan_kendaraan() != 0){
+                Call<ServerResponseJadwalData> call = jadwalServices.getJadwal(
+                        profileData.getToken(),
+                        pemesananFeriData.getTanggal_variable(),
+                        String.valueOf(pemesananFeriData.getId_asal()),
+                        String.valueOf(pemesananFeriData.getId_tujuan()),
+                        String.valueOf(pemesananFeriData.getId_golongan_kendaraan()),
+                        String.valueOf(pemesananFeriData.getJumlah_penumpang()),
+                        PemesananJadwalSpeedboatActivity.FERI
+                );
+                call.enqueue(new Callback<ServerResponseJadwalData>() {
+                    @Override
+                    public void onResponse(Call<ServerResponseJadwalData> call, Response<ServerResponseJadwalData> response) {
+                        Log.d("ALINDEBUG",String.valueOf(response.body().getJadwal().size()));
+                        if(response.body().getJadwal().size() == 0 || !response.body().getResponse_code().matches("200")){
+                            setNoDataState();
+                        }
+                        else{
+                            PemesananJadwalSpeedboatActivity.this.database.jadwalDAO().truncateJadwalEntity();
 
-            call.enqueue(new Callback<ServerResponseJadwalData>() {
-                @Override
-                public void onResponse(Call<ServerResponseJadwalData> call, Response<ServerResponseJadwalData> response) {
-                    Log.d("ALINDEBUG",String.valueOf(response.body().getJadwal().size()));
-                    if(response.body().getJadwal().size() == 0 || !response.body().getResponse_code().matches("200")){
+                            response.body().getJadwal().forEach(new Consumer<JadwalEntity>() {
+                                @Override
+                                public void accept(JadwalEntity jadwalEntity) {
+                                    PemesananJadwalSpeedboatActivity.this.database.jadwalDAO().insertJadwalEntity(jadwalEntity);
+                                }
+                            });
+
+                            setReadyState();
+
+                            String html = "Berhasil menemukan <b>"+response.body().getJadwal().size()+"</b> jadwal";
+
+                            PemesananJadwalSpeedboatActivity.this.tvHeader.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
+
+                            fillRecyclerView(response.body().getJadwal());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServerResponseJadwalData> call, Throwable t) {
                         setNoDataState();
+                        Toast.makeText(PemesananJadwalSpeedboatActivity.this, "FAILURE", Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                        PemesananJadwalSpeedboatActivity.this.database.jadwalDAO().truncateJadwalEntity();
+                });
+            }else{
+                Call<ServerResponseJadwalData> call = jadwalServices.getJadwal(
+                        profileData.getToken(),
+                        pemesananFeriData.getTanggal_variable(),
+                        String.valueOf(pemesananFeriData.getId_asal()),
+                        String.valueOf(pemesananFeriData.getId_tujuan()),
+                        String.valueOf(pemesananFeriData.getJumlah_penumpang()),
+                        PemesananJadwalSpeedboatActivity.FERI
+                );
+                call.enqueue(new Callback<ServerResponseJadwalData>() {
+                    @Override
+                    public void onResponse(Call<ServerResponseJadwalData> call, Response<ServerResponseJadwalData> response) {
+                        Log.d("ALINDEBUG",String.valueOf(response.body().getJadwal().size()));
+                        if(response.body().getJadwal().size() == 0 || !response.body().getResponse_code().matches("200")){
+                            setNoDataState();
+                        }
+                        else{
+                            PemesananJadwalSpeedboatActivity.this.database.jadwalDAO().truncateJadwalEntity();
 
-                        response.body().getJadwal().forEach(new Consumer<JadwalEntity>() {
-                            @Override
-                            public void accept(JadwalEntity jadwalEntity) {
-                                PemesananJadwalSpeedboatActivity.this.database.jadwalDAO().insertJadwalEntity(jadwalEntity);
-                            }
-                        });
+                            response.body().getJadwal().forEach(new Consumer<JadwalEntity>() {
+                                @Override
+                                public void accept(JadwalEntity jadwalEntity) {
+                                    PemesananJadwalSpeedboatActivity.this.database.jadwalDAO().insertJadwalEntity(jadwalEntity);
+                                }
+                            });
 
-                        setReadyState();
+                            setReadyState();
 
-                        String html = "Berhasil menemukan <b>"+response.body().getJadwal().size()+"</b> jadwal";
+                            String html = "Berhasil menemukan <b>"+response.body().getJadwal().size()+"</b> jadwal";
 
-                        PemesananJadwalSpeedboatActivity.this.tvHeader.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
+                            PemesananJadwalSpeedboatActivity.this.tvHeader.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
-                        fillRecyclerView(response.body().getJadwal());
+                            fillRecyclerView(response.body().getJadwal());
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<ServerResponseJadwalData> call, Throwable t) {
-                    setNoDataState();
-                    Toast.makeText(PemesananJadwalSpeedboatActivity.this, "FAILURE", Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<ServerResponseJadwalData> call, Throwable t) {
+                        setNoDataState();
+                        Toast.makeText(PemesananJadwalSpeedboatActivity.this, "FAILURE", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+
         }
     }
 

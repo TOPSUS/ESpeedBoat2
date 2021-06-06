@@ -44,6 +44,7 @@ public class JasaDialogFragment extends DialogFragment {
                 pemesananFeriData.setId_golongan_kendaraan(0);
                 pemesananFeriData.setGologan_kendaraan("");
                 pemesananFeriData.setKeterangan_golongan("");
+                pemesananFeriData.setJumlah_penumpang(0);
                 pemesananFeriData.setNomor_kendaraan("");
                 MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
                 dismiss();
@@ -56,6 +57,7 @@ public class JasaDialogFragment extends DialogFragment {
                 PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
                 pemesananFeriData.setTipe_jasa(FeriFragment.KENDARAAN);
                 pemesananFeriData.setId_golongan_kendaraan(0);
+                pemesananFeriData.setJumlah_penumpang(0);
                 pemesananFeriData.setGologan_kendaraan("");
                 MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
                 dismiss();

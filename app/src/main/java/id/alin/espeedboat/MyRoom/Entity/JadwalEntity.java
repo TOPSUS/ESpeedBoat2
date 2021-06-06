@@ -12,6 +12,9 @@ public class JadwalEntity {
     private long id_asal_pelabuhan;
     private long id_tujuan_pelabuhan;
     private boolean isOrderable;
+    private String status;
+    private String jenis_kapal;
+    private String nama_golongan;
     private String waktu_sampai;
     private String waktu_berangkat;
     private String harga;
@@ -202,7 +205,32 @@ public class JadwalEntity {
         return isOrderable;
     }
 
-    public void setIsOrderable(boolean isOrderable) {
-        this.isOrderable = isOrderable;
+
+    public void setOrderable(boolean orderable) {
+        isOrderable = orderable;
+    }
+
+    public String getJenis_kapal() {
+        return jenis_kapal;
+    }
+
+    public void setJenis_kapal(String jenis_kapal) {
+        this.jenis_kapal = jenis_kapal;
+    }
+
+    public String getNama_golongan() {
+        return nama_golongan;
+    }
+
+    public void setNama_golongan(String nama_golongan) {
+        this.nama_golongan = nama_golongan;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

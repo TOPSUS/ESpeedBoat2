@@ -19,6 +19,19 @@ public interface JadwalServices {
             @Field("date") String date,
             @Field("id_asal_pelabuhan") String id_asal_pelabuhan,
             @Field("id_tujuan_pelabuhan") String id_tujuan_pelabuhan,
+            @Field("jumlah_penumpang") String jumlah_penumpang,
+            @Field("tipe_kapal") String tipe_kapal
+    );
+
+    @FormUrlEncoded
+    @POST("/api/getjadwal")
+    Call<ServerResponseJadwalData> getJadwal(
+            @Header("Authorization") String Authorization,
+            @Field("date") String date,
+            @Field("id_asal_pelabuhan") String id_asal_pelabuhan,
+            @Field("id_tujuan_pelabuhan") String id_tujuan_pelabuhan,
+            @Field("id_golongan") String id_golongan,
+            @Field("jumlah_penumpang") String jumlah_penumpang,
             @Field("tipe_kapal") String tipe_kapal
     );
 }

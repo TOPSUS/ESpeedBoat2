@@ -105,8 +105,8 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
             });
         }else{
             holder.tvtipekapal.setBackgroundResource(R.color.lightgrey);
-            holder.itemView.setAlpha(.5f);
-            String peringatan = "JADWAL TELAH LEWAT";
+            holder.itemView.setAlpha(.8f);
+            String peringatan = this.jadwalEntities.get(position).getStatus();
             holder.btnpilih.setEnabled(false);
             holder.btnpilih.setText(peringatan);
         }
