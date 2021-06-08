@@ -68,7 +68,6 @@ public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
         initWidget();
 
         if(form.matches(FERI)){
-            Toast.makeText(getContext(), "MASUK", Toast.LENGTH_SHORT).show();
             initEventFeri();
         }else if(form.matches(SPEEDBOAT)){
             initSpeedBoat();
@@ -88,7 +87,6 @@ public class BottomSheetJumlahPenumpang extends BottomSheetDialogFragment {
                     pemesananSpeedboatData.setJumlah_penumpang(String.valueOf(materialNumberPicker.getValue()));
                     MainActivity.mainActivityViewModel.setPemesananSpeedboatData(pemesananSpeedboatData);
                 }else if(form.matches(FERI)){
-                    Toast.makeText(getContext(), "MASUK 2", Toast.LENGTH_SHORT).show();
                     PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
                     pemesananFeriData.setJumlah_penumpang(materialNumberPicker.getValue());
                     MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);

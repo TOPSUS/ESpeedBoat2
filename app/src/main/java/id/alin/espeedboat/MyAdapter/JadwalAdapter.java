@@ -70,14 +70,14 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.MyViewHold
         if(jadwalEntities.get(position).getSisa() < 10){
             Log.d("ALIN DEBUG","MASUK SISA");
             kapasitas ="<font color='red'>" +
-                    jadwalEntities.get(position).getKapasitas() +
-                    " / " + jadwalEntities.get(position).getPemesanan_saat_ini() +
+                    jadwalEntities.get(position).getPemesanan_saat_ini() +
+                    " / " + jadwalEntities.get(position).getKapasitas() +
                     "</font>";
             holder.tvkapasitasboat.setText(HtmlCompat.fromHtml(kapasitas, HtmlCompat.FROM_HTML_MODE_LEGACY));
         }else{
-            kapasitas =jadwalEntities.get(position).getKapasitas() +
+            kapasitas =jadwalEntities.get(position).getPemesanan_saat_ini() +
                     " / " +
-                    jadwalEntities.get(position).getPemesanan_saat_ini();
+                    jadwalEntities.get(position).getKapasitas();
             holder.tvkapasitasboat.setText(kapasitas);
         }
 

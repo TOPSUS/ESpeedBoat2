@@ -169,7 +169,6 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
                             PemesananFeriData pemesananFeriData = MainActivity.mainActivityViewModel.getPemesananFeriLiveData().getValue();
                             pemesananFeriData.setTanggal(date.toString());
                             pemesananFeriData.setTanggal_variable(tanggal_variable.toString());
-                            Toast.makeText(getContext(), tanggal_variable.toString(), Toast.LENGTH_SHORT).show();
                             MainActivity.mainActivityViewModel.setPemesananFeriData(pemesananFeriData);
                         }
                     }
@@ -364,7 +363,6 @@ public class FeriFragment extends Fragment implements LifecycleOwner {
 
             this.metgolongan.setError("Mohon Tentukan tentukan golongan terlebih dahulu");
         }
-        Toast.makeText(getContext(), String.valueOf(validate), Toast.LENGTH_SHORT).show();
         return validate == 1;
     }
 }
