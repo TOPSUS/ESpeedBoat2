@@ -20,6 +20,8 @@ public class JadwalEntity {
     private String harga;
     private String pelabuhan_asal_nama;
     private String pelabuhan_asal_kode;
+    private String dermaga_asal;
+    private String dermaga_tujuan;
     private String pelabuhan_tujuan_nama;
     private String pelabuhan_tujuan_kode;
     private String nama_speedboat;
@@ -232,5 +234,21 @@ public class JadwalEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDermaga_asal() {
+        return dermaga_asal;
+    }
+
+    public void setDermaga_asal(String dermaga_asal) {
+        this.dermaga_asal = dermaga_asal;
+    }
+
+    public String getDermaga_tujuan() {
+        return dermaga_tujuan;
+    }
+
+    public void setDermaga_tujuan(String dermaga_tujuan) {
+        this.dermaga_tujuan = dermaga_tujuan;
     }
 }
