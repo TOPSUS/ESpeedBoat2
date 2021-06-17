@@ -104,4 +104,20 @@ public interface PembelianServices {
             @Header("Authorization") String Authorization,
             @Field("id") long id
     );
+
+    @FormUrlEncoded
+    @POST("/api/setrefund")
+    Call<ServerResponseModels> setRefund(
+            @Header("Authorization") String Authorization,
+            @Field("id_pembelian") long id_pembelian,
+            @Field("rekening") String rekening,
+            @Field("alasan") String alasan
+    );
+
+    @FormUrlEncoded
+    @POST("/api/terimarefund")
+    Call<ServerResponseModels> terimaRefund(
+            @Header("Authorization") String Authorization,
+            @Field("id_pembelian") long id_pembelian
+    );
 }

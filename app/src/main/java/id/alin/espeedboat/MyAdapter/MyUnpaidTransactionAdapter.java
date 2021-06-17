@@ -117,6 +117,9 @@ public class MyUnpaidTransactionAdapter  extends RecyclerView.Adapter<MyUnpaidTr
         }else if(pembelianEntity.get(position).getStatus().equals("expired")){
             holder.tvStatus.setText("Kadaluwarsa");
             holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.Danger_Red));
+        }else if(pembelianEntity.get(position).getStatus().equals("direfund")){
+            holder.tvStatus.setText("Pengembalian Dana");
+            holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.Warning_Orange));
         }
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -34,6 +34,12 @@ public class ServerResponseDetailPembelian {
     private long harga_golongan;
     private long rating;
     private String review;
+    private int persenan_refund;
+    private String tanggal_refund;
+    private String rekening_refund;
+    private long jumlah_refund;
+    private String status_refund;
+    private int isrefund;
     private List<PenumpangDetailEntity> penumpang;
 
     public String getResponse_code() {
@@ -242,6 +248,54 @@ public class ServerResponseDetailPembelian {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public int getPersenan_refund() {
+        return persenan_refund;
+    }
+
+    public void setPersenan_refund(int persenan_refund) {
+        this.persenan_refund = persenan_refund;
+    }
+
+    public String getTanggal_refund() {
+        return tanggal_refund;
+    }
+
+    public void setTanggal_refund(String tanggal_refund) {
+        this.tanggal_refund = tanggal_refund;
+    }
+
+    public String getRekening_refund() {
+        return rekening_refund;
+    }
+
+    public void setRekening_refund(String rekening_refund) {
+        this.rekening_refund = rekening_refund;
+    }
+
+    public long getJumlah_refund() {
+        return jumlah_refund;
+    }
+
+    public void setJumlah_refund(long jumlah_refund) {
+        this.jumlah_refund = jumlah_refund;
+    }
+
+    public String getStatus_refund() {
+        return status_refund;
+    }
+
+    public void setStatus_refund(String status_refund) {
+        this.status_refund = status_refund;
+    }
+
+    public int getIsrefund() {
+        return isrefund;
+    }
+
+    public void setIsrefund(int isrefund) {
+        this.isrefund = isrefund;
     }
 
     public List<PenumpangDetailEntity> getPenumpang() {
