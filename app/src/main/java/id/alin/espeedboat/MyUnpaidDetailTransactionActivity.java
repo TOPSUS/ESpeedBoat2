@@ -354,6 +354,8 @@ public class MyUnpaidDetailTransactionActivity extends AppCompatActivity {
             tvRefund.setVisibility(View.GONE);
             layoutRefund.setVisibility(View.GONE);
             layoutTindakanRefund.setVisibility(View.GONE);
+            tvCardTindakan.setVisibility(View.GONE);
+            cvTindakan.setVisibility(View.GONE);
             if(body.getIsrefund()==1){
                 tvCardTindakan.setVisibility(View.GONE);
                 cvTindakan.setVisibility(View.GONE);
